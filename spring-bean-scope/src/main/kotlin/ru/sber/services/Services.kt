@@ -4,10 +4,10 @@ import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 
 @Component
-class singletonService {
+class SingletonService {
 }
 
 @Component
 @Scope("prototype")
-class prototypeService {
+class PrototypeService {
 }
