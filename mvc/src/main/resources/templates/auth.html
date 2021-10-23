@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Authentication form</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <h1>You have authenticated</h1>
+        <p th:text="'Login: ' + ${clientForm.login}" />
+        <p th:text="'Password: ' + ${clientForm.password}" />
+        <a href="/login">Another try</a>
+    </body>
+</html>
