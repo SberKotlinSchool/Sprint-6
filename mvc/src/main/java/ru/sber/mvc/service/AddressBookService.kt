@@ -15,7 +15,7 @@ class AddressBookService {
     public fun addAddressBook(address: AddressBook){
         address.setId(id)
         addressBook.put(id++, address)
-        logger.info("Save address with id {$id - 1}")
+        logger.info("Save address")
     }
 
     public fun listAddressBook(id: Int?, name: String?, phone: String?, address: String?): List<AddressBook> {
@@ -43,6 +43,7 @@ class AddressBookService {
 
     public fun deleteAddressBook(id: Int) {
         addressBook.remove(id)
+        logger.info("Delete address with id {$id}")
     }
 
 }

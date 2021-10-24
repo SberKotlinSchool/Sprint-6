@@ -6,5 +6,5 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ComponentScan("ru.sber.mvc.service")
-@ServletComponentScan("ru.sber.mvc.servlets")
+@ServletComponentScan("ru.sber.mvc.servlets", "ru.sber.mvc.filter")
 open class Configuration

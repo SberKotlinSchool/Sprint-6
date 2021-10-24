@@ -5,9 +5,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import ru.sber.mvc.entity.AddressBook
-import ru.sber.mvc.entity.Client
 import ru.sber.mvc.service.AddressBookService
-import java.util.concurrent.ConcurrentHashMap
 
 @Controller
 @RequestMapping(value = ["/app"])

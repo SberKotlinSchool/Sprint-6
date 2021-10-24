@@ -1,7 +1,6 @@
 package ru.sber.mvc.servlets
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.Mapping
 import ru.sber.mvc.service.Authentication
 import javax.servlet.annotation.WebServlet
 import javax.servlet.http.HttpServlet
@@ -24,7 +23,7 @@ class AuthenticationServlet() : HttpServlet() {
         val login = req?.getParameter("login")
         val password = req?.getParameter("password")
         if (login == null || password == null) {
-            resp!!.writer.println("<h2>There is no login or password</h2>")
+            resp!!.writer.println("There is no login or password")
             return
         }
 
@@ -42,7 +41,7 @@ class AuthenticationServlet() : HttpServlet() {
         val login = req?.getParameter("login")
         val password = req?.getParameter("password")
         if (login == null || password == null) {
-            resp!!.writer.println("<h2>There is no login or password</h2>")
+            resp!!.writer.println("There is no login or password")
             return
         }
 
@@ -52,7 +51,7 @@ class AuthenticationServlet() : HttpServlet() {
             return
         }
 
-        resp!!.writer.println("<h2>Error login or password</h2>")
+        resp!!.writer.println("Error login or password")
     }
 
 }
