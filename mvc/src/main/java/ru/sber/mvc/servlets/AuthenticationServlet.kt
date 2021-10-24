@@ -20,20 +20,7 @@ class AuthenticationServlet() : HttpServlet() {
     }
 
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
-        val login = req?.getParameter("login")
-        val password = req?.getParameter("password")
-        if (login == null || password == null) {
-            resp!!.writer.println("There is no login or password")
-            return
-        }
-
-        val cookie = authentication.authentication(login, password)
-        if (cookie != null) {
-            resp!!.addCookie(cookie)
-            return
-        }
-        resp!!.writer.println("Error login or password")
-        resp!!.writer.close()
+        servletContext.getRequestDispatcher("/index.html").forward(req, resp)
     }
 
 
@@ -52,6 +39,7 @@ class AuthenticationServlet() : HttpServlet() {
         }
 
         resp!!.writer.println("Error login or password")
+        resp!!.writer.close()
     }
 
 }
