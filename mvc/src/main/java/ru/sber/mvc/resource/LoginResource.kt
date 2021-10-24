@@ -11,30 +11,30 @@ import ru.sber.mvc.entity.Greeting
 import ru.sber.mvc.service.Authentication
 
 
-@Controller
-class LoginResource {
-    private val authentication: Authentication
-    @Autowired
-    constructor(authentication: Authentication) {
-        this.authentication = authentication
-    }
-
-
-    @RequestMapping(value = ["/login"], method = [RequestMethod.GET])
-    public fun getClientForm(model: Model): String {
-        model.addAttribute("clientForm", Client())
-        return "client"
-    }
-
-    @RequestMapping(value = ["/login"], method = [RequestMethod.POST])
-    public fun auth(@ModelAttribute client: Client, model: Model): String {
-        model.addAttribute("clientForm", client)
-        if (authentication.authentication(client)) {
-            return "auth"
-        }
-        return "client"
-    }
-}
+//@Controller
+//class LoginResource {
+//    private val authentication: Authentication
+//    @Autowired
+//    constructor(authentication: Authentication) {
+//        this.authentication = authentication
+//    }
+//
+//
+//    @RequestMapping(value = ["/login"], method = [RequestMethod.GET])
+//    public fun getClientForm(model: Model): String {
+//        model.addAttribute("clientForm", Client())
+//        return "client"
+//    }
+//
+//    @RequestMapping(value = ["/login"], method = [RequestMethod.POST])
+//    public fun auth(@ModelAttribute client: Client, model: Model): String {
+//        model.addAttribute("clientForm", client)
+//        if (authentication.authentication(client)) {
+//            return "auth"
+//        }
+//        return "client"
+//    }
+//}
 
 
 @Controller
