@@ -17,7 +17,3 @@ class ServicesConfig {
     fun secondService() {
     }
 }
-
-@Configuration
-@ComponentScan("ru.sber.anotherservices")
-class AnotherServicesConfig
