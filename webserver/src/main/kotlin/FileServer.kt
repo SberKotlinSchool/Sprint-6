@@ -8,7 +8,6 @@ import java.io.IOException
 import java.io.PrintWriter
 import java.net.ServerSocket
 import java.net.Socket
-import java.net.http.HttpRequest
 
 /**
  * A basic and very limited implementation of a file server that responds to GET
@@ -30,7 +29,7 @@ class FileServer {
     @Throws(IOException::class)
     fun run(socket: ServerSocket, fs: VFilesystem) {
 
-        socket.use {serverSocket ->
+        socket.use { serverSocket ->
             /**
              * Enter a spin loop for handling client requests to the provided
              * ServerSocket object.
@@ -84,30 +83,30 @@ class FileServer {
     private fun processRequest(socket: Socket, fs: VFilesystem) {
         LOG.info { "client connected:${socket.remoteSocketAddress}" }
         socket.use { s ->
+
             // читаем от клиента сообщение
             val reader = s.getInputStream().bufferedReader()
             val clientRequest = reader.readLine()
             LOG.info { "receive from ${socket.remoteSocketAddress}  > clientRequest $clientRequest" }
-
-            val request = Request(clientRequest.split(" ")[0],
+            val request = Request(
+                clientRequest.split(" ")[0],
                 clientRequest.split(" ")[1],
                 clientRequest.split(" ")[2]
             )
 
-            var file = fs.readFile(VPath(request.requestBody))
+            val file = fs.readFile(VPath(request.requestBody))
 
             // отправляем ответ
             val writer = PrintWriter(s.getOutputStream())
-            val httpHeader = ResponseHeader(request.requestProtocol,
+            val httpHeader = ResponseHeader(
+                request.requestProtocol,
                 200,
                 "text/html",
                 "Closed"
-                )
+            )
 
-            val httpResponse = Response(httpHeader,file).buildResponse();
+            val httpResponse = Response(httpHeader, file).buildResponse()
 
-
-            val serverResponse = "Server response: $httpResponse}"
             writer.println(httpResponse)
             writer.flush()
             LOG.info { "send to ${socket.remoteSocketAddress} > $httpResponse" }
