@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+   .error { color: red; }
+    </style>
+</head>
+<body>
+<h2>Edit client</h2>
+<form action="#" th:object="${client}" method="post">
+    <p>Name: <input type="text" th:field="*{fio}"/></p>
+    <span th:if="#{fields.hasErrors('fio')}" th:errors="*{fio}" class="error"></span>
+    <p>Address: <input type="text" th:field="*{address}"/></p>
+    <span th:if="#{fields.hasErrors('address')}" th:errors="*{address}" class="error"></span>
+    <p>Phone: <input type="text" th:field="*{phone}"/></p>
+    <span th:if="#{fields.hasErrors('phone')}" th:errors="*{phone}" class="error"></span>
+    <p>Email: <input type="text" th:field="*{email}"/></p>
+    <span th:if="#{fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>
+    <p><input type="submit" value="Submit"/>
+</form>
+</body>
+</html>
