@@ -1,3 +1,4 @@
+import data.HttpCodes
 import data.Request
 import data.Response
 import data.ResponseHeader
@@ -8,6 +9,7 @@ import java.io.IOException
 import java.io.PrintWriter
 import java.net.ServerSocket
 import java.net.Socket
+import java.time.LocalDateTime
 
 /**
  * A basic and very limited implementation of a file server that responds to GET
@@ -94,18 +96,34 @@ class FileServer {
                 clientRequest.split(" ")[2]
             )
 
-            val file = fs.readFile(VPath(request.requestBody))
 
+            var file = "empty file"
+            var httpResponse = ""
+
+
+            try {
+                file = fs.readFile(VPath(request.requestBody))
+                httpResponse = """
+               HTTP/1.0 200 OK
+               Server: FileServer
+                                    """.trimIndent()
+                httpResponse += "\n\n$file\n\n"
+
+            } catch (e: java.lang.NullPointerException) {
+                httpResponse = """
+                            HTTP/1.0 404 Not Found\r\n
+                            Server: FileServer\r\n
+                """.trimIndent()
+            }
+
+        
             // отправляем ответ
             val writer = PrintWriter(s.getOutputStream())
-            val httpHeader = ResponseHeader(
-                request.requestProtocol,
-                200,
-                "text/html",
-                "Closed"
-            )
 
-            val httpResponse = Response(httpHeader, file).buildResponse()
+
+  //          val httpResponse = Response(response, file).buildResponse()
+            println("We are here")
+            println(httpResponse)
 
             writer.println(httpResponse)
             writer.flush()

@@ -3,16 +3,17 @@ package data
 import java.time.LocalDateTime
 import java.time.LocalDateTime.now
 
-class ResponseHeader (
-     val protocol : String,
-     statusCode : Int,
-     contentType : String,
-     connection: String,
+data class ResponseHeader (
+      var protocol : String,
+      var status : String,
+      var statusCode : Int,
+      var contentType : String,
+      var connection: String
 ) {
 
 
     val httpHeader = """
-        $protocol $statusCode OK
+        $protocol $statusCode $status
         Date: ${LocalDateTime.now()}
         Last-Modified: ${LocalDateTime.now()}
         Content-Type: $contentType
