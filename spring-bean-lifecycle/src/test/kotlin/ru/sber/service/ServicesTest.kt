@@ -27,9 +27,10 @@ class ServicesTest {
         // given
         val context = AnnotationConfigApplicationContext(ServicesConfig::class.java)
 
+
         // when
         val callbackBean = context.getBean("callbackBean") as CallbackBean
-
+        context.close()
         // then
         assertEquals("Sorry, but I really have to go.", callbackBean.greeting)
     }
