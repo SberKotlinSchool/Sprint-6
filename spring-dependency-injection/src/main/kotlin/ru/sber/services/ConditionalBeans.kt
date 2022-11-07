@@ -16,7 +16,6 @@ class ProdProfileCondition : Condition {
 interface ConditionalInterface
 
 @Component
-@Conditional(ProdProfileCondition::class)
 class ConditionalService : ConditionalInterface {
     override fun toString(): String {
         return "ConditionalService"
@@ -24,6 +23,7 @@ class ConditionalService : ConditionalInterface {
 }
 
 @Component
+@Conditional(ProdProfileCondition::class)
 class AnotherConditionalService : ConditionalInterface {
     override fun toString(): String {
         return "AnotherConditionalService"

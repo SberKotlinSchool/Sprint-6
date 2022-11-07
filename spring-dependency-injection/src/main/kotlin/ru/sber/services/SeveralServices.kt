@@ -24,8 +24,9 @@ class SecondServiceImpl : ServiceInterface {
 
 @Component
 class SeveralBeanInjectionService {
+    //TODO почему List, Set а не ArrayList?
     @Autowired
-    lateinit var services: ArrayList<ServiceInterface>
+    lateinit var services: List<ServiceInterface>
 
     override fun toString(): String {
         return "SeveralBeanInjectionService(services=$services)"
