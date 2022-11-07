@@ -1,7 +1,6 @@
 import data.HttpCodes
 import data.Request
 import data.Response
-import data.ResponseHeader
 import mu.KotlinLogging
 import ru.sber.filesystem.VFilesystem
 import ru.sber.filesystem.VPath
@@ -9,7 +8,6 @@ import java.io.IOException
 import java.io.PrintWriter
 import java.net.ServerSocket
 import java.net.Socket
-import java.time.LocalDateTime
 
 /**
  * A basic and very limited implementation of a file server that responds to GET
@@ -97,37 +95,26 @@ class FileServer {
             )
 
 
-            var file = "empty file"
-            var httpResponse = ""
+            val httpResponse = Response()
 
 
             try {
-                file = fs.readFile(VPath(request.requestBody))
-                httpResponse = """
-               HTTP/1.0 200 OK
-               Server: FileServer
-                                    """.trimIndent()
-                httpResponse += "\n\n$file\n\n"
+                val file = fs.readFile(VPath(request.requestBody))
+                LOG.info("File found, creating response 200")
+                httpResponse.httpReplyText = "HTTP/1.0 ${HttpCodes.HTTP_OK.code} ${HttpCodes.HTTP_OK.status}" +
+                                         "\nServer: FileServer"
+                httpResponse.body = file
 
             } catch (e: java.lang.NullPointerException) {
-                httpResponse = """
-                            HTTP/1.0 404 Not Found\r\n
-                            Server: FileServer\r\n
-                """.trimIndent()
+                LOG.info("File not found, creating response 404")
+                httpResponse.httpReplyText = "HTTP/1.0 ${HttpCodes.HTTP_ERROR.code} ${HttpCodes.HTTP_ERROR.status}" +
+                                            "\nServer: FileServer\r\n"
             }
 
-        
-            // отправляем ответ
             val writer = PrintWriter(s.getOutputStream())
-
-
-  //          val httpResponse = Response(response, file).buildResponse()
-            println("We are here")
-            println(httpResponse)
-
-            writer.println(httpResponse)
+            writer.println(httpResponse.getResponse())
             writer.flush()
-            LOG.info { "send to ${socket.remoteSocketAddress} > $httpResponse" }
+            LOG.info { "Send to ${socket.remoteSocketAddress} > $httpResponse" }
         }
     }
 

@@ -1,17 +1,13 @@
 package data
 
-class Response(
-    private val header: ResponseHeader,
-    private val body: String
+data class Response(
+    var httpReplyText: String = "empty reply text",
+    var body: String = ""
 ) {
-    fun buildOkResponse(): String {
-        return header.getHeader() + "\n" +
-                "Content-Length: ${body.length}" +
-                "\n\n" + body
-    }
-    fun buildErrorResponse(): String {
-        return header.getHeader() + "\n" +
-                "Content-Length: ${body.length}" +
-                "\n\n" + body
+
+    fun getResponse(): String {
+        return if (body.isNotEmpty()) {
+            "$httpReplyText Content-Length: ${body.length} \n\n$body"
+        } else httpReplyText
     }
 }
