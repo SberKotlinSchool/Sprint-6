@@ -35,47 +35,7 @@ class FileServer {
              * ServerSocket object.
              */
             while (true) {
-
                 processRequest(serverSocket.accept(), fs)
-
-
-                // TODO Delete this once you start working on your solution.
-                //throw new UnsupportedOperationException();
-
-                // TODO 1) Use socket.accept to get a Socket object
-
-
-                /*
-                * TODO 2) Using Socket.getInputStream(), parse the received HTTP
-                * packet. In particular, we are interested in confirming this
-                * message is a GET and parsing out the path to the file we are
-                * GETing. Recall that for GET HTTP packets, the first line of the
-                * received packet will look something like:
-                *
-                *     GET /path/to/file HTTP/1.1
-                */
-
-
-                /*
-                 * TODO 3) Using the parsed path to the target file, construct an
-                 * HTTP reply and write it to Socket.getOutputStream(). If the file
-                 * exists, the HTTP reply should be formatted as follows:
-                 *
-                 *   HTTP/1.0 200 OK\r\n
-                 *   Server: FileServer\r\n
-                 *   \r\n
-                 *   FILE CONTENTS HERE\r\n
-                 *
-                 * If the specified file does not exist, you should return a reply
-                 * with an error code 404 Not Found. This reply should be formatted
-                 * as:
-                 *
-                 *   HTTP/1.0 404 Not Found\r\n
-                 *   Server: FileServer\r\n
-                 *   \r\n
-                 *
-                 * Don't forget to close the output stream.
-                 */
             }
         }
     }
@@ -88,27 +48,26 @@ class FileServer {
             val reader = s.getInputStream().bufferedReader()
             val clientRequest = reader.readLine()
             LOG.info { "receive from ${socket.remoteSocketAddress}  > clientRequest $clientRequest" }
+
             val request = Request(
                 clientRequest.split(" ")[0],
                 clientRequest.split(" ")[1],
                 clientRequest.split(" ")[2]
             )
 
-
             val httpResponse = Response()
-
 
             try {
                 val file = fs.readFile(VPath(request.requestBody))
                 LOG.info("File found, creating response 200")
                 httpResponse.httpReplyText = "HTTP/1.0 ${HttpCodes.HTTP_OK.code} ${HttpCodes.HTTP_OK.status}" +
-                                         "\nServer: FileServer"
+                        "\nServer: FileServer"
                 httpResponse.body = file
 
             } catch (e: java.lang.NullPointerException) {
                 LOG.info("File not found, creating response 404")
                 httpResponse.httpReplyText = "HTTP/1.0 ${HttpCodes.HTTP_ERROR.code} ${HttpCodes.HTTP_ERROR.status}" +
-                                            "\nServer: FileServer\r\n"
+                        "\nServer: FileServer\r\n"
             }
 
             val writer = PrintWriter(s.getOutputStream())
