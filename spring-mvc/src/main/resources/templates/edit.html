@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h2>Edit customer</h2>
+<form action="#" th:object="${customer}" method="post">
+    <p>FIO: <input type="text" th:field="*{fio}"/></p>
+    <span th:if="#{fields.hasErrors('fio')}" th:errors="*{fio}" class="error"></span>
+    <p>Address: <input type="text" th:field="*{address}"/></p>
+    <span th:if="#{fields.hasErrors('address')}" th:errors="*{address}" class="error"></span>
+    <p>Phone: <input type="text" th:field="*{phone}"/></p>
+    <span th:if="#{fields.hasErrors('phone')}" th:errors="*{phone}" class="error"></span>
+    <p>Email: <input type="text" th:field="*{email}"/></p>
+    <span th:if="#{fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>
+    <p><input type="submit" value="Submit"/>
+</form>
+</body>
+</html>
