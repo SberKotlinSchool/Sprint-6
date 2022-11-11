@@ -29,8 +29,8 @@ class FileServer {
         while (true) {
 
             // TODO Delete this once you start working on your solution.
-            //throw new UnsupportedOperationException();
-
+//            throw  UnsupportedOperationException();
+            socket.accept().use {  }
             // TODO 1) Use socket.accept to get a Socket object
 
 
