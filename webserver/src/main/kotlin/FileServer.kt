@@ -31,30 +31,23 @@ class FileServer {
         while (true) {
             socket.accept().use {
                 val reader = it.getInputStream().bufferedReader()
-                val request = reader.readLines()
-                assert(request[0].matches(Regex("GET .+")))
-
-                val fileName = request[0].split(" ")[1]
-                val fileContent = fs.readFile(VPath(fileName))
-
-                val writer = PrintWriter(it.getOutputStream())
-
-                if (fileContent == null ) {
-                    writer.write("HTTP/1.0 404 Not Found\r\n")
+                val request = reader.readLine()
+                if (!request.matches(Regex("GET .+"))){
+                    return@use
                 }
 
+                val fileName = request.split(" ")[1]
+                val fileContent = fs.readFile(VPath(fileName))
+
+                val writer = it.getOutputStream().bufferedWriter()
+
+                if (fileContent == null ) {
+                    writer
+                        .appendLine("HTTP/1.0 404 Not Found")
+                        .appendLine("Server: FileServer")
+                        .appendLine("")
+                }
             }
-
-            /*
-            * TODO 2) Using Socket.getInputStream(), parse the received HTTP
-            * packet. In particular, we are interested in confirming this
-            * message is a GET and parsing out the path to the file we are
-            * GETing. Recall that for GET HTTP packets, the first line of the
-            * received packet will look something like:
-            *
-            *     GET /path/to/file HTTP/1.1
-            */
-
 
             /*
              * TODO 3) Using the parsed path to the target file, construct an
