@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component
 interface QualifierInterface
 
 @Component
+@Qualifier("onlyFirstService")
 class FirstQualifierServiceImpl : QualifierInterface {
     override fun toString(): String {
         return "FirstQualifierServiceImpl"
@@ -14,6 +15,7 @@ class FirstQualifierServiceImpl : QualifierInterface {
 }
 
 @Component
+@Qualifier("onlySecondService")
 class SecondQualifierServiceImpl : QualifierInterface {
     override fun toString(): String {
         return "SecondQualifierServiceImpl"
