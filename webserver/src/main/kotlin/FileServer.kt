@@ -1,5 +1,7 @@
 import ru.sber.filesystem.VFilesystem
+import ru.sber.filesystem.VPath
 import java.io.IOException
+import java.io.PrintWriter
 import java.net.ServerSocket
 
 /**
@@ -27,12 +29,21 @@ class FileServer {
          * ServerSocket object.
          */
         while (true) {
+            socket.accept().use {
+                val reader = it.getInputStream().bufferedReader()
+                val request = reader.readLines()
+                assert(request[0].matches(Regex("GET .+")))
 
-            // TODO Delete this once you start working on your solution.
-//            throw  UnsupportedOperationException();
-            socket.accept().use {  }
-            // TODO 1) Use socket.accept to get a Socket object
+                val fileName = request[0].split(" ")[1]
+                val fileContent = fs.readFile(VPath(fileName))
 
+                val writer = PrintWriter(it.getOutputStream())
+
+                if (fileContent == null ) {
+                    writer.write("HTTP/1.0 404 Not Found\r\n")
+                }
+
+            }
 
             /*
             * TODO 2) Using Socket.getInputStream(), parse the received HTTP
