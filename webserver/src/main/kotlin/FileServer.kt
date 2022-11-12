@@ -1,7 +1,6 @@
 import ru.sber.filesystem.VFilesystem
 import ru.sber.filesystem.VPath
 import java.io.IOException
-import java.io.PrintWriter
 import java.net.ServerSocket
 
 /**
@@ -46,29 +45,18 @@ class FileServer {
                         .appendLine("HTTP/1.0 404 Not Found")
                         .appendLine("Server: FileServer")
                         .appendLine("")
+                } else {
+                    writer
+                        .appendLine("HTTP/1.0 200 OK")
+                        .appendLine("Server: FileServer")
+                        .appendLine()
+                        .appendLine(fileContent)
+                        .appendLine()
                 }
+                writer.flush()
+                writer.close()
             }
 
-            /*
-             * TODO 3) Using the parsed path to the target file, construct an
-             * HTTP reply and write it to Socket.getOutputStream(). If the file
-             * exists, the HTTP reply should be formatted as follows:
-             *
-             *   HTTP/1.0 200 OK\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *   FILE CONTENTS HERE\r\n
-             *
-             * If the specified file does not exist, you should return a reply
-             * with an error code 404 Not Found. This reply should be formatted
-             * as:
-             *
-             *   HTTP/1.0 404 Not Found\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *
-             * Don't forget to close the output stream.
-             */
         }
     }
 }
