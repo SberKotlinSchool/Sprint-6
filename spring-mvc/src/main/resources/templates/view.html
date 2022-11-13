@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>View book</h2>
+<table th:object="${book}">
+    <tr>
+        <td>Name</td>
+        <td th:text="*{name}"></td>
+    </tr>
+    <tr>
+        <td>Address</td>
+        <td th:text="*{author}"></td>
+    </tr>
+</table>
+</body>
+</html>
