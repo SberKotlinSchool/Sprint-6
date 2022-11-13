@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+        .error { color: red; }
+    </style>
+</head>
+<body>
+<h2>Edit person</h2>
+<form action="#" th:object="${person}" method="post">
+    <p>Name: <input type="text" th:field="*{fio}"/></p>
+    <p>Address: <input type="text" th:field="*{address}"/></p>
+    <p>Phone: <input type="text" th:field="*{phone}"/></p>
+    <p>Email: <input type="text" th:field="*{email}"/></p>
+    <p><input type="submit" value="Submit"/>
+</form>
+</body>
+</html>

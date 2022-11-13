@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>Person from address book</h2>
+<table border="1" th:object="${person}">
+    <tr>
+        <td>Name</td>
+        <td th:text="*{fio}"></td>
+    </tr>
+    <tr>
+        <td>Address</td>
+        <td th:text="*{address}"></td>
+    </tr>
+    <tr>
+        <td>Phone</td>
+        <td th:text="*{phone}"></td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td th:text="*{email}"></td>
+    </tr>
+</table>
+</body>
+</html>

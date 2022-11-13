@@ -9,14 +9,13 @@ import org.springframework.stereotype.Component
 
 class ProdProfileCondition : Condition {
     override fun matches(context: ConditionContext, metadata: AnnotatedTypeMetadata): Boolean {
-        return context.environment.activeProfiles.contains("qa")
+        return context.environment.activeProfiles.contains("prod")
     }
 }
 
 interface ConditionalInterface
 
 @Component
-@Conditional(ProdProfileCondition::class)
 class ConditionalService : ConditionalInterface {
     override fun toString(): String {
         return "ConditionalService"
