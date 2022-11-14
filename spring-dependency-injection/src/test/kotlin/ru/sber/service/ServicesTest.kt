@@ -3,13 +3,7 @@ package ru.sber.service
 import org.junit.jupiter.api.Test
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import ru.sber.config.ServicesConfig
-import ru.sber.services.ConditionalBeanInjectionService
-import ru.sber.services.ConstructorInjectionService
-import ru.sber.services.FieldInjectionService
-import ru.sber.services.PrimaryBeanInjectionService
-import ru.sber.services.QualifierBeanInjectionService
-import ru.sber.services.SetterInjectionService
-import ru.sber.services.SeveralBeanInjectionService
+import ru.sber.services.*
 import kotlin.test.assertEquals
 
 class ServicesTest {
@@ -49,6 +43,11 @@ class ServicesTest {
         // then
         assertEquals("Service was injected into SetterInjectionService", setterInjectionService.toString())
     }
+
+//    1) Код тестов править не нужно.
+//    2) При починке теста `severalBeanInjectionService should have two dependencies` класс SeveralServicesConfig изменять нельзя и в сервисе SeveralBeanInjectionService нельзя использовать метод @PostConstruct.
+//    3) При починке теста `qualifierBeanInjectionService should return only SecondQualifierServiceImpl dependency` свойство аннотации @Qualifier классе QualifierBeanInjectionService менять нельзя.
+
 
     @Test
     fun `severalBeanInjectionService should have two dependencies`() {
