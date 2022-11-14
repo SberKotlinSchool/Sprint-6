@@ -38,25 +38,22 @@ class FileServer {
                 val fileName = request.split(" ")[1]
                 val fileContent = fs.readFile(VPath(fileName))
 
-                val writer = it.getOutputStream().bufferedWriter()
-
-                if (fileContent == null ) {
-                    writer
-                        .appendLine("HTTP/1.0 404 Not Found")
-                        .appendLine("Server: FileServer")
-                        .appendLine("")
-                } else {
-                    writer
-                        .appendLine("HTTP/1.0 200 OK")
-                        .appendLine("Server: FileServer")
-                        .appendLine()
-                        .appendLine(fileContent)
-                        .appendLine()
+                it.getOutputStream().bufferedWriter().use { writer ->
+                    if (fileContent == null ) {
+                        writer
+                            .appendLine("HTTP/1.0 404 Not Found")
+                            .appendLine("Server: FileServer")
+                            .appendLine("")
+                    } else {
+                        writer
+                            .appendLine("HTTP/1.0 200 OK")
+                            .appendLine("Server: FileServer")
+                            .appendLine()
+                            .appendLine(fileContent)
+                            .appendLine()
+                    }
                 }
-                writer.flush()
-                writer.close()
             }
-
         }
     }
 }
