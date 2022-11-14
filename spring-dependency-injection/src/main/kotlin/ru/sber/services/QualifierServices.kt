@@ -23,8 +23,9 @@ class SecondQualifierServiceImpl : QualifierInterface {
 @Component
 class QualifierBeanInjectionService {
     @Autowired
-    @Qualifier("onlySecondService")
+    @Qualifier("secondQualifierServiceImpl")
     private lateinit var qualifierServices: Set<QualifierInterface>
+
 
     override fun toString(): String {
         return "QualifierBeanInjectionService(qualifierServices=$qualifierServices)"
