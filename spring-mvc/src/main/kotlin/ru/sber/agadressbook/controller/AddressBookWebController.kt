@@ -14,12 +14,9 @@ class AddressBookWebController @Autowired constructor(val addressBookWebService:
 
     @GetMapping("/person/{id}")
     fun getPerson(@PathVariable("id") id : Int, model : Model) : String {
-        println("We are in controller $id")
-        println("PERSON ${addressBookWebService.getPersonById(id)}")
         addressBookWebService.getPersonById(id)?.firstName?.let { model["firstName"] = it }
         model["firstName"] = addressBookWebService.getPersonById(id)?.firstName!!
-        //model["firstName"] = "TEST TEST TEST"
-        model["title"] = "GGGGGGGGGGGGGGGGGGGG!!!!!!!!!!!!!"
+        model["title"] = "This is a address-book title"
         return "test"
     }
 
