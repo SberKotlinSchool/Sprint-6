@@ -1,9 +1,7 @@
 package ru.sber.agadressbook.repository
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 import ru.sber.agadressbook.models.Person
-import java.util.concurrent.ConcurrentHashMap
 
 @Repository
 class AddressBookRepository {
