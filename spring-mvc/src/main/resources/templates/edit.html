@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Good Thymes Virtual Grocery</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+  <h1>AddressBook Редактирование</h1>
+  <hr>
+  <form action="#" th:object="${customer}" method="post">
+    <table border="1">
+      <tr>
+        <td>Фамилия</td>
+        <td>Имя</td>
+        <td>Отчество</td>
+        <td>Телефон</td>
+        <td>E-mail</td>
+        <td>Адрес</td>
+      </tr>
+      <tr>
+          <td>
+            <input type="text" th:placeholder="*{lastName}">
+          </td>
+          <td>
+            <input type="text" th:placeholder="*{firstName}">
+          </td>
+          <td>
+            <input type="text" th:placeholder="*{middleName}">
+          </td>
+          <td>
+            <input type="text"  th:placeholder="*{phone}">
+          </td>
+          <td>
+            <input type="text" th:placeholder="*{email}">
+          </td>
+          <td>
+            <input type="text" th:placeholder="*{address}">
+          </td>
+      </tr>
+    </table>
+    <button type="submit" value="Submit">Отправить</button>
+  </form>
+</body>
+</html>

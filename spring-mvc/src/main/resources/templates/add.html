@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>AddressBook</title>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+</head>
+<body>
+<h1>AddressBook Создание</h1>
+<hr>
+<form method="post" enctype="text/plain">
+  <table border="1">
+    <tr>
+      <td>Фамилия</td>
+      <td>Имя</td>
+      <td>Отчество</td>
+      <td>Телефон</td>
+      <td>E-mail</td>
+      <td>Адрес</td>
+    </tr>
+    <tr>
+      <td>
+        <input type="text" name="lastName">
+      </td>
+      <td>
+        <input type="text" name = "firstName">
+      </td>
+      <td>
+        <input type="text" name = "middleName">
+      </td>
+      <td>
+        <input type="text" name = "phone">
+      </td>
+      <td>
+        <input type="text" name = "email">
+      </td>
+      <td>
+        <input type="text" name = "address">
+      </td>
+    </tr>
+  </table>
+  <button type="submit">Отправить</button>
+</form>
+</body>
+</html>

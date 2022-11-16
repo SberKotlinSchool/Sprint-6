@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Good Thymes Virtual Grocery</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+  <h1>AddressBook</h1>
+  <hr>
+  <table border="1">
+    <tr>
+      <td>Фамилия</td>
+      <td>Имя</td>
+      <td>Отчество</td>
+      <td>Телефон</td>
+      <td>E-mail</td>
+      <td>Адрес</td>
+    </tr>
+    <tr th:object="${customer}">
+      <td th:text = *{lastName} ></td>
+      <td th:text = *{firstName}></td>
+      <td th:text = *{middleName}></td>
+      <td th:text = *{phone}></td>
+      <td th:text = *{email}></td>
+      <td th:text = *{address}></td>
+    </tr>
+  </table>
+</body>
+</html>
