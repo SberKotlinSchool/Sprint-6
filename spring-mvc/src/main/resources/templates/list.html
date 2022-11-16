@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Good Thymes Virtual Grocery</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h1>AddressBook</h1>
+    <a href="/app/add">Добавить запись</a>
+    <hr>
+    <div>
+        <form method="get" th:action = "@{/app/list}" >
+            <label>Поиск</label>
+            <input type="text" th:name="fio">
+        </form>
+    </div>
+    <div th:if="${#lists.isEmpty(books)}">
+        <p>В базе не найдено ни одной записи</p>
+    </div>
+    <div>
+        <table border="1">
+            <tr>
+                <td>ID</td>
+                <td>Фамилия</td>
+                <td>Имя</td>
+                <td>Телефон</td>
+                <td>Подробная информация</td>
+            </tr>
+            <tr th:each="row : ${books}">
+                <td th:text = ${row.key}></td>
+                <td th:text = ${row.value.lastName} ></td>
+                <td th:text = ${row.value.firstName}></td>
+                <td th:text = ${row.value.phone}></td>
+                <td>
+                    <a th:href="@{/app/{id}/view(id=${row.key})}">Просмотр</a>
+                </td>
+                <td>
+                    <a th:href="@{/app/{id}/edit(id=${row.key})}">Редактирование</a>
+                </td>
+                <td>
+                    <a th:href="@{/app/{id}/delete(id=${row.key})}">Удалить</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
