@@ -8,8 +8,14 @@ import ru.sber.agadressbook.repository.AddressBookRepository
 @Service
 class AddressBookWebService @Autowired constructor(val addressBookRepository: AddressBookRepository) {
 
-    fun getPersonById(id : Int) : Person? {
-        println("We are in service")
-        return addressBookRepository.getPersonById(id)
+    fun getRecordId(id : Int) : Person? {
+        println("We are in service getPersonById")
+        return addressBookRepository.getRecordById(id)
+    }
+
+    fun addRecord(person: Person) : Person? {
+        println("We are in service addPerson")
+        println("We are in service $person")
+        return addressBookRepository.addRecord(person)
     }
 }

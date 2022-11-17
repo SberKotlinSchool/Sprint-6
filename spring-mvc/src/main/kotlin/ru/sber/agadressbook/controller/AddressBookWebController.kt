@@ -4,11 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.*
 import ru.sber.agadressbook.models.Person
 import ru.sber.agadressbook.service.AddressBookWebService
+
 
 @RequestMapping("/address-book")
 @Controller
@@ -16,8 +15,8 @@ class AddressBookWebController @Autowired constructor(val addressBookWebService:
 
     @GetMapping("/person/{id}")
     fun getPerson(@PathVariable("id") id : Int, model : Model) : String {
-        addressBookWebService.getPersonById(id)?.firstName?.let { model["firstName"] = it }
-        model["firstName"] = addressBookWebService.getPersonById(id)?.firstName!!
+        addressBookWebService.getRecordId(id)?.firstName?.let { model["firstName"] = it }
+        model["firstName"] = addressBookWebService.getRecordId(id)?.firstName!!
         model["title"] = "This is a address-book title"
         return "test"
     }
@@ -36,6 +35,15 @@ class AddressBookWebController @Autowired constructor(val addressBookWebService:
     fun addRecord() : String {
         return "add_record"
     }
+
+    @RequestMapping(value = ["/add_record"], method = [RequestMethod.POST])
+    fun addRecordPost(@ModelAttribute person: Person, model: Model): String? {
+        model.addAttribute("person", person)
+        println("controller Post Person")
+        addressBookWebService.addRecord(person)
+        return "all_records"
+    }
+
 
     @GetMapping("edit_record")
     fun editRecord() : String {

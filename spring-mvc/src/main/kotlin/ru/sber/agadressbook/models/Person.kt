@@ -1,3 +1,7 @@
 package ru.sber.agadressbook.models
 
-data class Person(val firstName : String, val lastName : String, val phoneNumber : String)
+data class Person(
+    val firstName: String,
+    val phoneNumber: String = "",
+    val address: String = ""
+)

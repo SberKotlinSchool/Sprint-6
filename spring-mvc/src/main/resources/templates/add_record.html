@@ -6,14 +6,14 @@
 </head>
 <body>
 
-<p style="text-align:center"><strong>Add Record</strong></p>
+<form action="#" th:action="@{/add_record}" th:object="${person}" method="post">
 
-<p style="text-align:center"><strong><input name="Name" type="text" value="Name"/></strong></p>
+    <p style="text-align:center"><strong>Add Record</strong></p>
+    <p style="text-align:center"><strong><input name="Name" type="text" value="Name" th:field="*{firstName}" /></strong></p>
+    <p style="text-align:center"><strong><input name="Address" type="text" value="Address" th:field="*{address}"/> </strong></p>
+    <p style="text-align:center"><strong><input name="Phone" type="text" value="Phone" th:field="*{phoneNumber}"/></strong></p>
+    <p style="text-align:center"><strong><input name="Enter" type="submit" value="Add record"/></strong></p>
 
-<p style="text-align:center"><strong><input name="Address" type="text" value="Address"/></strong></p>
-
-<p style="text-align:center"><strong><input name="Phone" type="text" value="Phone"/></strong></p>
-
-<p style="text-align:center"><strong><input name="Enter" type="submit" value="Add record"/></strong></p>
+</form>
 </body>
 </html>

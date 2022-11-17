@@ -11,12 +11,26 @@ class AddressBookRepository {
 
 
     init {
-
-        addressBookDataBase[1] = Person("AAA","BBB","CCC")
-        addressBookDataBase[2] = Person("DDD","EEE","222")
+        addressBookDataBase[1] = Person("Пиастр","555-55-55","Печерская ул.")
+        addressBookDataBase[2] = Person("Инокентий","777-77-77","Приморская ул.")
     }
 
-    fun getPersonById(id: Int) : Person? {
+    fun getRecordById(id: Int) : Person? {
        return addressBookDataBase[id]
     }
+
+    fun addRecord(person: Person) : Person? {
+        val maxIndex = addressBookDataBase.keys.maxByOrNull { it }!!
+        addressBookDataBase.keys.maxByOrNull { it }
+        return if (maxIndex != null) addressBookDataBase.put(maxIndex,person) else addressBookDataBase.put(maxIndex, person)
+    }
+
+    fun deleteRecord(id: Int) : Person? {
+        return addressBookDataBase.remove(id)
+    }
+
+    fun editRecord(id: Int, person: Person): Person? {
+        return addressBookDataBase.put(id, person)
+    }
+
 }
