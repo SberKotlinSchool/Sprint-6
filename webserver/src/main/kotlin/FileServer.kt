@@ -50,6 +50,7 @@ class FileServer {
             val bufferedReader = BufferedReader(InputStreamReader(inputStream))
 
             val filePath = bufferedReader.readLine().split(" ")[1]
+
             /*
              * TODO 3) Using the parsed path to the target file, construct an
              * HTTP reply and write it to Socket.getOutputStream(). If the file
