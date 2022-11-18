@@ -14,6 +14,8 @@
         <td style="text-align:center">Имя</td>
         <td style="text-align:center">Адрес</td>
         <td style="text-align:center">Телефон</td>
+        <td style="text-align:center"></td>
+        <td style="text-align:center"></td>
     </tr>
     <div th:each="record : ${records}">
         <tr th:each="recordEntry : ${record}">
@@ -29,17 +31,20 @@
             <td>
                 <a th:href="@{{id}/edit(id=${recordEntry.key})}" th:text="${recordEntry.value.phoneNumber}">phoneNumber</a>
             </td>
-
+            <td>
+                <a th:href="@{{id}/view(id=${recordEntry.value.id})}">Просмотр</a>
+            </td>
+            <td>
+                <form th:method="DELETE" th:action="@{/addressbook/{id}/delete(id=${recordEntry.key})}">
+                    <p style="text-align:center"><strong>   <input type="submit", value="Удалить"/></strong></p>
+                </form>
+            </td>
         </tr>
     </div>
 </table>
 </br>
-<a href="/addressbook/add">Добавить пользователя</a>
-</br>
-<a href="/addressbook/delete">Удалить пользователя</a>
-</br>
-<a href="/addressbook/login_form">Выйти</a>
 
+<a href="/addressbook/login_form">Выход</a>
 
 </body>
 </html>

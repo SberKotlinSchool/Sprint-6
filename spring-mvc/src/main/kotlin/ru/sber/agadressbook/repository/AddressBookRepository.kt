@@ -18,20 +18,22 @@ class AddressBookRepository {
        return addressBookDataBase[id]
     }
 
-    fun addRecord(id: Int, person: Person) : Person? {
-        return addressBookDataBase.put(id,person)
+    fun updateRecord(id: Int, person: Person) : Person? {
+       return addressBookDataBase.put(id, person)
     }
 
     fun deleteRecord(id: Int) : Person? {
         return addressBookDataBase.remove(id)
     }
 
-    fun editRecord(id: Int, person: Person): Person? {
-        return addressBookDataBase.put(id, person)
-    }
-
     fun getAllRecords(): HashMap<Int, Person> {
         return addressBookDataBase;
+    }
+
+    fun addRecord(person : Person) : Person? {
+        val personId = addressBookDataBase.count() + 1
+        person.id = personId
+        return addressBookDataBase.put(personId,person)
     }
 
 }

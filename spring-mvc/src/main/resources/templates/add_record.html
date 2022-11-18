@@ -6,14 +6,20 @@
 </head>
 <body>
 
-<!--<form action="#" th:action="@{/add_record}" th:object="${person}" method="post">-->
+<form th:method="POST" th:action="@{/addressbook/add}" xmlns:th="http://www.w3.org/1999/xhtml">
 
     <p style="text-align:center"><strong>Add Record</strong></p>
-    <p style="text-align:center"><strong><input name="Name" type="text" value="Name" /></strong></p>
-    <p style="text-align:center"><strong><input name="Address" type="text" value="Address"/> </strong></p>
-    <p style="text-align:center"><strong><input name="Phone" type="text" value="Phone"/></strong></p>
+
+    <p style="text-align:center"><strong><input name="firstName" id="firstName" type="text" value="Name"/></strong></p>
+
+    <p style="text-align:center"><strong><input name="address" id="address" type="text" value="Address"/> </strong></p>
+
+    <p style="text-align:center"><strong><input name="phoneNumber" id="phoneNumber" type="text" value="Phone"/></strong>
+    </p>
+
     <p style="text-align:center"><strong><input name="Enter" type="submit" value="Add record"/></strong></p>
 
-<!--</form>-->
+
+</form>
 </body>
 </html>
