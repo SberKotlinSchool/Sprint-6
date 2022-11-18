@@ -7,18 +7,18 @@
 <body>
 
 <p style="text-align:center"><strong>View Record</strong></p>
-<div th:object="${record}">
-    <p style="text-align:center"><strong><input name="firstName" id="firstName" type="text"
-                                                th:value="${record.firstName}"
-                                                value="Name"/></strong></p>
-    <p style="text-align:center"><strong><input name="address" id="address" type="text" th:value="${record.address}"
-                                                value="Address"/></strong></p>
-    <p style="text-align:center"><strong><input name="phoneNumber" id="phoneNumber" type="text"
-                                                th:value="${record.phoneNumber}" value="Phone"/></strong></p>
-</div>
+<form th:method="PATCH" th:action="@{/addressbook/{id}/edit(id=${record.id})}" th:object="${record}">
+    <div th:object="${record}">
+        <p style="text-align:center"><strong><input name="firstName" id="firstName" type="text"
+                                                    th:value="${record.firstName}"
+                                                    value="Name"/></strong></p>
+        <p style="text-align:center"><strong><input name="address" id="address" type="text" th:value="${record.address}"
+                                                    value="Address"/></strong></p>
+        <p style="text-align:center"><strong><input name="phoneNumber" id="phoneNumber" type="text"
+                                                    th:value="${record.phoneNumber}" value="Phone"/></strong></p>
 
-<form th:method="GET" th:action="@{/addressbook/{id}/edit(id=${record.getId()})}">
-    <p style="text-align:center"><strong> <input type="submit" , value="Update record"/></strong></p>
+        <p style="text-align:center"><strong> <input type="submit" , value="Update record"/></strong></p>
+    </div>
 </form>
 
 

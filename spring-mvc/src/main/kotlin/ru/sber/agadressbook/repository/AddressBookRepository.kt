@@ -2,27 +2,28 @@ package ru.sber.agadressbook.repository
 
 import org.springframework.stereotype.Repository
 import ru.sber.agadressbook.models.Person
+import kotlin.math.max
 
 @Repository
 class AddressBookRepository {
 
-    var addressBookDataBase : HashMap<Int, Person> = hashMapOf()
+    var addressBookDataBase: HashMap<Int, Person> = hashMapOf()
 
 
     init {
-        addressBookDataBase[1] = Person(1,"Пиастр","555-55-55","Печерская ул.")
-        addressBookDataBase[2] = Person(2,"Инокентий","777-77-77","Приморская ул.")
+        addressBookDataBase[1] = Person(1, "Пиастр", "555-55-55", "Печерская ул.")
+        addressBookDataBase[2] = Person(2, "Инокентий", "777-77-77", "Приморская ул.")
     }
 
-    fun getRecordById(id: Int) : Person? {
-       return addressBookDataBase[id]
+    fun getRecordById(id: Int): Person? {
+        return addressBookDataBase[id]
     }
 
-    fun updateRecord(id: Int, person: Person) : Person? {
-       return addressBookDataBase.put(id, person)
+    fun updateRecord(id: Int, person: Person): Person? {
+        return addressBookDataBase.put(id, person)
     }
 
-    fun deleteRecord(id: Int) : Person? {
+    fun deleteRecord(id: Int): Person? {
         return addressBookDataBase.remove(id)
     }
 
@@ -30,10 +31,9 @@ class AddressBookRepository {
         return addressBookDataBase;
     }
 
-    fun addRecord(person : Person) : Person? {
-        val personId = addressBookDataBase.count() + 1
-        person.id = personId
-        return addressBookDataBase.put(personId,person)
+    fun addRecord(person: Person): Person? {
+        if (addressBookDataBase.keys.maxByOrNull { it } == null) person.id = 1 else person.id = addressBookDataBase.keys.maxByOrNull { it }!! + 1
+        return addressBookDataBase.put(person.id, person)
     }
 
 }

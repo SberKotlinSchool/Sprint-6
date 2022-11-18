@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/addressbook/{id}/edit(id=${record.id})}" th:object="${record}">
+<form th:method="PATCH" th:action="@{/addressbook/{id}/edit(id=${record.id})}" th:object="${record}">
 
     <p style="text-align:center"><strong>Edit Record</strong></p>
     <div th:object="${record}">

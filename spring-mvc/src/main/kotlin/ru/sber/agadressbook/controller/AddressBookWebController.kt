@@ -58,9 +58,8 @@ class AddressBookWebController @Autowired constructor(val addressBookRepository:
         return "edit_record"
     }
 
-    @PostMapping("{id}/edit")
+    @PatchMapping("{id}/edit")
     fun updateRecord(@ModelAttribute("record") person: Person?, @PathVariable("id") id: Int): String {
-        println("AAA ${person}")
         addressBookRepository.updateRecord(id, person!!)
         return "redirect:/addressbook/list"
     }
