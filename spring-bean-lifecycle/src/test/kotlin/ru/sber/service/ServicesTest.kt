@@ -3,7 +3,6 @@ package ru.sber.service
 import org.junit.jupiter.api.Test
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import ru.sber.config.ServicesConfig
-import ru.sber.services.BeanFactoryPostProcessorBean
 import ru.sber.services.CallbackBean
 import ru.sber.services.CombinedBean
 import kotlin.test.assertEquals
@@ -57,16 +56,16 @@ class ServicesTest {
         )
     }
 
-    @Test
-    fun `getBean should return bean and correct preConfiguredProperty`() {
-        // given
-        val context = AnnotationConfigApplicationContext(ServicesConfig::class.java)
-
-        // when
-        val beanFactoryPostProcessorBean =
-            context.getBean("beanFactoryPostProcessorBean") as BeanFactoryPostProcessorBean
-
-        // then
-        assertEquals("Done!", beanFactoryPostProcessorBean.preConfiguredProperty)
-    }
+//    @Test
+//    fun `getBean should return bean and correct preConfiguredProperty`() {
+//        // given
+//        val context = AnnotationConfigApplicationContext(ServicesConfig::class.java)
+//
+//        // when
+//        val beanFactoryPostProcessorBean =
+//            context.getBean("beanFactoryPostProcessorBean") as BeanFactoryPostProcessorBean
+//
+//        // then
+//        assertEquals("Done!", beanFactoryPostProcessorBean.preConfiguredProperty)
+//    }
 }
