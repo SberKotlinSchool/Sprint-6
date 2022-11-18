@@ -1,42 +1,44 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Thymeleaf Variables</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Thymeleaf Variables</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<p style="text-align:center"><strong>User List</strong></p>
+<p style="text-align:center"><strong>All address-book records</strong></p>
+
 
 <table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px">
-	<caption>Все записи</caption>
-	<tbody>
-		<tr>
-			<td style="text-align:center">ID</td>
-			<td style="text-align:center">Имя</td>
-			<td style="text-align:center">Адрес</td>
-			<td style="text-align:center">Телефон</td>
-		</tr>
-		<tr>
-			<td style="text-align:center"> </td>
-			<td style="text-align:center"> </td>
-			<td style="text-align:center"> </td>
-			<td style="text-align:center"> </td>
-		</tr>
-		<tr>
-			<td style="text-align:center"> </td>
-			<td style="text-align:center"> </td>
-			<td style="text-align:center"> </td>
-			<td style="text-align:center"> </td>
-		</tr>
-	</tbody>
-</table>
+    <tr>
+        <td style="text-align:center">ID</td>
+        <td style="text-align:center">Имя</td>
+        <td style="text-align:center">Адрес</td>
+        <td style="text-align:center">Телефон</td>
+    </tr>
+    <div th:each="record : ${records}">
+        <tr th:each="recordEntry : ${record}">
+            <td>
+                <a th:href="@{{id}/edit(id=${recordEntry.value.id})}" th:text="${recordEntry.value.id}">id</a>
+            </td>
+            <td>
+                <a th:href="@{{id}/edit(id=${recordEntry.key})}" th:text="${recordEntry.value.firstName}">name</a>
+            </td>
+            <td>
+                <a th:href="@{{id}/edit(id=${recordEntry.key})}" th:text="${recordEntry.value.address}">address</a>
+            </td>
+            <td>
+                <a th:href="@{{id}/edit(id=${recordEntry.key})}" th:text="${recordEntry.value.phoneNumber}">phoneNumber</a>
+            </td>
 
+        </tr>
+    </div>
+</table>
 </br>
-<a href="/address-book/add_record" >Добавить пользователя</a>
+<a href="/addressbook/add">Добавить пользователя</a>
 </br>
-<a href="/address-book/delete_record">Удалить пользователя</a>
+<a href="/addressbook/delete">Удалить пользователя</a>
 </br>
-<a href="/address-book/login_form">Выйти</a>
+<a href="/addressbook/login_form">Выйти</a>
 
 
 </body>

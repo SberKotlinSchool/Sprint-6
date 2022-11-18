@@ -13,9 +13,11 @@ class AddressBookWebService @Autowired constructor(val addressBookRepository: Ad
         return addressBookRepository.getRecordById(id)
     }
 
-    fun addRecord(person: Person) : Person? {
-        println("We are in service addPerson")
-        println("We are in service $person")
-        return addressBookRepository.addRecord(person)
+    fun addRecord(id: Int, person: Person) : Person? {
+        return addressBookRepository.addRecord(id, person)
+    }
+
+    fun getAllRecords() : List<HashMap<Int,Person>> {
+        return listOf(addressBookRepository.getAllRecords())
     }
 }

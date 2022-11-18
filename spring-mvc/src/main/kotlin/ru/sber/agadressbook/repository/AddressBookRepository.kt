@@ -6,23 +6,20 @@ import ru.sber.agadressbook.models.Person
 @Repository
 class AddressBookRepository {
 
-    //var addressBookDataBase : HashMap<Int, Person> = hashMapOf(1 to Person("AAA","BBB","CCC"))
     var addressBookDataBase : HashMap<Int, Person> = hashMapOf()
 
 
     init {
-        addressBookDataBase[1] = Person("Пиастр","555-55-55","Печерская ул.")
-        addressBookDataBase[2] = Person("Инокентий","777-77-77","Приморская ул.")
+        addressBookDataBase[1] = Person(1,"Пиастр","555-55-55","Печерская ул.")
+        addressBookDataBase[2] = Person(2,"Инокентий","777-77-77","Приморская ул.")
     }
 
     fun getRecordById(id: Int) : Person? {
        return addressBookDataBase[id]
     }
 
-    fun addRecord(person: Person) : Person? {
-        val maxIndex = addressBookDataBase.keys.maxByOrNull { it }!!
-        addressBookDataBase.keys.maxByOrNull { it }
-        return if (maxIndex != null) addressBookDataBase.put(maxIndex,person) else addressBookDataBase.put(maxIndex, person)
+    fun addRecord(id: Int, person: Person) : Person? {
+        return addressBookDataBase.put(id,person)
     }
 
     fun deleteRecord(id: Int) : Person? {
@@ -31,6 +28,10 @@ class AddressBookRepository {
 
     fun editRecord(id: Int, person: Person): Person? {
         return addressBookDataBase.put(id, person)
+    }
+
+    fun getAllRecords(): HashMap<Int, Person> {
+        return addressBookDataBase;
     }
 
 }
