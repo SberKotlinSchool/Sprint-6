@@ -2,12 +2,13 @@ package ru.sber.agadressbook.repository
 
 import org.springframework.stereotype.Repository
 import ru.sber.agadressbook.models.Person
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.max
 
 @Repository
 class AddressBookRepository {
 
-    var addressBookDataBase: HashMap<Int, Person> = hashMapOf()
+    var addressBookDataBase: ConcurrentHashMap<Int, Person> = ConcurrentHashMap()
 
 
     init {
@@ -27,7 +28,7 @@ class AddressBookRepository {
         return addressBookDataBase.remove(id)
     }
 
-    fun getAllRecords(): HashMap<Int, Person> {
+    fun getAllRecords(): ConcurrentHashMap<Int, Person> {
         return addressBookDataBase;
     }
 
