@@ -10,6 +10,7 @@ class CallbackBean : InitializingBean, DisposableBean {
     var greeting: String? = "What's happening?"
 
     override fun afterPropertiesSet() {
+        greeting = "Hello! My name is callbackBean!"
     }
 
     override fun destroy() {
@@ -17,12 +18,21 @@ class CallbackBean : InitializingBean, DisposableBean {
     }
 }
 
+@Component
 class CombinedBean {
     var postProcessBeforeInitializationOrderMessage: String? = null
     var postConstructOrderMessage: String? = null
     var customInitOrderMessage: String? = null
     var afterPropertiesSetOrderMessage: String? = null
     var postProcessAfterInitializationOrderMessage: String? = null
+
+    fun postProcessAfterInitialization() {
+        postProcessAfterInitializationOrderMessage = "postProcessAfterInitialization() is called"
+    }
+
+    fun postProcessBeforeInitializationOrderMessage() {
+        postProcessBeforeInitializationOrderMessage = "postProcessBeforeInitialization() is called"
+    }
 
     fun afterPropertiesSet() {
         afterPropertiesSetOrderMessage = "afterPropertiesSet() is called"
