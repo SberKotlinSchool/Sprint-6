@@ -6,18 +6,17 @@ import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.web.bind.annotation.*
 import ru.sber.agadressbook.models.Person
-import ru.sber.agadressbook.repository.AddressBookRepository
 import ru.sber.agadressbook.service.AddressBookWebService
 
 @RequestMapping("/addressbook")
 @Controller
 class AddressBookWebController @Autowired constructor(
-    val addressBookRepository: AddressBookRepository) {
+    val addressBookWebService: AddressBookWebService) {
 
     @GetMapping("/record/{id}")
     fun getPerson(@PathVariable("id") id: Int, model: Model): String {
-        addressBookRepository.getRecordById(id)?.firstName?.let { model["firstName"] = it }
-        model["firstName"] = addressBookRepository.getRecordById(id)?.firstName!!
+        addressBookWebService.getRecordById(id)?.firstName?.let { model["firstName"] = it }
+        model["firstName"] = addressBookWebService.getRecordById(id)?.firstName!!
         return "test"
     }
 
@@ -33,44 +32,40 @@ class AddressBookWebController @Autowired constructor(
 
     @PostMapping("/add")
     fun create(@ModelAttribute("record") person: Person?): String? {
-        addressBookRepository.addRecord(person!!)
+        addressBookWebService.addRecord(person!!)
         return "redirect:/addressbook/list"
     }
 
     @GetMapping("{id}/edit")
     fun editRecord(@PathVariable("id") id: Int, model: Model): String {
-        model.addAttribute("record", addressBookRepository.getRecordById(id))
+        model.addAttribute("record", addressBookWebService.getRecordById(id))
         return "edit_record"
     }
 
     @PatchMapping("{id}/edit")
     fun updateRecord(@ModelAttribute("record") person: Person?, @PathVariable("id") id: Int): String {
-        addressBookRepository.updateRecord(id, person!!)
+        addressBookWebService.updateRecord(id, person!!)
         return "redirect:/addressbook/list"
     }
 
-    @GetMapping("delete")
-    fun deleteRecord(): String {
-        return "delete_record"
-    }
 
     @GetMapping("list")
     fun getAllRecord(model: Model): String {
 
-        model.addAttribute("records", addressBookRepository.getAllRecords())
+        model.addAttribute("records", addressBookWebService.getAllRecords())
         return "list_records"
     }
 
 
     @DeleteMapping("{id}/delete")
     fun delete(@PathVariable("id") id: Int): String? {
-        addressBookRepository.deleteRecord(id)
+        addressBookWebService.deleteRecord(id)
         return "redirect:/addressbook/list"
     }
 
     @GetMapping("{id}/view")
     fun viewRecord(@PathVariable("id") id: Int, model: Model): String {
-        model["record"] = addressBookRepository.getRecordById(id)!!
+        model["record"] = addressBookWebService.getRecordById(id)!!
         return "view_record"
     }
 }

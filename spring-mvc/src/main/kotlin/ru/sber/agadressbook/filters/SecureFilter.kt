@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @WebFilter(
-    urlPatterns = ["/addressbook/*", "/addressbook/api/*"],
+    urlPatterns = ["/addressbok/*"],
     filterName = "SecureFilter"
 )
 class SecureFilter : Filter {
