@@ -5,14 +5,14 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.web.bind.annotation.*
-import ru.sber.agadressbook.models.Credentials
 import ru.sber.agadressbook.models.Person
 import ru.sber.agadressbook.repository.AddressBookRepository
-
+import ru.sber.agadressbook.service.AddressBookWebService
 
 @RequestMapping("/addressbook")
 @Controller
-class AddressBookWebController @Autowired constructor(val addressBookRepository: AddressBookRepository) {
+class AddressBookWebController @Autowired constructor(
+    val addressBookRepository: AddressBookRepository) {
 
     @GetMapping("/record/{id}")
     fun getPerson(@PathVariable("id") id: Int, model: Model): String {
@@ -24,21 +24,6 @@ class AddressBookWebController @Autowired constructor(val addressBookRepository:
     @GetMapping("")
     fun index(): String {
         return "redirect:/addressbook/list"
-    }
-
-    @GetMapping("/login_form")
-    fun login(): String {
-        return "login_form"
-    }
-
-    @PostMapping("/login_form")
-    fun doLogin(@ModelAttribute("credentials") credentials: Credentials): String {
-        val userPassword = "123"
-        if(credentials.password == userPassword) {
-            return "redirect:/addressbook/list"
-        } else {
-            return "redirect:/addressbook/login_form"
-        }
     }
 
     @GetMapping("/add")
@@ -54,7 +39,7 @@ class AddressBookWebController @Autowired constructor(val addressBookRepository:
 
     @GetMapping("{id}/edit")
     fun editRecord(@PathVariable("id") id: Int, model: Model): String {
-        model.addAttribute("record",addressBookRepository.getRecordById(id))
+        model.addAttribute("record", addressBookRepository.getRecordById(id))
         return "edit_record"
     }
 
@@ -71,6 +56,7 @@ class AddressBookWebController @Autowired constructor(val addressBookRepository:
 
     @GetMapping("list")
     fun getAllRecord(model: Model): String {
+
         model.addAttribute("records", addressBookRepository.getAllRecords())
         return "list_records"
     }
@@ -87,6 +73,5 @@ class AddressBookWebController @Autowired constructor(val addressBookRepository:
         model["record"] = addressBookRepository.getRecordById(id)!!
         return "view_record"
     }
-
-
 }
+
