@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service
 import ru.sber.agadressbook.models.Credentials
 import ru.sber.agadressbook.models.Person
 import ru.sber.agadressbook.repository.AddressBookRepository
+import java.util.concurrent.ConcurrentHashMap
 
 
 @Service
@@ -26,7 +27,7 @@ class AddressBookWebService(@Autowired val addressBookRepository: AddressBookRep
         return addressBookRepository.deleteRecord(id)
     }
 
-    fun getAllRecords(): HashMap<Int, Person> {
+    fun getAllRecords(): ConcurrentHashMap<Int, Person> {
         return addressBookRepository.getAllRecords()
     }
 
