@@ -33,9 +33,10 @@ class FileServer {
                         "Server: FileServer\r\n" +
                         "\r\n" +
                         "$it\r\n"
-                    } ?: "HTTP/1.0 404 Not Found\r\n" +
-                    "Server: FileServer\r\n" +
-                    "\r\n"
+                    } ?:
+                         "HTTP/1.0 404 Not Found\r\n" +
+                         "Server: FileServer\r\n" +
+                         "\r\n"
                     PrintWriter(session.getOutputStream()).use { writer ->
                         writer.println(result)
                         writer.flush()
