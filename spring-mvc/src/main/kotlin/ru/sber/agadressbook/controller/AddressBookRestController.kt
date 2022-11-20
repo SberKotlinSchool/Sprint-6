@@ -15,21 +15,29 @@ class AddressBookRestController @Autowired constructor(
 
     @PostMapping("/add")
     fun create(@RequestBody person: Person): ResponseEntity<Person> {
-        return  ResponseEntity.ok(addressBookWebService.addRecord(person))
+        addressBookWebService.addRecord(person)
+        return  ResponseEntity.ok(person)
     }
 
     @PatchMapping("{id}/edit")
     fun updateRecord(@PathVariable("id") id: Int, @RequestBody person: Person): ResponseEntity<Person> {
-        return ResponseEntity.ok(addressBookWebService.updateRecord(id, person))
+        addressBookWebService.updateRecord(id, person)
+        return ResponseEntity.ok(person)
     }
 
     @GetMapping("list")
     fun getAllRecords(): ResponseEntity<List<Person>> {
-        return ResponseEntity.ok(addressBookWebService.getAllRecords().toList().map { it.second })
+            return ResponseEntity.ok(addressBookWebService.getAllRecords().toList().map { it.second })
+    }
+
+    @GetMapping("{id}/view")
+    fun viewRecord(@PathVariable("id") id: Int): ResponseEntity<Person> {
+        return ResponseEntity.ok(addressBookWebService.getRecordById(id))
     }
 
     @DeleteMapping("{id}/delete")
     fun delete(@PathVariable("id") id: Int): ResponseEntity<Person> {
+        addressBookWebService.deleteRecord(id)
         return  ResponseEntity.ok(addressBookWebService.deleteRecord(id))
     }
 }
