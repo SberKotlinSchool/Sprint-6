@@ -17,6 +17,7 @@ class AddressBookRepository {
     }
 
     fun getRecordById(id: Int): Person? {
+        addressBookDataBase[id]
         return addressBookDataBase[id]
     }
 
