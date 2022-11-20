@@ -28,7 +28,7 @@ class AddressBookRestControllerTest {
     @Autowired
     private lateinit var restTemplate: TestRestTemplate
 
-    private val record = Person(555, "Аристарх", "111-11-11", "переулок Сивцев Вражек")
+    private val newRecord = Person(555, "Аристарх", "111-11-11", "переулок Сивцев Вражек")
 
     private fun getUrl(endPoint: String, isSecured: Boolean): String {
         return if (isSecured) {
@@ -43,7 +43,7 @@ class AddressBookRestControllerTest {
         val response = restTemplate.exchange(
             getUrl( "/addressbook/api/2/view", false),
             HttpMethod.GET,
-            HttpEntity(record),
+            HttpEntity(newRecord),
             Person::class.java
         )
         assertNotNull(response)
@@ -57,7 +57,7 @@ class AddressBookRestControllerTest {
         val response = restTemplate.exchange(
             getUrl("/addressbook/api/list", false),
             HttpMethod.GET,
-            HttpEntity(record),
+            HttpEntity(newRecord),
             Array<Person>::class.java
         )
         assertNotNull(response)
@@ -70,11 +70,11 @@ class AddressBookRestControllerTest {
     fun addRecordTest() {
         val response = restTemplate.postForEntity(
             getUrl("/addressbook/api/add", false),
-            HttpEntity(record),
+            HttpEntity(newRecord),
             Person::class.java
         )
         assertNotNull(response)
-        assertEquals(response.body?.firstName, record.firstName)
+        assertEquals(response.body?.firstName, newRecord.firstName)
     }
 
     @Test
@@ -82,7 +82,7 @@ class AddressBookRestControllerTest {
         val response = restTemplate.exchange(
             getUrl( "/addressbook/api/2/delete", false),
             HttpMethod.DELETE,
-            HttpEntity(record),
+            HttpEntity(newRecord),
             String::class.java
         )
         assertEquals(HttpStatus.OK, response.statusCode)
