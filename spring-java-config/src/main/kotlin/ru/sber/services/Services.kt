@@ -1,5 +1,6 @@
 package ru.sber.services
 
+import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 
@@ -23,6 +24,7 @@ class ThirdService {
 }
 
 @Service
+@Primary
 class FourthService {
     override fun toString(): String {
         return "I am fourthService"
