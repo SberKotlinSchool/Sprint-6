@@ -4,21 +4,22 @@
     <meta charset="UTF-8">
     <title>Registration</title>
     <link rel="stylesheet" href="/buttons.css">
+    <link rel="stylesheet" href="/position.css">
 </head>
 <body>
-<div align="center">
-    <h5>REGISTRATION</h5>
-    <form method="post" action="/signIn">
-        <p>Who are you?</p>
-        <input name="userName" placeholder="Your name"/>
-        <input name="password" placeholder="Your password"/>
+<h5 class="text-center">REGISTRATION</h5>
+<div>
+    <form method="post" action="/register">
+        <p class="text-center">Enter your name and pass</p>
+        <input class="obj-center" name="userName" placeholder="New name"/>
+        <p/>
+        <input type="password" class="obj-center" name="password" placeholder="New password"/>
         <p>
-            <button class="btn btn-sign-in">Send</button>
+            <button class="obj-center btn btn-sign-in">Send</button>
         </p>
     </form>
-    <form action="/register">
-        <button class="btn btn-register">Ooops, can I register?..</button>
-    </form>
 </div>
+<p/>
+<button onclick="history.back()" class="obj-center btn btn-back">Back</button>
 </body>
 </html>

@@ -1,5 +1,5 @@
 .btn {
-    color: white;
+    color: snow;
     padding: 10px 24px;
     cursor: pointer;
     border-radius: 20px;
@@ -8,6 +8,11 @@
 .btn-register {
     background-color: #04AA6D;
     border: 1px solid green;
+}
+
+.btn-back {
+    background-color: dimgrey;
+    border: 1px darkslategrey;
 }
 
 .btn-sign-in {

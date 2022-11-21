@@ -4,20 +4,24 @@
     <meta charset="UTF-8">
     <title>Sign in</title>
     <link rel="stylesheet" href="/buttons.css">
+    <link rel="stylesheet" href="/position.css">
 </head>
+<p class="text-center">Who are you?</p>
 <body>
-<div align="center">
-    <form method="post" action="/signIn">
-        <p>Who are you?</p>
-        <input name="userName" placeholder="Your name"/>
-        <input name="password" placeholder="Your password"/>
-        <p>
-            <button class="btn btn-sign-in">Send</button>
-        </p>
-    </form>
-    <form action="/register">
-        <button class="btn btn-register">Ooops, can I register?..</button>
-    </form>
-</div>
+<form method="post" action="/signIn">
+    <input class="obj-center" name="userName" placeholder="Your name"/>
+    <input type="password" class="obj-center" name="password" placeholder="Your password"/>
+    <p>
+        <button class="obj-center btn btn-sign-in">Send</button>
+    </p>
+</form>
+<form action="/register">
+    <p>
+        <button class="obj-center btn btn-register">Ooops, can I register?..</button>
+    </p>
+</form>
+<p>
+    <button onclick="history.back()" class="obj-center btn btn-back">Back</button>
+</p>
 </body>
 </html>

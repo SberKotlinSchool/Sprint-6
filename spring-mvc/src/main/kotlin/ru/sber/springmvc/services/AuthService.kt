@@ -5,10 +5,11 @@ import ru.sber.springmvc.repository.LoginPass
 
 @Service
 class AuthService {
-    fun checkUserCred(userData: LoginPass): Boolean {
-        if (userData.localDB[userData.userName] != null && userData.localDB[userData.userName] == userData.password) {
-            return true
-        }
-        return false
+    fun checkUserNamePass(userData: LoginPass): Boolean {
+        return (checkUserName(userData) && userData.localDB[userData.userName] == userData.password)
+    }
+
+    fun checkUserName(userData: LoginPass): Boolean {
+        return userData.localDB[userData.userName] != null
     }
 }

@@ -5,6 +5,7 @@ package ru.sber.springmvc.repository
 //    var localDB = HashMap<String, String>()
 //}
 
-data class LoginPass (val userName: String, val password: String) {
+data class LoginPass (val userName: String,
+                      val password: String) {
     var localDB = HashMap<String, String>()
 }
