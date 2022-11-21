@@ -15,7 +15,7 @@ class SecondService {
     }
 }
 
-@Component
+@Component(value = "thirdService")
 class ThirdService {
     override fun toString(): String {
         return "I am thirdService"
