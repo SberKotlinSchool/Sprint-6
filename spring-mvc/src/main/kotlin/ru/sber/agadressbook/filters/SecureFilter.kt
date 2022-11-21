@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @WebFilter(
-    urlPatterns = ["/addressbok/*"],
+    urlPatterns = ["/addressbook/*"],
     filterName = "SecureFilter"
 )
 class SecureFilter : Filter {
@@ -18,7 +18,7 @@ class SecureFilter : Filter {
         val request = req as HttpServletRequest
         val response = resp as HttpServletResponse
         if (request.cookies == null || request.cookies.none { it.name == "auth" && LocalDateTime.parse(it.value) < LocalDateTime.now() }) {
-            response.sendRedirect("/login_form")
+            response.sendRedirect("/addressbook/login_form")
         } else {
             filterChain?.doFilter(req, resp)
         }

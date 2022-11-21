@@ -13,6 +13,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.web.client.RestTemplate
 import ru.sber.agadressbook.models.Person
+import java.time.LocalDateTime
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -36,14 +37,20 @@ class AddressBookRestControllerTest {
         } else "http://$host:$port/$endPoint"
     }
 
+    fun setCookie(): HttpHeaders {
+        val httpHeader = HttpHeaders()
+        httpHeader.add("Cookie", "auth=${LocalDateTime.now()}")
+        //println(httpHeader)
+        return httpHeader
+    }
 
     @Test()
     fun viewRecordTest() {
 
         val response = restTemplate.exchange(
-            getUrl( "/addressbook/api/2/view", false),
+            getUrl("/addressbook/api/2/view", false),
             HttpMethod.GET,
-            HttpEntity(newRecord),
+            HttpEntity(newRecord, setCookie()),
             Person::class.java
         )
         assertNotNull(response)
@@ -57,7 +64,7 @@ class AddressBookRestControllerTest {
         val response = restTemplate.exchange(
             getUrl("/addressbook/api/list", false),
             HttpMethod.GET,
-            HttpEntity(newRecord),
+            HttpEntity(newRecord, setCookie()),
             Array<Person>::class.java
         )
         assertNotNull(response)
@@ -70,7 +77,7 @@ class AddressBookRestControllerTest {
     fun addRecordTest() {
         val response = restTemplate.postForEntity(
             getUrl("/addressbook/api/add", false),
-            HttpEntity(newRecord),
+            HttpEntity(newRecord, setCookie()),
             Person::class.java
         )
         assertNotNull(response)
@@ -80,9 +87,9 @@ class AddressBookRestControllerTest {
     @Test
     fun deleteRecordTest() {
         val response = restTemplate.exchange(
-            getUrl( "/addressbook/api/2/delete", false),
+            getUrl("/addressbook/api/2/delete", false),
             HttpMethod.DELETE,
-            HttpEntity(newRecord),
+            HttpEntity(newRecord, setCookie()),
             String::class.java
         )
         assertEquals(HttpStatus.OK, response.statusCode)
@@ -99,7 +106,7 @@ class AddressBookRestControllerTest {
         val response = restTemplate.exchange(
             getUrl("/addressbook/api/2/edit", false),
             HttpMethod.PATCH,
-            HttpEntity(editedRecord),
+            HttpEntity(editedRecord, setCookie()),
             Person::class.java
         )
         assertNotNull(response)
