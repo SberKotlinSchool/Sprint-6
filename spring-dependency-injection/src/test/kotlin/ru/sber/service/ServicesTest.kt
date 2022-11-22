@@ -20,10 +20,12 @@ class ServicesTest {
         val context = AnnotationConfigApplicationContext(ServicesConfig::class.java)
 
         // when
-        val constructorInjectionService = context.getBean("constructorInjectionService") as ConstructorInjectionService
+        val constructorInjectionService = context
+            .getBean("constructorInjectionService") as ConstructorInjectionService
 
         // then
-        assertEquals("Service was injected into ConstructorInjectionService", constructorInjectionService.toString())
+        assertEquals("Service was injected into ConstructorInjectionService",
+            constructorInjectionService.toString())
     }
 
     @Test
@@ -32,10 +34,12 @@ class ServicesTest {
         val context = AnnotationConfigApplicationContext(ServicesConfig::class.java)
 
         // when
-        val fieldInjectionService = context.getBean("fieldInjectionService") as FieldInjectionService
+        val fieldInjectionService = context.getBean("fieldInjectionService")
+                as FieldInjectionService
 
         // then
-        assertEquals("Service was injected into FieldInjectionService", fieldInjectionService.toString())
+        assertEquals("Service was injected into FieldInjectionService",
+            fieldInjectionService.toString())
     }
 
     @Test
@@ -44,10 +48,12 @@ class ServicesTest {
         val context = AnnotationConfigApplicationContext(ServicesConfig::class.java)
 
         // when
-        val setterInjectionService = context.getBean("setterInjectionService") as SetterInjectionService
+        val setterInjectionService = context.getBean("setterInjectionService")
+                as SetterInjectionService
 
         // then
-        assertEquals("Service was injected into SetterInjectionService", setterInjectionService.toString())
+        assertEquals("Service was injected into SetterInjectionService",
+            setterInjectionService.toString())
     }
 
     @Test
@@ -56,7 +62,8 @@ class ServicesTest {
         val context = AnnotationConfigApplicationContext(ServicesConfig::class.java)
 
         // when
-        val severalBeanInjectionService = context.getBean("severalBeanInjectionService") as SeveralBeanInjectionService
+        val severalBeanInjectionService = context.getBean("severalBeanInjectionService")
+                as SeveralBeanInjectionService
 
         // then
         assertEquals(
@@ -71,7 +78,8 @@ class ServicesTest {
         val context = AnnotationConfigApplicationContext(ServicesConfig::class.java)
 
         // when
-        val primaryBeanInjectionService = context.getBean("primaryBeanInjectionService") as PrimaryBeanInjectionService
+        val primaryBeanInjectionService = context.getBean("primaryBeanInjectionService")
+                as PrimaryBeanInjectionService
 
         // then
         assertEquals(
@@ -87,7 +95,8 @@ class ServicesTest {
 
         // when
         val qualifierBeanInjectionService =
-            context.getBean("qualifierBeanInjectionService") as QualifierBeanInjectionService
+            context.getBean("qualifierBeanInjectionService")
+                    as QualifierBeanInjectionService
 
         // then
         assertEquals(
@@ -107,7 +116,8 @@ class ServicesTest {
 
         // when
         val conditionalBeanInjectionService =
-            context.getBean("conditionalBeanInjectionService") as ConditionalBeanInjectionService
+            context.getBean("conditionalBeanInjectionService")
+                    as ConditionalBeanInjectionService
 
         // then
         assertEquals(
