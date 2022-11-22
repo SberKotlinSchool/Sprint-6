@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
@@ -14,9 +15,10 @@ import java.time.LocalDate
 import javax.servlet.http.Cookie
 
 @AutoConfigureMockMvc
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class SpringMvcApplicationTests {
-
+    @LocalServerPort
+    private var port: Int = 8080
 
     @Autowired
     private lateinit var mockMvc: MockMvc
@@ -81,9 +83,8 @@ class SpringMvcApplicationTests {
 
     @Test
     fun deleteTest() {
-        mockMvc.perform(get("/app/1/delete")
+        mockMvc.perform(get("/app/${"89151371111".hashCode()}/delete")
                 .cookie(getAuthCookie()))
-            .andDo(::print)
             .andExpect(status().is3xxRedirection)
     }
 
@@ -91,11 +92,10 @@ class SpringMvcApplicationTests {
     fun editTest() {
         //ok
         mockMvc.perform(
-            post("/app/1/edit")
+            post("/app/${"89151371111".hashCode()}/edit")
                 .cookie(getAuthCookie())
                 .param("name", "Leha")
                 .param("phone", "89151221111111"))
-            .andDo(::print)
             .andExpect(status().is3xxRedirection)
     }
 }
