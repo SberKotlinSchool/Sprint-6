@@ -1,4 +1,5 @@
 import ru.sber.filesystem.VFilesystem
+import ru.sber.filesystem.VPath
 import java.io.IOException
 import java.net.ServerSocket
 
@@ -32,18 +33,37 @@ class FileServer {
             //throw new UnsupportedOperationException();
 
             // TODO 1) Use socket.accept to get a Socket object
+            socket.accept().use {
+                /*
+                * TODO 2) Using Socket.getInputStream(), parse the received HTTP
+                * packet. In particular, we are interested in confirming this
+                * message is a GET and parsing out the path to the file we are
+                * GETing. Recall that for GET HTTP packets, the first line of the
+                * received packet will look something like:
+                *
+                *     GET /path/to/file HTTP/1.1
+                */
+                val clientRequest = it.getInputStream().bufferedReader().readLine()
+                val (method, path, version) = clientRequest.split(" ")
+                val readFile = fs.readFile(VPath(path))
 
-
-            /*
-            * TODO 2) Using Socket.getInputStream(), parse the received HTTP
-            * packet. In particular, we are interested in confirming this
-            * message is a GET and parsing out the path to the file we are
-            * GETing. Recall that for GET HTTP packets, the first line of the
-            * received packet will look something like:
-            *
-            *     GET /path/to/file HTTP/1.1
-            */
-
+                it.getOutputStream().use {
+                    var response = """
+                        HTTP/1.0 404 Not Found\r\n
+                        Server: FileServer\r\n
+                        \r\n
+                    """.trimIndent()
+                    if (readFile != null) {
+                        response = """
+                            HTTP/1.0 200 OK
+                            Server: FileServer
+                            
+                            $readFile
+                        """.trimIndent()
+                    }
+                    it.write(response.toByteArray())
+                }
+            }
 
             /*
              * TODO 3) Using the parsed path to the target file, construct an
