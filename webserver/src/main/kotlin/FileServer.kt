@@ -33,9 +33,7 @@ class FileServer {
             while (true) {
 
                 // TODO 1) Use socket.accept to get a Socket object
-                val socketClient = it.accept() // блокирующий вызов
-
-                socketClient.use { s ->
+                socket.accept().use { s ->
                     /*
                 * TODO 2) Using Socket.getInputStream(), parse the received HTTP
                 * packet. In particular, we are interested in confirming this
@@ -69,18 +67,19 @@ class FileServer {
                  *
                  * Don't forget to close the output stream.
                  */
-                    val w = PrintWriter(s.getOutputStream())
-                    var serverResponse = responseOk()
-                    if (TYPE == "GET") {
-                        val fileContent = fs.readFile(VPath(FILENAME)) ?: ""
-                        if (fileContent.isNotEmpty()) {
-                            serverResponse.appendLine(fileContent)
-                        } else {
-                            serverResponse = responseNotFound()
+                    PrintWriter(s.getOutputStream()).use { w ->
+                        var serverResponse = responseOk()
+                        if (TYPE == "GET") {
+                            val fileContent = fs.readFile(VPath(FILENAME)) ?: ""
+                            if (fileContent.isNotEmpty()) {
+                                serverResponse.appendLine(fileContent)
+                            } else {
+                                serverResponse = responseNotFound()
+                            }
                         }
+                        w.println(serverResponse)
+                        w.flush()
                     }
-                    w.println(serverResponse)
-                    w.flush()
                 }
             }
         }
