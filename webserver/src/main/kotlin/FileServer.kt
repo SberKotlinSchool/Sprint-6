@@ -69,18 +69,18 @@ class FileServer {
                  *
                  * Don't forget to close the output stream.
                  */
-                    PrintWriter(s.getOutputStream()).use { w ->
-                        var serverResponse = responseOk()
-                        if (TYPE == "GET") {
-                            val fileContent = fs.readFile(VPath(FILENAME)) ?: ""
-                            if (fileContent.isNotEmpty()) {
-                                serverResponse.appendLine(fileContent)
-                            } else {
-                                serverResponse = responseNotFound()
-                            }
+                    val w = PrintWriter(s.getOutputStream())
+                    var serverResponse = responseOk()
+                    if (TYPE == "GET") {
+                        val fileContent = fs.readFile(VPath(FILENAME)) ?: ""
+                        if (fileContent.isNotEmpty()) {
+                            serverResponse.appendLine(fileContent)
+                        } else {
+                            serverResponse = responseNotFound()
                         }
-                        w.println(serverResponse)
                     }
+                    w.println(serverResponse)
+                    w.flush()
                 }
             }
         }
