@@ -7,5 +7,7 @@ import org.springframework.stereotype.Component
 @Component
 class MyBeanFactoryPostProcessor : BeanFactoryPostProcessor {
     override fun postProcessBeanFactory(beanFactory: ConfigurableListableBeanFactory) {
+        val beanFactoryPostProcessorBeanDefinition = beanFactory.getBeanDefinition("beanFactoryPostProcessorBean")
+        beanFactoryPostProcessorBeanDefinition.initMethodName = "postConstruct"
     }
 }

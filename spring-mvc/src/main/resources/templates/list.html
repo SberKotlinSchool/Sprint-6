@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+
+    <body>
+        <h2>Адресная книга</h2>
+        <table>
+            <tr>
+                <th>ФИО</th>
+                <th>Адрес</th>
+                <th>Телефон</th>
+                <th>Email</th>
+            </tr>
+            <tr th:each="client : ${clients}">
+                <td th:text="${client.name}"></td>
+                <td th:text="${client.address}"></td>
+                <td th:text="${client.phone}"></td>
+                <td th:text="${client.email}"></td>
+            </tr>
+        </table>
+    </body>
+</html>
