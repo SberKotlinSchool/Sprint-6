@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sweetter app</title>
+    <link rel="stylesheet" href="/buttons.css">
+    <link rel="stylesheet" href="/position.css">
+    <link rel="stylesheet" href="/text.css">
+</head>
+<body>
+<a href="/"><button>SWEETTER</button></a>
+<p/>
+<span class="form-inline" th:each="note, iStat : ${notes}">
+    <form class="form-inline">
+        <p th:text="${note}"> Content </p>
+    </form>
+    <span th:if="${session.user == note.author}">
+        <form method="get" class="form-inline" th:action="@{/message/edit/{id}(id=${iStat.index})}">
+            <button>Edit</button>
+        </form>
+        <form method="post" class="form-inline" th:action="@{/message/delete/{id}(id=${iStat.index})}">
+            <button>Delete</button>
+        </form>
+    </span>
+    <hr/>
+</span>
+<form method="post" th:action="@{/message/new}" th:if="${session.user != null}">
+    <input type="hidden" th:value="${session.user}" name="author">
+    <input th:value="''" name="content">
+    <input type="hidden" th:value="''" name="date">
+    <button class="btn btn-sign-in">Post</button>
+</form>
+<p/>
+<button onclick="history.back()" class="btn btn-back">Back</button>
+</body>
+</html>

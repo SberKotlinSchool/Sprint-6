@@ -2,30 +2,26 @@ package ru.sber.springmvc.controllers
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
-import org.springframework.ui.Model
+import org.springframework.ui.ModelMap
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
-import ru.sber.springmvc.repository.LoginPass
+import org.springframework.web.bind.annotation.RequestMapping
+import ru.sber.springmvc.dto.User
 import ru.sber.springmvc.services.AuthService
 
 @Controller
-class SignInController{
+@RequestMapping("/signIn")
+class SignInController @Autowired constructor(val service: AuthService){
 
-    @Autowired
-    lateinit var authService: AuthService
-
-    @GetMapping("/signIn")
+    @GetMapping
     fun signIn(): String {
         return "signIn"
     }
 
-    @PostMapping("/signIn")
-    fun signInProcessing(@ModelAttribute userData: LoginPass, model: Model): String {
-        userData.localDB["admin"] = "admin"
-
-        return if (authService.checkUserNamePass(userData)) "index"
-        else
-            "register"
+    @PostMapping
+    fun signInProcessing(@ModelAttribute user: User, model: ModelMap): String {
+        model.addAttribute("error", "Try again")
+        return "signIn"
     }
 }

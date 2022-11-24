@@ -1,21 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Sign in</title>
     <link rel="stylesheet" href="/buttons.css">
     <link rel="stylesheet" href="/position.css">
+    <link rel="stylesheet" href="/text.css">
 </head>
-<p class="text-center">Who are you?</p>
+<div class="text-center text-wrong" th:if="${error != null}">
+    <p><td th:text="${error}"></td></p>
+</div>
+<div th:unless="${error != null}">
+    <p class="text-center">Who are you?</p>
+</div>
 <body>
-<form method="post" action="/signIn">
+<form method="post" action="/toSignIn">
     <input class="obj-center" name="userName" placeholder="Your name"/>
+    <p/>
     <input type="password" class="obj-center" name="password" placeholder="Your password"/>
+
     <p>
         <button class="obj-center btn btn-sign-in">Send</button>
     </p>
 </form>
-<form action="/register">
+<form method="get" action="/register">
     <p>
         <button class="obj-center btn btn-register">Ooops, can I register?..</button>
     </p>

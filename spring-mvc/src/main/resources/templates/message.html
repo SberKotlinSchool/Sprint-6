@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Message</title>
+    <link rel="stylesheet" href="/buttons.css">
+    <link rel="stylesheet" href="/position.css">
+    <link rel="stylesheet" href="/text.css">
+</head>
+<body>
+<form method="post">
+    <input class="obj-center" style="width:20%; height:100px" th:value="${notes[id].content}" name="content">
+    <input type="hidden" th:value="${session.user}" name="author">
+    <input type="hidden" th:value="''" name="date">
+    <button class="obj-center btn btn-sign-in">Save</button>
+</form>
+<button onclick="history.back()" class="obj-center btn btn-back">Back</button>
+</body>
+</html>
