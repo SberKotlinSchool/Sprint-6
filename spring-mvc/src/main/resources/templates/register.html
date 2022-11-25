@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link rel="stylesheet" href="/buttons.css">
+    <link rel="stylesheet" href="/position.css">
+    <link rel="stylesheet" href="/text.css">
+</head>
+<body>
+<div class="text-center text-wrong" th:if="${error != null}">
+    <p><td th:text="${error}"></td></p>
+</div>
+<div th:unless="${error != null}">
+    <p class="text-center">Enter your name and pass</p>
+</div>
+<div>
+    <form method="post" action="/register">
+        <input class="obj-center" name="userName" placeholder="New name"/>
+        <p/>
+        <input type="password" class="obj-center" name="password" placeholder="New password"/>
+        <p>
+            <button class="obj-center btn btn-sign-in">Register me!</button>
+        </p>
+    </form>
+</div>
+<p/>
+<button onclick="history.back()" class="obj-center btn btn-back">Back</button>
+</body>
+</html>

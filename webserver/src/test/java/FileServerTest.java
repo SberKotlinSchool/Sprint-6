@@ -2,7 +2,11 @@ import junit.framework.TestCase;
 import ru.sber.filesystem.VFilesystem;
 import ru.sber.filesystem.VPath;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.ServerSocket;
 import java.net.SocketException;
@@ -24,7 +28,7 @@ public class FileServerTest extends TestCase {
     private static String getRandomFileContents(final int len) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < len; i++) {
-            sb.append(Integer.toString(rand.nextInt(10)));
+            sb.append(rand.nextInt(10));
         }
         return sb.toString();
     }

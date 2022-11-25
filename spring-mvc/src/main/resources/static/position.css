@@ -1,0 +1,9 @@
+.obj-center {
+    display: flex;
+    margin: auto;
+    width: auto;
+}
+
+.form-inline {
+    display:inline;
+}

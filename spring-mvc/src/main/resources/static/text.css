@@ -1,0 +1,9 @@
+.text-wrong {
+    color: red;
+}
+
+.text-center {
+    font-size: 30px;
+    font-family: Consolas,bold;
+    text-align: center;
+}
