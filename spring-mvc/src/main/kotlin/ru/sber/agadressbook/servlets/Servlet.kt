@@ -23,18 +23,18 @@ class Servlet(@Autowired val addressBookWebService: AddressBookWebService) : Htt
     }
 
     override fun doPost(req: HttpServletRequest, resp: HttpServletResponse) {
-        val userLogin = req.getParameter("userName")
-        val userPassword = req.getParameter("password")
+//        val userLogin = req.getParameter("userName")
+//        val userPassword = req.getParameter("password")
 
-
-        if ((userLogin != null && userPassword != null) && addressBookWebService.checkUser(Credentials(userLogin, userPassword))) {
-            val cookie = Cookie("auth", LocalDateTime.now().toString())
-            resp.addCookie(cookie)
-            resp.sendRedirect("/addressbook/list")
-        } else {
-            resp.sendRedirect("/login_form")
-            resp.writer.close()
-        }
+//
+//        if ((userLogin != null && userPassword != null) && addressBookWebService.checkUser(Credentials(userLogin, userPassword))) {
+//            val cookie = Cookie("auth", LocalDateTime.now().toString())
+//            resp.addCookie(cookie)
+//            resp.sendRedirect("/addressbook/list")
+//        } else {
+//            resp.sendRedirect("/login_form")
+//            resp.writer.close()
+//        }
     }
 
 }

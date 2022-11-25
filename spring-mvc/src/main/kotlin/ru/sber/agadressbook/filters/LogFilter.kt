@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse
 
 
 class LogFilter : Filter {
-
     private val logger = KotlinLogging.logger {}
     private var logData = mutableListOf<String>()
 
