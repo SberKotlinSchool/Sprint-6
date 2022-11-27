@@ -1,11 +1,11 @@
-package ru.sberbank.school.mvchomework
+package com.sbuniver.homework
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class MvchomeworkApplication
+class HomeworkApplication
 
 fun main(args: Array<String>) {
-	runApplication<MvchomeworkApplication>(*args)
+	runApplication<HomeworkApplication>(*args)
 }

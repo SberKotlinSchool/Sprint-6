@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="En">
+<head>
+    <title>Delete address</title>
+</head>
+<body>
+<form action="?" method="delete">
+    <table class="table">
+        <thead>
+        <tr>
+            <td>id</td>
+            <td>name</td>
+            <td>city</td>
+            <td>street</td>
+            <td>home</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input type="text" disabled th:value="${address.id}"></td>
+            <td><input type="text" disabled th:value="${address.name}"></td>
+            <td><input type="text" disabled th:value="${address.city}"></td>
+            <td><input type="text" disabled th:value="${address.street}"></td>
+            <td><input type="text" disabled th:value="${address.home}"></td>
+            <td>
+                <button type="submit" class="btn">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+</body>
+</html>

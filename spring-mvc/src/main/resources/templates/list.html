@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>list of addresses</title>
+</head>
+<body>
+<table class="table">
+    <thead>
+    <tr>
+        <td>id</td>
+        <td>name</td>
+        <td>city</td>
+        <td>street</td>
+        <td>home</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="address: ${addresses}">
+        <td th:text="${address.id}"></td>
+        <td th:text="${address.name}"></td>
+        <td th:text="${address.city}"></td>
+        <td th:text="${address.street}"></td>
+        <td th:text="${address.home}"></td>
+        <td><a th:href="@{/app/{id}/edit(id = ${address.id})}">Edit</a></td>
+        <td><a th:href="@{/app/{id}/delete(id = ${address.id})}">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
+<br>
+
+
+<form action="/app/add" method="POST">
+    <div>Add new address:</div>
+    <table>
+        <tbody>
+        <tr>
+            <td><label>Name:</label></td>
+            <td><input name="name" placeholder="name"></td>
+        </tr>
+        <tr>
+            <td><label>City:</label></td>
+            <td><input name="city" placeholder="city"></td>
+        </tr>
+        <tr>
+            <td><label>Street:</label></td>
+            <td><input name="street" placeholder="street"></td>
+        </tr>
+        <tr>
+            <td><label>Home:</label></td>
+            <td><input name="home" placeholder="home"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="form-group">
+        <button type="submit" class="btn btn-default">Save</button>
+    </div>
+</form>
+
+</body>
+</html>

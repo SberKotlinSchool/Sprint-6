@@ -1,13 +1,12 @@
-package ru.sberbank.school.mvchomework.controller
+package com.sbuniver.homework
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 
 @Controller
-class AppController {
-
+class Controller {
     @GetMapping("/")
-    fun mainPage(): String{
+    fun home(): String {
         return "index"
     }
 }
