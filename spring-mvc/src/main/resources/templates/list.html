@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>List</h2>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Phone</th>
+    </tr>
+    <tr th:each="person : ${persons}">
+        <td th:text="${person.name}"></td>
+        <td th:text="${person.phone}"></td>
+        <td><a th:href="@{/app/{id}/view(id=${person.id})}">view</a></td>
+        <td><a th:href="@{/app/{id}/edit(id=${person.id})}">edit</a></td>
+        <td><a th:href="@{/app/{id}/delete(id=${person.id})}">delete</a></td>
+    </tr>
+</table>
+<p><a th:href="@{/app/add}">add</a></p>
+</body>
+</html>

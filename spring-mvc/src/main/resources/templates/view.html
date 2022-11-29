@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>View person</h2>
+<a th:href="@{/app/list}">back</a>
+<table border="1">
+    <tr>
+        <td>Name</td>
+        <td th:text="${person.name}"></td>
+    </tr>
+    <tr>
+        <td>Phone</td>
+        <td th:text="${person.phone}"></td>
+    </tr>
+</table>
+</body>
+</html>
