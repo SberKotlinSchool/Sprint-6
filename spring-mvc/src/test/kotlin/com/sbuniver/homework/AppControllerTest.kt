@@ -52,11 +52,11 @@ class AppControllerTest {
             .andDo(MockMvcResultHandlers.print())
             .andExpect(status().is3xxRedirection)
 
-//        mock.perform(MockMvcRequestBuilders.get("/app/list"))
-//            .andExpect(status().isOk)
-//            .andExpect(MockMvcResultMatchers.content().string(StringContains("Newman")))
-//            .andExpect(MockMvcResultMatchers.content().string(StringContains("New York")))
-//            .andExpect(MockMvcResultMatchers.content().string(StringContains("New Street")))
+        mock.perform(MockMvcRequestBuilders.get("/app/list"))
+            .andExpect(status().isOk)
+            .andExpect(MockMvcResultMatchers.content().string(StringContains("Newman")))
+            .andExpect(MockMvcResultMatchers.content().string(StringContains("New York")))
+            .andExpect(MockMvcResultMatchers.content().string(StringContains("New Street")))
     }
 
     @Test

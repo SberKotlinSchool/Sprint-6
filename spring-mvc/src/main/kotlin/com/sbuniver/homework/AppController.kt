@@ -1,5 +1,6 @@
 package com.sbuniver.homework
 
+import com.sbuniver.homework.dto.AddForm
 import com.sbuniver.homework.dto.AddressBook
 import com.sbuniver.homework.dto.AddressDto
 import mu.KotlinLogging
@@ -37,16 +38,16 @@ class AppController {
     @PostMapping("/{id}/edit")
     fun editDo(
         @PathVariable id: Int,
-        @RequestBody formData: MultiValueMap<String, String>,
+        @ModelAttribute addForm: AddForm,
         response: HttpServletResponse
     ) {
-        println(formData)
+        println(addForm)
         val addressDto = AddressDto(
             id,
-            formData["name"]!!.joinToString(separator = " "),
-            formData["city"]!!.joinToString(separator = " "),
-            formData["street"]!!.joinToString(separator = " "),
-            formData["home"]!![0].toInt(),
+            addForm.name!!,
+            addForm.city!!,
+            addForm.street!!,
+            addForm.home!!.toInt(),
         )
         addressBook.update(addressDto)
         response.sendRedirect("/app/list")
@@ -54,16 +55,16 @@ class AppController {
 
     @PostMapping("/add")
     fun add(
-        @RequestBody formData: MultiValueMap<String, String>,
+        @ModelAttribute addForm: AddForm,
         response: HttpServletResponse
     ) {
         addressBook.add(
             AddressDto(
                 addressBook.maxId() + 1,
-                formData["name"]!!.joinToString(separator = " "),
-                formData["city"]!!.joinToString(separator = " "),
-                formData["street"]!!.joinToString(separator = " "),
-                formData["home"]!![0].toInt(),
+                addForm.name!!,
+                addForm.city!!,
+                addForm.street!!,
+                addForm.home!!.toInt(),
             )
         )
         response.sendRedirect("/app/list")
