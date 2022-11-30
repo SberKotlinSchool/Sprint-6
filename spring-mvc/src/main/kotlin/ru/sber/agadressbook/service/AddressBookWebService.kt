@@ -1,7 +1,7 @@
 package ru.sber.agadressbook.service
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.access.annotation.Secured
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Service
 import ru.sber.agadressbook.models.Credentials
 import ru.sber.agadressbook.models.Person
@@ -24,7 +24,7 @@ class AddressBookWebService(@Autowired val addressBookRepository: AddressBookRep
         return addressBookRepository.updateRecord(id, person)
     }
 
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('ADMIN')")
     fun deleteRecord(id: Int): Person? {
         return addressBookRepository.deleteRecord(id)
     }

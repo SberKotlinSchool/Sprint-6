@@ -1,17 +1,12 @@
 package ru.sber.agadressbook.config
 
-import org.h2.store.Data
+
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter
 import org.springframework.boot.web.servlet.ServletComponentScan
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
-import org.springframework.jdbc.datasource.DriverManagerDataSource
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
@@ -22,7 +17,6 @@ import javax.sql.DataSource
 @Configuration
 @ComponentScan("ru.sber.agadressbook")
 @ServletComponentScan("ru.sber.agadressbook.servlets", "ru.sber.agadressbook.filters")
-@EnableWebSecurity
 class AddressBookConfig : WebSecurityConfigurerAdapter() {
 
     @Autowired
