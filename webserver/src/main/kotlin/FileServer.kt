@@ -1,5 +1,7 @@
 import ru.sber.filesystem.VFilesystem
+import ru.sber.filesystem.VPath
 import java.io.IOException
+import java.io.PrintWriter
 import java.net.ServerSocket
 
 /**
@@ -27,44 +29,22 @@ class FileServer {
          * ServerSocket object.
          */
         while (true) {
+            socket.accept().use {
+                val input = it.getInputStream().bufferedReader().readLine().split(" ")
+                assert(input[0] == "GET")
+                val fileContent = fs.readFile(VPath(input[1]))
 
-            // TODO Delete this once you start working on your solution.
-            //throw new UnsupportedOperationException();
+                val output =
+                    if (fileContent == null)
+                        "HTTP/1.0 404 Not Found\r\nServer: FileServer\r\n\r\n"
+                    else
+                        "HTTP/1.0 200 OK\r\nServer: FileServer\r\n\r\n$fileContent\r\n"
 
-            // TODO 1) Use socket.accept to get a Socket object
-
-
-            /*
-            * TODO 2) Using Socket.getInputStream(), parse the received HTTP
-            * packet. In particular, we are interested in confirming this
-            * message is a GET and parsing out the path to the file we are
-            * GETing. Recall that for GET HTTP packets, the first line of the
-            * received packet will look something like:
-            *
-            *     GET /path/to/file HTTP/1.1
-            */
-
-
-            /*
-             * TODO 3) Using the parsed path to the target file, construct an
-             * HTTP reply and write it to Socket.getOutputStream(). If the file
-             * exists, the HTTP reply should be formatted as follows:
-             *
-             *   HTTP/1.0 200 OK\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *   FILE CONTENTS HERE\r\n
-             *
-             * If the specified file does not exist, you should return a reply
-             * with an error code 404 Not Found. This reply should be formatted
-             * as:
-             *
-             *   HTTP/1.0 404 Not Found\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *
-             * Don't forget to close the output stream.
-             */
+                PrintWriter(it.getOutputStream()).use { writer ->
+                    writer.print(output)
+                    writer.flush()
+                }
+            }
         }
     }
 }
