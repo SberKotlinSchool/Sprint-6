@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Employee from address book</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+
+        input:read-only {
+            background: lightgray;
+        }
+
+        .row {
+            margin-top: 10px;
+        }
+        select {
+            width: 300px;
+        }
+
+    </style>
+</head>
+<body>
+<h2>Employee from address book</h2>
+<table th:border="1" th:object="${employee}">
+    <tr>
+        <td>ID</td>
+        <td th:text="*{id}"></td>
+    </tr>
+    <tr>
+        <td>Firstname</td>
+        <td th:text="*{firstName}"></td>
+    </tr>
+    <tr>
+        <td>Lastname</td>
+        <td th:text="*{lastName}"></td>
+    </tr>
+    <tr>
+        <td>Patronymic</td>
+        <td th:text="*{patronymic}"></td>
+    </tr>
+    <tr>
+        <td>Address</td>
+        <td th:text="*{address}"></td>
+    </tr>
+    <tr>
+        <td>Phone</td>
+        <td th:text="*{phone}"></td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td th:text="*{email}"></td>
+    </tr>
+</table>
+</body>
+</html>

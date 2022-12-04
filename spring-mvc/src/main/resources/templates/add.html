@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>Add employee to address book</h2>
+<form action="#" th:action="@{/app/add}" th:object="${employee}" method="post">
+    <p>Firstname: <input type="text" th:field="*{firstName}"/></p>
+    <span th:if="#{fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error"></span>
+    <p>Lastname: <input type="text" th:field="*{lastName}"/></p>
+    <span th:if="#{fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error"></span>
+    <p>Patronymic: <input type="text" th:field="*{patronymic}"/></p>
+    <span th:if="#{fields.hasErrors('patronymic')}" th:errors="*{patronymic}" class="error"></span>
+    <p>Address: <input type="text" th:field="*{address}"/></p>
+    <span th:if="#{fields.hasErrors('address')}" th:errors="*{address}" class="error"></span>
+    <p>Phone: <input type="text" th:field="*{phone}"/></p>
+    <span th:if="#{fields.hasErrors('phone')}" th:errors="*{phone}" class="error"></span>
+    <p>Email: <input type="text" th:field="*{email}"/></p>
+    <span th:if="#{fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>
+    <p><input type="submit" value="Submit"/>
+</form>
+</body>
+</html>
