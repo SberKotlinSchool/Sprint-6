@@ -13,7 +13,7 @@ import java.net.URI
 
 @RestController
 @RequestMapping("api")
-class RestController(
+class ApiController(
     private val addressService: AddressService
 ) {
 

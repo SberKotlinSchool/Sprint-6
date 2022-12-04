@@ -19,7 +19,7 @@ class AddressService {
      * @return Запись типа "Адрес"
      */
     fun createAddress(address: CreateAddressRq): Address {
-        val newAddress = Address(counter, address.fullName, address.postAddress, address.phoneNumber)
+        val newAddress = Address(counter, address.fullName, address.postAddress, address.phoneNumber, address.email)
         addressBook[counter] = newAddress
         counter++
         logger.info("Создана запись в адресной книге с id = ${newAddress.id}")
@@ -31,7 +31,7 @@ class AddressService {
      * @param addressId ID записи
      * @return Список адресов
      */
-    fun getAddresses(addressId: Long?): List<Address?> {
+    fun getAddresses(addressId: Long? = null): List<Address?> {
         return if (addressId == null) {
             logger.info("Получение всех записей в адресной книге")
             addressBook.values.toList()
@@ -50,7 +50,7 @@ class AddressService {
     fun updateAddress(addressId: Long, address: CreateAddressRq): Address? {
         return if (addressBook.containsKey(addressId)) {
             logger.info("Обновлена запись в адресной книге с id = $addressId")
-            val newAddress = Address(addressId, address.fullName, address.postAddress, address.phoneNumber)
+            val newAddress = Address(addressId, address.fullName, address.postAddress, address.phoneNumber, address.email)
             addressBook[addressId] = newAddress
             newAddress
         } else {

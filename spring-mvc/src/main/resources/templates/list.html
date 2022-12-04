@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>Адресная книга</h2>
+<div>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>ФИО</th>
+            <th>Почтовый адрес</th>
+            <th>Номер телефона</th>
+            <th>Адрес электронной почты</th>
+        </tr>
+        <tr th:each="address : ${addresses}">
+            <td th:text="${address.id}"></td>
+            <td th:text="${address.fullName}"></td>
+            <td th:text="${address.postAddress}"></td>
+            <td th:text="${address.phoneNumber}"></td>
+            <td th:text="${address.email}"></td>
+            <td>
+                <a th:href="@{/app/{id}/view(id=${address.id})}">Просмотр</a>
+            </td>
+            <td>
+                <a th:href="@{/app/{id}/edit(id=${address.id})}">Редактирование</a>
+            </td>
+            <td>
+                <a th:href="@{/app/{id}/delete(id=${address.id})}">Удалить</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div>
+    <form method="get" th:action="@{/app/add}">
+        <p>
+            <button>Добавить запись</button>
+        </p>
+    </form>
+</div>
+</body>
+</html>
