@@ -12,7 +12,7 @@ import ru.sber.addresses.services.AddressService
 import java.net.URI
 
 @RestController
-@RequestMapping("api")
+@RequestMapping(path = ["/api"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
 class ApiController(
     private val addressService: AddressService
 ) {
@@ -22,7 +22,7 @@ class ApiController(
         addressService.createAddress(rq)
             .let { address -> ResponseEntity.created(URI("/app/${address.id}")).build<Unit>() }
 
-    @GetMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping("view")
     fun getAddresses(@RequestBody rq: GetAddressRq) =
         ResponseEntity.ok(addressService.getAddresses(rq.id))
 
