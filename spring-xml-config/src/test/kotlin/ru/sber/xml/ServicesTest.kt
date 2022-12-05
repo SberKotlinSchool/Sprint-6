@@ -9,7 +9,7 @@ class ServicesTest {
     @Test
     fun `should create context and get bean successfully`() {
         // given
-        val context = ClassPathXmlApplicationContext("applicationContext")
+        val context = ClassPathXmlApplicationContext("applicationContext.xml")
 
         // when
         val firstService = context.getBean("firstService")
@@ -51,6 +51,6 @@ class ServicesTest {
         val thirdService = context.getBean("thirdService")
 
         // then
-        assertEquals("I am thirdService", thirdService.toString())
+        assertEquals("I am anotherThirdService", thirdService.toString())
     }
 }

@@ -53,6 +53,6 @@ class ServicesTest {
         val fourthService = context.getBean("fourthService")
 
         // then
-        assertEquals("I am fourthService", fourthService.toString())
+        assertEquals("I am anotherFourthService", fourthService.toString())
     }
 }
