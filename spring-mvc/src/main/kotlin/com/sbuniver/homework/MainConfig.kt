@@ -6,8 +6,4 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc
 
 @Configuration
 @ServletComponentScan("com.sbuniver.homework")
-@EnableWebMvc
-class MainConfig {
-
-
-}
+class MainConfig

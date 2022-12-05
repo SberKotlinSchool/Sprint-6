@@ -21,7 +21,7 @@ class ApiController {
     @GetMapping("/{id}/view")
     fun getById(@PathVariable id: Int) = addressBook.get(id)
 
-    @PatchMapping("/edit")
+    @PutMapping("/edit")
     fun editById(@RequestBody address: AddressDto) = addressBook.update(address)
 
     @DeleteMapping("/{id}/delete")

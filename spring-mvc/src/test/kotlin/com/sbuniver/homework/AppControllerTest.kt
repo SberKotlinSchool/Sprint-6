@@ -6,13 +6,11 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import org.springframework.web.servlet.function.RequestPredicates.param
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -44,6 +42,7 @@ class AppControllerTest {
                 MockMvcRequestBuilders
                     .post("/app/add")
                     .param("name", "Newman")
+                    .param("name", "Newman")
                     .param("city", "New York")
                     .param("street", "New Street")
                     .param("home", "100")
@@ -66,11 +65,31 @@ class AppControllerTest {
             .andExpect(MockMvcResultMatchers.content().string(StringContains("Andrey")))
 
         mock
-            .perform(MockMvcRequestBuilders.delete("/app/1/delete"))
+            .perform(MockMvcRequestBuilders.delete("/app/5/delete"))
             .andDo(MockMvcResultHandlers.print())
 
         mock.perform(MockMvcRequestBuilders.get("/app/list"))
             .andDo(MockMvcResultHandlers.print())
-            .andExpect(MockMvcResultMatchers.content().string(not(StringContains("Andrey"))))
+            .andExpect(MockMvcResultMatchers.content().string(not(StringContains("Sergey"))))
+    }
+
+    @Test
+    fun editAddressTest() {
+        mock.perform(
+            MockMvcRequestBuilders
+                .put("/app/6/edit")
+                .param("name", "Newman")
+                .param("name", "Newman")
+                .param("city", "New York")
+                .param("street", "New Street")
+                .param("home", "100")
+        )
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(status().is3xxRedirection)
+
+        mock.perform(MockMvcRequestBuilders.get("/app/list"))
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(MockMvcResultMatchers.content().string(not(StringContains("John"))))
+            .andExpect(MockMvcResultMatchers.content().string(StringContains("Newman")))
     }
 }

@@ -35,7 +35,7 @@ class AppController {
         return "viewOne"
     }
 
-    @PostMapping("/{id}/edit")
+    @PutMapping("/{id}/edit")
     fun editDo(
         @PathVariable id: Int,
         @ModelAttribute addForm: AddForm,
