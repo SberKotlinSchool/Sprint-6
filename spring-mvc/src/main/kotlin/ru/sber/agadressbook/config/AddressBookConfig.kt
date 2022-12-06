@@ -16,16 +16,18 @@ import javax.sql.DataSource
 
 @Configuration
 @ComponentScan("ru.sber.agadressbook")
-@ServletComponentScan("ru.sber.agadressbook.servlets", "ru.sber.agadressbook.filters")
+@ServletComponentScan("ru.sber.agadressbook.filters")
 class AddressBookConfig : WebSecurityConfigurerAdapter() {
 
     @Autowired
     private lateinit var datasource: DataSource
 
     override fun configure(http: HttpSecurity) {
-        http.authorizeHttpRequests()
-            .antMatchers("/addressbook/*").authenticated()
-            .antMatchers("/addressbook/api/**").hasRole("API")
+        http .csrf().disable()
+            .authorizeRequests()
+            .antMatchers("/addressbook/api/**").hasAnyRole("ADMIN", "API")
+            .antMatchers("/addressbook/**").hasAnyRole("USER", "API", "ADMIN")
+            .anyRequest().authenticated()
             .and()
             .formLogin()
             .defaultSuccessUrl("/addressbook/list",true)

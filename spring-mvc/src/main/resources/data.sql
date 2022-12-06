@@ -5,4 +5,4 @@ CREATE TABLE USERS (
 
 CREATE TABLE AUTHORITIES  (
                        username          VARCHAR2(255),
-                       AUTHORITY  VARCHAR(255) NOT NULL,);
+                       AUTHORITY  VARCHAR(255) NOT NULL);

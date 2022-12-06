@@ -5,10 +5,12 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.jdbc.datasource.DriverManagerDataSource
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import javax.sql.DataSource
 
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
+@EnableWebSecurity
 //удалять может только пользователь superadmin
 //пользователь user имеет доступ только на просмотр
 //пользователь admin, имеет доступ к /adrressbook/api/*
@@ -26,6 +28,8 @@ class DatabaseConfig {
 
     @Value("\${spring.datasource.password}")
     private lateinit var dbPassword: String
+
+    @Value("")
 
     @Bean
     fun dataSource(): DataSource =
