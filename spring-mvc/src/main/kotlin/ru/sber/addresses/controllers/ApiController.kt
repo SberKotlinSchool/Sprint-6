@@ -3,16 +3,13 @@ package ru.sber.addresses.controllers
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.bind.annotation.RestController
+import ru.sber.addresses.dto.Address
 import ru.sber.addresses.requests.CreateAddressRq
-import ru.sber.addresses.requests.DeleteAddressRq
-import ru.sber.addresses.requests.GetAddressRq
 import ru.sber.addresses.requests.UpdateAddressRq
 import ru.sber.addresses.services.AddressService
-import java.net.URI
 
 @RestController
-@RequestMapping(path = ["/api"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping(path = ["/api"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class ApiController(
     private val addressService: AddressService
 ) {
@@ -20,25 +17,29 @@ class ApiController(
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun createAddress(@RequestBody rq: CreateAddressRq) =
         addressService.createAddress(rq)
-            .let { address -> ResponseEntity.created(URI("/app/${address.id}")).build<Unit>() }
+            .let { address -> ResponseEntity.ok(address.id) }
+
+    @GetMapping("{id}/view")
+    fun getAddress(@PathVariable("id") id: Long) =
+        ResponseEntity.ok(addressService.getAddresses(id))
 
     @GetMapping("view")
-    fun getAddresses(@RequestBody rq: GetAddressRq) =
-        ResponseEntity.ok(addressService.getAddresses(rq.id))
+    fun getAddresses() =
+        ResponseEntity.ok(addressService.getAddresses())
 
-    @PutMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun updateAddress(@RequestBody rq: UpdateAddressRq): ResponseEntity<Unit> {
-        val result = addressService.updateAddress(rq.id, rq.address)
+    @PutMapping("{id}/edit")
+    fun updateAddress(@PathVariable("id") id: Long, @RequestBody rq: UpdateAddressRq): ResponseEntity<Address> {
+        val result = addressService.updateAddress(id, rq.address)
         return if (result != null) {
-            ResponseEntity.ok().build()
+            ResponseEntity.ok(result)
         } else {
             ResponseEntity.notFound().build()
         }
     }
 
-    @DeleteMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun deleteAddress(@RequestBody rq: DeleteAddressRq): ResponseEntity<Unit> {
-        val result = addressService.deleteAddress(rq.id)
+    @DeleteMapping("{id}/delete")
+    fun deleteAddress(@PathVariable("id") id: Long): ResponseEntity<Unit> {
+        val result = addressService.deleteAddress(id)
         return if (result != null) {
             ResponseEntity.ok().build()
         } else {
