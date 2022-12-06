@@ -52,15 +52,6 @@ class AddressBookRestControllerTest {
     @Test()
     fun getRecordListTest() {
 
-        val fileName = "./myfile.txt"
-        val myfile = File(fileName)
-
-        myfile.printWriter().use { out ->
-
-            out.println("First line")
-            out.println("Second line")
-        }
-
         httpMock.perform(
             MockMvcRequestBuilders.get(getUrl("/addressbook/api/list", false))
                 .contentType(MediaType.APPLICATION_JSON)
