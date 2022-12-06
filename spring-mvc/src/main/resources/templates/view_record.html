@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thymeleaf Variables</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<p style="text-align:center"><strong>View Record</strong></p>
+<form th:method="PATCH" th:action="@{/addressbook/{id}/edit(id=${record.id})}" th:object="${record}">
+    <div th:object="${record}">
+        <p style="text-align:center"><strong><input name="firstName" id="firstName" type="text"
+                                                    th:value="${record.firstName}"
+                                                    value="Name"/></strong></p>
+        <p style="text-align:center"><strong><input name="address" id="address" type="text" th:value="${record.address}"
+                                                    value="Address"/></strong></p>
+        <p style="text-align:center"><strong><input name="phoneNumber" id="phoneNumber" type="text"
+                                                    th:value="${record.phoneNumber}" value="Phone"/></strong></p>
+
+        <p style="text-align:center"><strong> <input type="submit" , value="Update record"/></strong></p>
+    </div>
+</form>
+
+
+<form th:method="DELETE" th:action="@{/addressbook/{id}/delete(id=${record.getId()})}">
+    <p style="text-align:center"><strong> <input type="submit" , value="Delete record"/></strong></p>
+</form>
+
+<a href="/addressbook/list">Назад</a>
+
+
+</body>
+</html>
