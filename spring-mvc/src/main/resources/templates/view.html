@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>View</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+</head>
+<body>
+
+<form>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>Phone Number</td>
+        </tr>
+        <tr th:object="${entry}">
+            <td th:text=*{name}></td>
+            <td th:text=*{phoneNumber}></td>
+        </tr>
+    </table>
+</form>
+</body>

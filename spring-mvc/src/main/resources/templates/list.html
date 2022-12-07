@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+<h2>List</h2>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Phone Number</th>
+  </tr>
+  <tr th:each="entry: ${list}">
+    <td th:text="${entry.name}"></td>
+    <td th:text="${entry.phoneNumber}"></td>
+  </tr>
+</table>
+</body>
