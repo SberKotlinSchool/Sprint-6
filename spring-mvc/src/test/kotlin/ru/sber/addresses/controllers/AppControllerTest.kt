@@ -98,7 +98,7 @@ internal class AppControllerTest {
     @Test
     fun viewAddressGetTestWhenRedirection() {
         addAddress().also { counter++ }
-        mockMvc.perform(MockMvcRequestBuilders.get("/app/${counter + 1}/view"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/app/${counter + 100}/view"))
             .andExpect(MockMvcResultMatchers.status().is3xxRedirection)
             .andExpect(MockMvcResultMatchers.view().name("redirect:/app/list"))
     }
@@ -114,7 +114,7 @@ internal class AppControllerTest {
     @Test
     fun editAddressGetTestWhenRedirection() {
         addAddress().also { counter++ }
-        mockMvc.perform(MockMvcRequestBuilders.get("/app/${counter + 1}/edit"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/app/${counter + 100}/edit"))
             .andExpect(MockMvcResultMatchers.status().is3xxRedirection)
             .andExpect(MockMvcResultMatchers.view().name("redirect:/app/list"))
     }
