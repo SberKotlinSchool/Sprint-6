@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>Изменить запись</h2>
+<div>
+    <form method="post" th:object="${address}">
+        <p>ФИО: <input type="text" th:field="*{fullName}"/></p>
+        <span th:if="#{fields.hasErrors('fullName')}" th:errors="*{fullName}" class="error"></span>
+        <p>Почтовый адрес: <input type="text" th:field="*{postAddress}"/></p>
+        <span th:if="#{fields.hasErrors('postAddress')}" th:errors="*{postAddress}" class="error"></span>
+        <p>Номер телефона: <input type="text" th:field="*{phoneNumber}"/></p>
+        <span th:if="#{fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" class="error"></span>
+        <p>Адрес электронной почты: <input type="text" th:field="*{email}"/></p>
+        <span th:if="#{fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>
+        <p><input type="submit" value="Сохранить"/>
+    </form>
+</div>
+<div>
+    <form method="get" th:action="@{/app/list}">
+        <p>
+            <button>Отменить редактирование</button>
+        </p>
+    </form>
+</div>
+</body>
+</html>

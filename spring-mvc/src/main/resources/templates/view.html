@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>Запись из адресной книги</h2>
+<div>
+    <table border="1" th:object="${address}">
+        <tr>
+            <td>ФИО</td>
+            <td th:text="*{fullName}"></td>
+        </tr>
+        <tr>
+            <td>Почтовый адрес</td>
+            <td th:text="*{postAddress}"></td>
+        </tr>
+        <tr>
+            <td>Номер телефона</td>
+            <td th:text="*{phoneNumber}"></td>
+        </tr>
+        <tr>
+            <td>Адрес электронной почты</td>
+            <td th:text="*{email}"></td>
+        </tr>
+    </table>
+</div>
+<div>
+    <form method="get" th:action="@{/app/list}">
+        <p>
+            <button>Вернуться к списку</button>
+        </p>
+    </form>
+</div>
+</body>
+</html>
