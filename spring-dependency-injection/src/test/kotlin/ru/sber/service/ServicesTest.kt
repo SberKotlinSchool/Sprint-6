@@ -10,6 +10,7 @@ import ru.sber.services.PrimaryBeanInjectionService
 import ru.sber.services.QualifierBeanInjectionService
 import ru.sber.services.SetterInjectionService
 import ru.sber.services.SeveralBeanInjectionService
+import ru.sber.services.SeveralServicesConfig
 import kotlin.test.assertEquals
 
 class ServicesTest {
@@ -53,7 +54,7 @@ class ServicesTest {
     @Test
     fun `severalBeanInjectionService should have two dependencies`() {
         // given
-        val context = AnnotationConfigApplicationContext(ServicesConfig::class.java)
+        val context = AnnotationConfigApplicationContext(SeveralServicesConfig::class.java)
 
         // when
         val severalBeanInjectionService = context.getBean("severalBeanInjectionService") as SeveralBeanInjectionService
