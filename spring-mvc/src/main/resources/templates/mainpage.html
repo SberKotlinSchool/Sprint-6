@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+    h1 {
+        background: #F3FFFF;
+        color: blue;
+        padding: 2px;
+        text-align: center;
+    }
+    hr {
+        border: none; /* Убираем границу */
+        background-color: blue; /* Цвет линии */
+        color: blue; /* Цвет линии для IE6-7 */
+        height: 5px; /* Толщина линии */
+   }
+       .noteline{
+        border: none; /* Убираем границу */
+        background-color: blue; /* Цвет линии */
+        color: light-blue; /* Цвет линии для IE6-7 */
+        height: 2px; /* Толщина линии */
+   }
+   p{
+        text-align: center
+        }
+   .btn-group{
+    background-color: #F3FFFF;
+    border: 1px solid blue;
+    color: white;
+    padding: 10px 24px;
+    float: left;
+}
+  </style>
+</head>
+<body>
+<h1 color = "#B0E0E6" th:text="${login} + '`s' + '  Notebook'" />
+<hr>
+<div  class="form-inline" th:each="note, iStat : ${notes}">
+<!--    <input th:value="${note}">-->
+    <form method="post" th:action="@{/note/edit}">
+        <input type="hidden" name="login" th:value="${login}">
+        <input type="hidden" name="pass" th:value="''">
+        <input type="hidden" name="id" th:value="${iStat.index}">
+        <input name="note" th:value="${note}">
+        <button>Edit</button>
+    </form>
+    <form method="post" th:action="@{/note/delete}">
+        <input type="hidden" name="login" th:value="${login}">
+        <input type="hidden" name="pass" th:value="''">
+        <input type="hidden" name="id" th:value="${iStat.index}">
+        <button>Delete</button>
+    </form>
+    <hr class="noteline">
+</div>
+<div class="btn-group">
+    <form method="post" th:action="@{/note/new}" >
+        <input name="note" placeholder="Введите заметку" >
+        <input type="hidden" name="login" th:value="${login}">
+        <input type="hidden" name="pass" th:value="''">
+        <button>Add</button>
+    </form>
+</div>
+</body>
+</html>
