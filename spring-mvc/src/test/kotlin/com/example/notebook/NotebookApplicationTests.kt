@@ -31,7 +31,7 @@ class NotebookApplicationTests {
 	fun deleteNoteTest() {
 		mockMvc.perform(
 			MockMvcRequestBuilders.post("/note/delete")
-				.param("id","1")
+				.param("id","0")
 				.param("login", "starikovamari")
 				.param("pass", "")
 		).andExpect(MockMvcResultMatchers.status().`is`(200))
@@ -42,7 +42,7 @@ class NotebookApplicationTests {
 	fun editNoteTest() {
 		mockMvc.perform(
 			MockMvcRequestBuilders.post("/note/edit")
-				.param("id","1")
+				.param("id","0")
 				.param("note", "sixth note")
 				.param("login", "starikovamari")
 				.param("pass", "")
