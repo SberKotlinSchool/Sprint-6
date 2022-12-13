@@ -67,6 +67,7 @@ public class FileServerTest extends TestCase {
                 Thread.currentThread().getStackTrace()[2].getMethodName());
         port = ThreadLocalRandom.current().nextInt(3000, 9000);
         final ServerSocket socket = new ServerSocket(port);
+        System.out.println("Server started");
         socket.setReuseAddress(true);
         final VFilesystem fs = getFilesystem();
         
