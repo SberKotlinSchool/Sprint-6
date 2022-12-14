@@ -23,14 +23,13 @@ class ServicesTest {
     }
 
     @Test
-    //TODO можно и нужно поправить сам тест (постарайтесь решить
-    // без прямого обращения к методу destroy). В остальных тестах код теста править не нужно.
     fun `getBean should return bean and call destroy`() {
         // given
         val context = AnnotationConfigApplicationContext(ServicesConfig::class.java)
 
         // when
         val callbackBean = context.getBean("callbackBean") as CallbackBean
+        context.close()
 
         // then
         assertEquals("Sorry, but I really have to go.", callbackBean.greeting)
@@ -38,7 +37,7 @@ class ServicesTest {
 
     //TODO инициализацию свойств postProcessBeforeInitializationOrderMessage
     // и postProcessAfterInitializationOrderMessage для бина combinedBean необходимо реализовать в бине MyBeanPostProcessor
-
+//В остальных тестах код теста править не нужно.
     @Test
     fun `getBean should return bean and call the methods in the correct order`() {
         // given
@@ -49,15 +48,15 @@ class ServicesTest {
 
         // then
         assertEquals(
-            "postProcessBeforeInitialization() is called",
-            combinedBean.postProcessBeforeInitializationOrderMessage
+                "postProcessBeforeInitialization() is called",
+                combinedBean.postProcessBeforeInitializationOrderMessage
         )
         assertEquals("postConstruct() is called", combinedBean.postConstructOrderMessage)
         assertEquals("afterPropertiesSet() is called", combinedBean.afterPropertiesSetOrderMessage)
         assertEquals("customInit() is called", combinedBean.customInitOrderMessage)
         assertEquals(
-            "postProcessAfterInitialization() is called",
-            combinedBean.postProcessAfterInitializationOrderMessage
+                "postProcessAfterInitialization() is called",
+                combinedBean.postProcessAfterInitializationOrderMessage
         )
     }
 
@@ -68,7 +67,7 @@ class ServicesTest {
 
         // when
         val beanFactoryPostProcessorBean =
-            context.getBean("beanFactoryPostProcessorBean") as BeanFactoryPostProcessorBean
+                context.getBean("beanFactoryPostProcessorBean") as BeanFactoryPostProcessorBean
 
         // then
         assertEquals("Done!", beanFactoryPostProcessorBean.preConfiguredProperty)
