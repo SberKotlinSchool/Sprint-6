@@ -23,6 +23,8 @@ class ServicesTest {
     }
 
     @Test
+    //TODO можно и нужно поправить сам тест (постарайтесь решить
+    // без прямого обращения к методу destroy). В остальных тестах код теста править не нужно.
     fun `getBean should return bean and call destroy`() {
         // given
         val context = AnnotationConfigApplicationContext(ServicesConfig::class.java)
@@ -33,6 +35,9 @@ class ServicesTest {
         // then
         assertEquals("Sorry, but I really have to go.", callbackBean.greeting)
     }
+
+    //TODO инициализацию свойств postProcessBeforeInitializationOrderMessage
+    // и postProcessAfterInitializationOrderMessage для бина combinedBean необходимо реализовать в бине MyBeanPostProcessor
 
     @Test
     fun `getBean should return bean and call the methods in the correct order`() {
