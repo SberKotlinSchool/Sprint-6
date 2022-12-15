@@ -35,9 +35,6 @@ class ServicesTest {
         assertEquals("Sorry, but I really have to go.", callbackBean.greeting)
     }
 
-    //TODO инициализацию свойств postProcessBeforeInitializationOrderMessage
-    // и postProcessAfterInitializationOrderMessage для бина combinedBean необходимо реализовать в бине MyBeanPostProcessor
-//В остальных тестах код теста править не нужно.
     @Test
     fun `getBean should return bean and call the methods in the correct order`() {
         // given
