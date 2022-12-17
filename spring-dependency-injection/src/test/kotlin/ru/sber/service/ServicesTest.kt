@@ -3,13 +3,7 @@ package ru.sber.service
 import org.junit.jupiter.api.Test
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import ru.sber.config.ServicesConfig
-import ru.sber.services.ConditionalBeanInjectionService
-import ru.sber.services.ConstructorInjectionService
-import ru.sber.services.FieldInjectionService
-import ru.sber.services.PrimaryBeanInjectionService
-import ru.sber.services.QualifierBeanInjectionService
-import ru.sber.services.SetterInjectionService
-import ru.sber.services.SeveralBeanInjectionService
+import ru.sber.services.*
 import kotlin.test.assertEquals
 
 class ServicesTest {
@@ -60,8 +54,8 @@ class ServicesTest {
 
         // then
         assertEquals(
-            "SeveralBeanInjectionService(services=[FirstServiceImpl, SecondServiceImpl])",
-            severalBeanInjectionService.toString()
+                "SeveralBeanInjectionService(services=[FirstServiceImpl, SecondServiceImpl])",
+                severalBeanInjectionService.toString()
         )
     }
 
@@ -75,8 +69,8 @@ class ServicesTest {
 
         // then
         assertEquals(
-            "PrimaryBeanInjectionService(primaryService=SecondPrimaryServiceImpl)",
-            primaryBeanInjectionService.toString()
+                "PrimaryBeanInjectionService(primaryService=SecondPrimaryServiceImpl)",
+                primaryBeanInjectionService.toString()
         )
     }
 
@@ -87,12 +81,12 @@ class ServicesTest {
 
         // when
         val qualifierBeanInjectionService =
-            context.getBean("qualifierBeanInjectionService") as QualifierBeanInjectionService
+                context.getBean("qualifierBeanInjectionService") as QualifierBeanInjectionService
 
         // then
         assertEquals(
-            "QualifierBeanInjectionService(qualifierServices=[SecondQualifierServiceImpl])",
-            qualifierBeanInjectionService.toString()
+                "QualifierBeanInjectionService(qualifierServices=[SecondQualifierServiceImpl])",
+                qualifierBeanInjectionService.toString()
         )
     }
 
@@ -107,12 +101,12 @@ class ServicesTest {
 
         // when
         val conditionalBeanInjectionService =
-            context.getBean("conditionalBeanInjectionService") as ConditionalBeanInjectionService
+                context.getBean("conditionalBeanInjectionService") as ConditionalBeanInjectionService
 
         // then
         assertEquals(
-            "ConditionalBeanInjectionService(conditionalService=ConditionalService)",
-            conditionalBeanInjectionService.toString()
+                "ConditionalBeanInjectionService(conditionalService=ConditionalService)",
+                conditionalBeanInjectionService.toString()
         )
     }
 }
