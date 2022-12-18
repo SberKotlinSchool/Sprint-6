@@ -1,6 +1,8 @@
 import ru.sber.filesystem.VFilesystem
-import java.io.IOException
+import ru.sber.filesystem.VPath
+import java.io.*
 import java.net.ServerSocket
+
 
 /**
  * A basic and very limited implementation of a file server that responds to GET
@@ -27,44 +29,24 @@ class FileServer {
          * ServerSocket object.
          */
         while (true) {
-
-            // TODO Delete this once you start working on your solution.
-            //throw new UnsupportedOperationException();
-
-            // TODO 1) Use socket.accept to get a Socket object
-
-
-            /*
-            * TODO 2) Using Socket.getInputStream(), parse the received HTTP
-            * packet. In particular, we are interested in confirming this
-            * message is a GET and parsing out the path to the file we are
-            * GETing. Recall that for GET HTTP packets, the first line of the
-            * received packet will look something like:
-            *
-            *     GET /path/to/file HTTP/1.1
-            */
-
-
-            /*
-             * TODO 3) Using the parsed path to the target file, construct an
-             * HTTP reply and write it to Socket.getOutputStream(). If the file
-             * exists, the HTTP reply should be formatted as follows:
-             *
-             *   HTTP/1.0 200 OK\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *   FILE CONTENTS HERE\r\n
-             *
-             * If the specified file does not exist, you should return a reply
-             * with an error code 404 Not Found. This reply should be formatted
-             * as:
-             *
-             *   HTTP/1.0 404 Not Found\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *
-             * Don't forget to close the output stream.
-             */
+            val connection = socket.accept()
+            BufferedReader(InputStreamReader(connection.getInputStream())).use { reader ->
+                PrintWriter(BufferedWriter(OutputStreamWriter(connection.getOutputStream()))).use { writer ->
+                    val line = reader.readLine()
+                    val path = VPath(line.split(" ")[1])
+                    val content = fs.readFile(path)
+                    if (content!=null && content.isNotEmpty()) {
+                        writer.write("HTTP/1.0 200 OK\r\n");
+                        writer.write("Server: FileServer\r\n");
+                        writer.write("\r\n");
+                        writer.write(content + "\r\n");
+                    } else {
+                        writer.write("HTTP/1.0 404 Not Found\r\n");
+                        writer.write("Server: FileServer\r\n");
+                        writer.write("\r\n");
+                    }
+                }
+            }
         }
     }
 }
