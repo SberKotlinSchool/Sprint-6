@@ -13,7 +13,7 @@ class MyBeanFactoryPostProcessor : BeanFactoryPostProcessor {
             method.isAnnotationPresent(PostConstruct::class.java)
         }?.let { initMethod ->
             beanFactory.beanDefinitionNames.forEach { bdn ->
-                beanFactory.getBeanDefinition(bdn)?.let { bd ->
+                beanFactory.getBeanDefinition(bdn).let { bd ->
                     bd.beanClassName?.let {beanClassName ->
                         Class.forName(beanClassName).also { clazz ->
                             clazz.genericInterfaces.singleOrNull { it.typeName == "ru.sber.services.BeanFactoryPostProcessorInterface" }
