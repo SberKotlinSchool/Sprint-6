@@ -3,10 +3,11 @@ package ru.sber.springmvc.service
 import org.springframework.stereotype.Service
 import ru.sber.springmvc.exception.AddressBookException
 import ru.sber.springmvc.model.AddressBookRow
+import java.util.concurrent.ConcurrentHashMap
 
 @Service
 class AddressBookService {
-    private val book = HashMap<String, String>()
+    private val book = ConcurrentHashMap<String, String>()
 
     fun add(row: AddressBookRow) {
         if (book.containsKey(row.name)) {
