@@ -1,8 +1,0 @@
-
-class FileServerUtilsTest {
-
-    fun goodBodyTest() {
-
-    }
-
-}
