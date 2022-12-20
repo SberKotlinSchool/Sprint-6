@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All addresses</title>
+</head>
+<body>
+    <form method="post" action="/app/add">
+        <input type="text" name="name" placeholder="Введите имя">
+        <input type="text" name="address" placeholder="Введите адрес">
+        <button>Add row</button>
+    </form>
+    <table>
+        <tr><th>Name</th><th>Address</th></tr>
+        <tr th:each="row: ${bookRows}">
+            <td th:text="${row.name}"></td>
+            <td th:text="${row.address}"></td>
+            <td><a th:href="'/app/'+${row.name}+'/view'">View</a></td>
+            <td>
+                <form method="post" th:action="'/app/'+${row.name}+'/delete'"
+                      onsubmit="return confirm('Are you sure?');">
+                    <input type="submit" value="Delete">
+                </form>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
