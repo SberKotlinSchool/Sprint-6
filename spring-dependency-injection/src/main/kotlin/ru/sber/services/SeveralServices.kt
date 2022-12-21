@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
+import org.springframework.beans.factory.annotation.Qualifier
+import kotlin.reflect.typeOf
 
 interface ServiceInterface
 
@@ -25,7 +27,7 @@ class SecondServiceImpl : ServiceInterface {
 @Component
 class SeveralBeanInjectionService {
     @Autowired
-    lateinit var services: ArrayList<ServiceInterface>
+    lateinit var services: Set<ServiceInterface>
 
     override fun toString(): String {
         return "SeveralBeanInjectionService(services=$services)"
