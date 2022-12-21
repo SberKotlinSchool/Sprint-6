@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit record page</title>
+</head>
+<body>
+
+<form th:method="post" th:action="@{app/{id}/edit(id=${record.id})}" >
+    <label for="name">Enter  name: </label>
+    <input type="text" name = "name" id="name"/>
+    <label for="address">Enter  address: </label>
+    <input type="text"  name = "address" id="address"/>
+
+
+    <br/>
+    <input type="submit" value="Login"/>
+</form>
+
+</body>
+</html>

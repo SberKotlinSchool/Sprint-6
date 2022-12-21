@@ -2,14 +2,12 @@ package ru.sber.springmvc.controllers
 
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ModelAttribute
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.*
 import ru.sber.springmvc.dao.AddressBookRepository
 import ru.sber.springmvc.domain.Record
 
 @Controller
+@RequestMapping("/app")
 class AddressBookController {
 
     private final val addressBook: AddressBookRepository
@@ -25,21 +23,38 @@ class AddressBookController {
 //    /app/{id}/delete удаление конкретной записи
 //    /api/... с теми же действиями, но только будет применяться json для запроса и ответов.
 
-    @PostMapping("/app/add")
-    fun addRecord(@ModelAttribute("record") record: Record): String{
-        addressBook.addRecord(3, record )//TODO добавить метод по генерации ID?
+    @PostMapping("/add")
+    fun addRecord(@ModelAttribute("record") record: Record): String {
+        addressBook.addRecord(record)
         return "success"
     }
 
-    @GetMapping("/app/list")
+    @GetMapping("/list")
     fun showAll(model: Model): String {
         model.addAttribute("records", addressBook.getAll())
         return "showAll"
     }
 
-    @GetMapping("/app/view")
-    fun getById(@RequestParam("id") id: Long, model: Model): String? {
+    @GetMapping("/{id}/view")
+    fun getById(@PathVariable("id") id: Long, model: Model): String? {
         model.addAttribute("recordById", addressBook.getById(id))
         return "getById"
+    }
+
+    @GetMapping("/{id}/delete")
+    fun delete(@PathVariable(name = "id") id: Long) {
+        addressBook.deleteById(id)
+    }
+
+    @GetMapping("/{id}/edit")
+    fun editGet(model: Model, @PathVariable id: Long): String {
+        model.addAttribute("record", addressBook.getById(id))
+        return "edit"
+    }
+
+    @PostMapping("/{id}/edit")
+    fun editPost(record: Record, @PathVariable id: String): String {
+        addressBook.addRecord(record)
+        return "redirect:/app/list"
     }
 }
