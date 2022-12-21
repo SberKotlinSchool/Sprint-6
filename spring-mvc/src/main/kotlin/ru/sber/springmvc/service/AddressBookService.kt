@@ -41,4 +41,7 @@ class AddressBookService {
         book.remove(id)
     }
 
+    internal fun deleteAll(){
+        book.clear()
+    }
 }
