@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Список адресов</title>
+    </head>
+    <body>
+        <div th:text="${list}"></div>
+        <div th:each="mapItem:${res}">
+            <div th:utext="${mapItem.key}"></div><br>
+            <div th:utext="${mapItem.value.firstName}"></div><br>
+            <div th:utext="${mapItem.value.lastName}"></div><br>
+            <div th:utext="${mapItem.value.email}"></div><br>
+            <div th:utext="${mapItem.value.phone}"></div><br>
+            <div th:utext="${mapItem.value.address}"></div><br>
+        </div>
+        <p><a href="http://localhost:8080/app">Вернуться в меню</a> </p>
+    </body>
+
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <div th:text="'firstName: ' + ${res.firstName}"></div>
+        <div th:text="'lastName: ' + ${res.lastName}"></div>
+        <div th:text="'email: ' + ${res.email}"></div>
+        <div th:text="'phone: ' + ${res.phone}"></div>
+        <div th:text="'address: ' + ${res.address}"></div>
+
+        <p><a href="http://localhost:8080/app">Вернуться в меню</a> </p>
+    </body>
+</html>

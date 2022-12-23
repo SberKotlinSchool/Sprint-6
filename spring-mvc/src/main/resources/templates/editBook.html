@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Измененный контакт</title>
+    </head>
+    <body>
+        <form method="post">
+            <p> Ведите данные для новой записи </p>
+            <input name="firstName" placeholder="firstName" th:value="${res.firstName}"/>
+            <p></p>
+            <input name="lastName" placeholder="lastName" th:value="${res.lastName}"/>
+            <p></p>
+            <input name="email" placeholder="email" th:value="${res.email}"/>
+            <p></p>
+            <input name="phone" placeholder="phone" th:value="${res.phone}"/>
+            <p></p>
+            <input name="address" placeholder="address" th:value="${res.address}"/>
+            <p>
+                <button>Отправить</button>
+            </p>
+        </form>
+    </body>
+</html>
