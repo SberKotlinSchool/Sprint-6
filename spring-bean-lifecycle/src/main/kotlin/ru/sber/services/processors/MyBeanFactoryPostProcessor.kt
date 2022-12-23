@@ -8,18 +8,6 @@ import javax.annotation.PostConstruct
 @Component
 class MyBeanFactoryPostProcessor : BeanFactoryPostProcessor {
     override fun postProcessBeanFactory(beanFactory: ConfigurableListableBeanFactory) {
-/*
-        beanFactory.beanDefinitionNames.forEach { defName ->
-            val currentBean = beanFactory.getBeanDefinition(defName)
-            Class.forName(currentBean.beanClassName).interfaces.forEach { c ->
-                val method = c.methods.find {
-                    m -> m.isAnnotationPresent(PostConstruct::class.java)
-                }
-                println(method?.name)
-                currentBean.initMethodName = method?.name
-            }
-        }
-*/
         beanFactory.beanDefinitionNames.forEach {
             val currentBean = beanFactory.getBeanDefinition(it)
             val className = currentBean.beanClassName
