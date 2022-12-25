@@ -12,7 +12,7 @@ import ru.sber.springmvc.domain.Record
 class AddressBookController @Autowired constructor(val addressBook: AddressBookRepository) {
 
     @GetMapping("/add")
-    fun addRecord():String{
+    fun addRecord(): String {
         return "newRecord"
     }
 
@@ -47,7 +47,7 @@ class AddressBookController @Autowired constructor(val addressBook: AddressBookR
     }
 
     @PostMapping("{id}/edit")
-    fun editPost(@ModelAttribute("record")record: Record, @PathVariable("id") id: Long): String {
+    fun editPost(@ModelAttribute("record") record: Record, @PathVariable("id") id: Long): String {
         addressBook.updateRecord(id, record)
         return "redirect:/app/list"
     }

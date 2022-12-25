@@ -25,7 +25,8 @@ class AddressBookRestController @Autowired constructor(val addressBook: AddressB
     }
 
     @DeleteMapping("/{id}/delete")
-    fun delete(@PathVariable(name = "id") id: Long) {
+    fun delete(@PathVariable("id") id: Long): ResponseEntity<Record?> {
         addressBook.deleteById(id)
+        return ResponseEntity.ok(addressBook.deleteById(id))
     }
 }

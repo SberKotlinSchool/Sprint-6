@@ -35,8 +35,7 @@ class AddressBookRepository {
         return records.getValue(id)
     }
 
-    fun deleteById(id: Long) {
-        records.remove(id)
+    fun deleteById(id: Long): Record? {
+      return  records.remove(id)
     }
-
 }

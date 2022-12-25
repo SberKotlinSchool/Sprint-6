@@ -14,15 +14,11 @@ import java.time.LocalDateTime
 class AuthenticationFilter : Filter {
     override fun init(filterConfig: FilterConfig?) {
         super.init(filterConfig)
-        println("AuthenticationFilter is started")
     }
 
     override fun doFilter(req: ServletRequest, res: ServletResponse, chain: FilterChain) {
         val request = req as HttpServletRequest
         val response = res as HttpServletResponse
-
-        val requestPath: String = request.getRequestURI()
-        println("requestPath from AuthFilter  $requestPath")
 
         if (request.cookies == null ||
             request.cookies.none {
@@ -30,7 +26,6 @@ class AuthenticationFilter : Filter {
                 // && LocalDateTime.parse(it.value) < LocalDateTime.now()
             }
         ) {
-            println("перенаправление на ${"/login"}")
             response.sendRedirect("/login")
         } else {
             chain.doFilter(req, res)
