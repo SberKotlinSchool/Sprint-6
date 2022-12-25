@@ -14,7 +14,6 @@
 	<name>spring-mvc</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>1.8</java.version>
 		<maven.compiler.source>8</maven.compiler.source>
 		<maven.compiler.target>8</maven.compiler.target>
 		<kotlin.version>1.7.20</kotlin.version>
