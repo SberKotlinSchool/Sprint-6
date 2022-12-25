@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Person's info page</title>
+</head>
+<body>
+<h2>Person's info</h2>
+<a th:href="@{/persons}">back</a>
+<table cellspacing="0" border="3" cellpadding="10">
+    <tr>
+        <td>Name</td>
+        <td th:text="${person.name}"></td>
+    </tr>
+    <tr>
+        <td>City</td>
+        <td th:text="${person.city}"></td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>List of persons page</title>
+</head>
+<body>
+<h2>List of persons</h2>
+<table cellspacing="0" border="3" cellpadding="10">
+    <tr>
+        <th>Name</th>
+        <th>City</th>
+        <th colspan="4">Action</th>
+    </tr>
+    <tr th:each="person : ${persons}">
+        <td th:text="${person.name}"></td>
+        <td th:text="${person.city}"></td>
+        <td><a th:href="@{/persons/{id}/view(id=${person.id})}">view</a></td>
+        <td><a th:href="@{/persons/{id}/edit(id=${person.id})}">edit</a></td>
+        <td><a th:href="@{/persons/{id}/delete(id=${person.id})}">delete</a></td>
+    </tr>
+</table>
+<p><a th:href="@{/persons/add}">add</a></p>
+</body>
+</html>
