@@ -115,4 +115,24 @@ class ServicesTest {
             conditionalBeanInjectionService.toString()
         )
     }
+
+    @Test
+    fun `conditionalBeanInjectionService should return AnotherConditionalService dependency`() {
+        // given
+        val context = AnnotationConfigApplicationContext().apply {
+            environment.setActiveProfiles("qa")
+            register(ServicesConfig::class.java)
+            refresh()
+        }
+
+        // when
+        val conditionalBeanInjectionService =
+            context.getBean("conditionalBeanInjectionService") as ConditionalBeanInjectionService
+
+        // then
+        assertEquals(
+            "ConditionalBeanInjectionService(conditionalService=AnotherConditionalService)",
+            conditionalBeanInjectionService.toString()
+        )
+    }
 }
