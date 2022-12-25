@@ -22,12 +22,14 @@
 <table class="records">
     <thead>
     <tr>
+        <th>ID</th>
         <th>Name</th>
         <th>Address</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="record : ${records}">
+        <td th:text="${record.id}">ID</td>
         <td th:text="${record.name}">Name</td>
         <td th:text="${record.address}">Address</td>
     </tr>

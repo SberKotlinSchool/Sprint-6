@@ -7,13 +7,11 @@ import ru.sber.springmvc.domain.*
 
 @Service
 interface AddressBookService {
-    fun insert(record: Record): Record
+    fun insert(record: Record): Record?
 
-    fun getAll(): ConcurrentHashMap<Long, Record>
+    fun getAll(): List<Record>
 
-    fun getByName(name: String): List<Record?>?
+    fun getById(id: Long): Record?
 
-    fun getById(id: Long?): Optional<Record?>?
-
-    fun deleteById(id: Long?)
+    fun deleteById(id: Long)
 }

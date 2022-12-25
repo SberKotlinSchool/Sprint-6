@@ -5,16 +5,17 @@
     <title>Edit record page</title>
 </head>
 <body>
-
-<form th:method="post" th:action="@{app/{id}/edit(id=${record.id})}" >
+<form th:method="POST" th:action="@{/app/{id}/edit(id=${record.id})}" th:object="${record}">
+    <div th:object="${record}">
     <label for="name">Enter  name: </label>
-    <input type="text" name = "name" id="name"/>
+    <input type="text" name = "name" id="name" th:value="${record.name}"/>
     <label for="address">Enter  address: </label>
-    <input type="text"  name = "address" id="address"/>
+    <input type="text"  name = "address" id="address" th:value="${record.address}"/>
 
 
     <br/>
-    <input type="submit" value="Login"/>
+    <input type="submit" value="Update record"/>
+    </div>
 </form>
 
 </body>
