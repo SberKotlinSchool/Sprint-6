@@ -1,13 +1,13 @@
 package ru.sber.springmvc.servlets
 
-import jakarta.servlet.annotation.WebServlet
-import jakarta.servlet.http.Cookie
-import jakarta.servlet.http.HttpServlet
-import jakarta.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse
 import ru.sber.springmvc.domain.User
 import java.time.LocalDateTime
 import java.util.concurrent.ConcurrentHashMap
+import javax.servlet.annotation.WebServlet
+import javax.servlet.http.Cookie
+import javax.servlet.http.HttpServlet
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 
 @WebServlet(
@@ -24,7 +24,6 @@ class AuthenticationServlet : HttpServlet() {
     }
 
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
-        println("зашел в doGet в Servlet ")
         servletConfig.servletContext.getRequestDispatcher("/login.html").forward(req, resp)
     }
 
@@ -34,7 +33,6 @@ class AuthenticationServlet : HttpServlet() {
 
         validUsers.forEach { t, u ->
             if (u.name.equals(username) && u.password.equals(password)) {
-                println("НАШЛАСЬ ПАРА в базе паролей: ${u.name.equals(username) && u.password.equals(password)}")
                 resp.addCookie(Cookie("auth", LocalDateTime.now().toString()))
                 println(LocalDateTime.now().toString())
                 println(LocalDateTime.now())
@@ -47,8 +45,3 @@ class AuthenticationServlet : HttpServlet() {
         }
     }
 }
-
-//        request.setAttribute("messages", messages)
-//        request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response)
-
-
