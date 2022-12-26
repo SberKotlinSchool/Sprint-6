@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h2>Меню</h2>
+        <p><a href="/app/add">Добавить запись</a></p>
+        <p><a th:href="@{'/app/' + ${index} + '/view'}">Просмотр последней записи</a></p>
+        <p><a th:href="@{'/app/' + ${index} + '/edit'}">Обновить последнюю запись</a></p>
+        <p><a th:href="@{'/app/' + ${index} + '/delete'}">Удалить последнюю запись</a></p>
+        <p><a href="/app/list">Список записей</a></p>
+    </body>
+</html>
