@@ -1,6 +1,9 @@
 import ru.sber.filesystem.VFilesystem
+import ru.sber.filesystem.VPath
 import java.io.IOException
+import java.io.PrintWriter
 import java.net.ServerSocket
+import java.net.Socket
 
 /**
  * A basic and very limited implementation of a file server that responds to GET
@@ -28,11 +31,8 @@ class FileServer {
          */
         while (true) {
 
-            // TODO Delete this once you start working on your solution.
-            //throw new UnsupportedOperationException();
-
             // TODO 1) Use socket.accept to get a Socket object
-
+            val socketObj: Socket = socket.accept()
 
             /*
             * TODO 2) Using Socket.getInputStream(), parse the received HTTP
@@ -43,7 +43,10 @@ class FileServer {
             *
             *     GET /path/to/file HTTP/1.1
             */
-
+            val reader = socketObj.getInputStream().bufferedReader()
+            val firstLine = reader.readLine()
+            val filePath = firstLine.split(" ")[1]
+            val readFile = fs.readFile(VPath(filePath))
 
             /*
              * TODO 3) Using the parsed path to the target file, construct an
@@ -65,6 +68,27 @@ class FileServer {
              *
              * Don't forget to close the output stream.
              */
+            val lineSeporator = System.lineSeparator()
+            var result: String
+            if (readFile != null) {
+                result = (
+                        "HTTP/1.0 200 OK" + lineSeporator
+                                + "Server: FileServer" + lineSeporator
+                                + lineSeporator
+                                + readFile
+                                + lineSeporator
+                        )
+            } else {
+                result = (
+                        "HTTP/1.0 404 Not Found" + lineSeporator
+                                + "Server: FileServer" + lineSeporator
+                                + lineSeporator)
+            }
+            val writer = PrintWriter(socketObj.getOutputStream())
+            writer.print(result)
+            writer.flush()
+            writer.close()
+            reader.close()
         }
     }
 }
