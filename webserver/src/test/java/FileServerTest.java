@@ -131,6 +131,7 @@ public class FileServerTest extends TestCase {
                     ", with content length " + responseStr.length());
         }
 
+
         return new HttpResponse(responseCode, responseStr);
     }
 
@@ -217,6 +218,7 @@ public class FileServerTest extends TestCase {
 
         HttpResponse response = sendHttpRequest(rootDirName + "/missing.txt", true);
         assertEquals(404, response.code);
+
 
         // Termination
         server.socket.close();

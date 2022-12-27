@@ -3,13 +3,7 @@ package ru.sber.service
 import org.junit.jupiter.api.Test
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import ru.sber.config.ServicesConfig
-import ru.sber.services.ConditionalBeanInjectionService
-import ru.sber.services.ConstructorInjectionService
-import ru.sber.services.FieldInjectionService
-import ru.sber.services.PrimaryBeanInjectionService
-import ru.sber.services.QualifierBeanInjectionService
-import ru.sber.services.SetterInjectionService
-import ru.sber.services.SeveralBeanInjectionService
+import ru.sber.services.*
 import kotlin.test.assertEquals
 
 class ServicesTest {

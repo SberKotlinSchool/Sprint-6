@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="user-inputs" th:object="${client}">
+    <h2 th:text="${client.name}">
+        <span></span>
+    </h2>
+</div>
+<div class="container">
+<table>
+    <thead>
+    <tr>
+        <th>Имя</th>
+        <th>Телефон</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:object="${client}">
+        <td th:text="${client.name}"></td>
+        <td th:text="${client.phone}"></td>
+        <td>
+            <a th:href="@{'/app/' + ${client.name} + '/delete' }" methods="get">
+                <div style="float: left;">
+                    <button class="bn31">&nbsp;&nbsp;&nbsp;Удалить&nbsp;&nbsp;&nbsp;</button>
+                </div>
+            </a>
+            <a th:href="@{'/app/' + ${client.name} + '/edit' }" methods="get">
+                <div style="float: right;">
+                    <button class="bn30">Редактировать</button>
+                </div>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</body>
+</html>
