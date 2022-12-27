@@ -1,20 +1,17 @@
 package ru.sber.mvc.filters
 
-import jakarta.servlet.Filter
-import jakarta.servlet.FilterChain
-import jakarta.servlet.ServletRequest
-import jakarta.servlet.ServletResponse
-import jakarta.servlet.annotation.WebFilter
-import jakarta.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse
-import org.springframework.core.annotation.Order
 import java.time.LocalDateTime
-
+import javax.servlet.Filter
+import javax.servlet.FilterChain
+import javax.servlet.ServletRequest
+import javax.servlet.ServletResponse
+import javax.servlet.annotation.WebFilter
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 @WebFilter(
    urlPatterns = ["/app/*", "/api/*"]
 )
-@Order(1)
 class LoginFilter : Filter {
     override fun doFilter(p0: ServletRequest?, p1: ServletResponse?, p2: FilterChain?) {
 

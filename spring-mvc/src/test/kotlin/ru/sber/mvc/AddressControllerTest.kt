@@ -1,6 +1,5 @@
 package ru.sber.mvc
 
-import jakarta.servlet.http.Cookie
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.Matchers.not
 import org.junit.jupiter.api.Test
@@ -12,6 +11,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import java.time.LocalDateTime
+import javax.servlet.http.Cookie
 
 @AutoConfigureMockMvc
 @SpringBootTest
