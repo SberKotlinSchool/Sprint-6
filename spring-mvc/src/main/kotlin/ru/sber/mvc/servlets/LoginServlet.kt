@@ -9,24 +9,17 @@ import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import mu.KotlinLogging
 
 @WebServlet(
     urlPatterns = ["/login"]
 )
 class LoginServlet  @Autowired constructor(private val service: LoginServiceCheckable) : HttpServlet() {
 
-    private val logger = KotlinLogging.logger {}
-
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
-        logger.info { "LoginServlet.doGet" }
         servletContext.getRequestDispatcher("/login.html").forward(req, resp)
     }
 
     override fun doPost(req: HttpServletRequest, resp: HttpServletResponse) {
-
-        logger.info { "LoginServlet.doPost" }
-
         val login = req.getParameter("login")
         val password = req.getParameter("password")
 
