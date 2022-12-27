@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Edit address</title>
+</head>
+<body>
+    <form method="post" th:action="@{/app/{id}/edit(id=${row.id})}">
+        <p>Name:<input name="name" th:value="${row.name}"/></p>
+        <p>Phone:<input name="phone" th:value="${row.phone}"/></p>
+        <p>Description:<input name="descr" th:value="${row.descr}"/></p>
+        <input type="submit" value="Submit"/>
+    </form>
+    <p><a th:href="@{/app/list}">back</a></p>
+</body>
+</html>
