@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="user-inputs">
+        <h2>
+            Адресная книга
+            <span></span>
+        </h2>
+    </div>
+    <div class="container">
+    <table>
+        <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Телефон</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="lists :${list}">
+            <td th:text="${lists.name}"></td>
+            <td th:text="${lists.phone}"></td>
+            <td>
+                <div style="float: ;"></div><a th:href="@{'/app/' + ${lists.name} + '/view' }"><button class="bn30">Подробнее</button></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+        <form action="/app/add">
+            <button type="submit">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Добавить
+            </button>
+        </form>
+    </div>
+</body>
+</html>
