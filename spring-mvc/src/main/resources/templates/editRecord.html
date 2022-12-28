@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thymeleaf Variables</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/app/{id}/edit(id=${record.id})}" th:object="${record}">
+
+    <p style="text-align:center"><strong>Edit Record</strong></p>
+    <div th:object="${record}">
+        <p style="text-align:center"><strong><input name="name" id="name" type="text"
+                                                    th:value="${record.name}"
+                                                    value="Name"/></strong></p>
+        <p style="text-align:center"><strong><input name="address" id="address" type="text" th:value="${record.address}"
+                                                    value="Address"/></strong></p>
+        <p style="text-align:center"><strong><input id="Enter" type="submit" value="Update record"/></strong></p>
+    </div>
+
+</form>
+
+</body>
+</html>

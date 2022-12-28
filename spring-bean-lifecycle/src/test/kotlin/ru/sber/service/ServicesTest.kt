@@ -29,6 +29,7 @@ class ServicesTest {
 
         // when
         val callbackBean = context.getBean("callbackBean") as CallbackBean
+        context.close()
 
         // then
         assertEquals("Sorry, but I really have to go.", callbackBean.greeting)
@@ -44,15 +45,15 @@ class ServicesTest {
 
         // then
         assertEquals(
-            "postProcessBeforeInitialization() is called",
-            combinedBean.postProcessBeforeInitializationOrderMessage
+                "postProcessBeforeInitialization() is called",
+                combinedBean.postProcessBeforeInitializationOrderMessage
         )
         assertEquals("postConstruct() is called", combinedBean.postConstructOrderMessage)
         assertEquals("afterPropertiesSet() is called", combinedBean.afterPropertiesSetOrderMessage)
         assertEquals("customInit() is called", combinedBean.customInitOrderMessage)
         assertEquals(
-            "postProcessAfterInitialization() is called",
-            combinedBean.postProcessAfterInitializationOrderMessage
+                "postProcessAfterInitialization() is called",
+                combinedBean.postProcessAfterInitializationOrderMessage
         )
     }
 
@@ -63,7 +64,7 @@ class ServicesTest {
 
         // when
         val beanFactoryPostProcessorBean =
-            context.getBean("beanFactoryPostProcessorBean") as BeanFactoryPostProcessorBean
+                context.getBean("beanFactoryPostProcessorBean") as BeanFactoryPostProcessorBean
 
         // then
         assertEquals("Done!", beanFactoryPostProcessorBean.preConfiguredProperty)
