@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>TABLE {
+        border-collapse: collapse;
+    }
+
+    TH {
+        background: lightgreen;
+        text-align: center;
+    }
+
+    TD {
+        vertical-align: top;
+        background: #fff;
+    }
+
+    TH, TD {
+        border: 1px solid black;
+        padding: 2px;
+    }
+
+    .bar {
+        border: 1px solid black;
+        background: lightgreen;
+    }
+
+    .c {
+        border: 0px;
+    }
+
+    .a {
+        width: 150px;
+    }
+
+    .b {
+        width: 90px;
+    }
+
+    .tdc {
+        text-align: center;
+    }</style>
+    <title>Address Book</title>
+</head>
+<body>
+<div>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th colspan="2">Operations</th>
+        </tr>
+        <tr th:each="row : ${rows}">
+            <td><a th:href="@{/app/{id}/view(id=${row.id})}" th:text="${row.name}">view</a></td>
+            <td th:text="${row.phone}"></td>
+            <td><a th:href="@{/app/{id}/edit(id=${row.id})}">edit</a></td>
+            <td><a th:href="@{/app/{id}/delete(id=${row.id})}">delete</a></td>
+        </tr>
+    </table>
+    <p><a th:href="@{/app/add}">add</a></p>
+</div>
+</body>
+</html>
