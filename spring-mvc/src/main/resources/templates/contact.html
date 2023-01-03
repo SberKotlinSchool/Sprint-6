@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Контакт</title>
+</head>
+<body>
+<a th:href="@{/app/list}">back</a>
+<form method="post" th:action="@{command}" th:object="${contact}">
+<fieldset>
+    <legend>Персональные данные</legend>
+    <ul>
+
+        <li>
+            <label for="lastName">Фамилия:*</label>
+            <input type="text" name="lastName" th:value="${contact.lastName}" placeholder="Иванов" id="lastName" required>
+        </li>
+        <li>
+            <label for="name">Имя:*</label>
+            <input type="text" name="name" th:value="${contact.name}" placeholder="Иван" id="name" required>
+        </li>
+        <li>
+            <label for="middleName">Отчество:*</label>
+            <input type="text" name="middleName" th:value="${contact.middleName}" placeholder="Иванович" id="middleName">
+        </li>
+        <li>
+            <label for="birthDate">Дата рождения:</label>
+            <input type="date" name="birthDate" th:value="${contact.birthDate}" placeholder="01.01.2000" id="birthDate" min="0" max="10" required>
+        </li>
+    </ul>
+</fieldset>
+<fieldset>
+    <legend>Контакты</legend>
+    <ul>
+        <li>
+            <label for="email">E-mail:*</label>
+            <input type="email" name="mail" th:value="${contact.mail}" placeholder="ivanov@mail.ru" id="email" required>
+        </li>
+        <li>
+            <label for="phoneNumber">Телефон:*</label>
+            <input type="tel" name="phoneNumber" th:value="${contact.phoneNumber}" placeholder="+7 000 000-00-00" id="phoneNumber" maxlength="21" required>
+        </li>
+    </ul>
+</fieldset>
+<div>
+    <button type="submit">Отправить</button>
+    <p>* — Обязательные поля</p>
+</div>
+</form>
+</body>
+</html>
