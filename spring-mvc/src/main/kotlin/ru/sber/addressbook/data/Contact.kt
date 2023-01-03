@@ -1,10 +1,10 @@
-package ru.sber.mvc.data
+package ru.sber.addressbook.data
 
 import java.time.LocalDate
 
 data class Contact(
-    val firstName: String = "",
     val lastName: String = "",
+    val firstName: String = "",
     val middleName: String? = "",
     val birthDate: LocalDate? = null,
     val phoneNumber: String = "",

@@ -1,4 +1,4 @@
-package ru.sber.mvc.controller
+package ru.sber.addressbook.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -11,6 +11,6 @@ class AuthenticationController {
 
     @GetMapping
     fun login(model: Model): String {
-        return "authenticationForm"
+        return "authenticationform"
     }
 }

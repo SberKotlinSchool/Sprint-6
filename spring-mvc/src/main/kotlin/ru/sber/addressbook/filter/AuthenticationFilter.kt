@@ -1,30 +1,28 @@
-package ru.sber.mvc.filter
+package ru.sber.addressbook.filter
 
-import jakarta.servlet.Filter
-import jakarta.servlet.FilterChain
-import jakarta.servlet.ServletRequest
-import jakarta.servlet.ServletResponse
-import jakarta.servlet.annotation.WebFilter
-import jakarta.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-
+import javax.servlet.Filter
+import javax.servlet.FilterChain
+import javax.servlet.ServletRequest
+import javax.servlet.ServletResponse
+import javax.servlet.annotation.WebFilter
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 @Component
-@WebFilter(urlPatterns = ["/app/*", "/api/*"], filterName = "AuthenticationFilter")
+@WebFilter(urlPatterns = ["/app/*", "/api/*"])
 @Order(2)
-class AuthenticationFilter : Filter {
+class AuthenticationFilter: Filter {
 
     override fun doFilter(request: ServletRequest?, response: ServletResponse?, chain: FilterChain?) {
         val req = request as HttpServletRequest
         val res = response as HttpServletResponse
         val cookie = req.cookies?.firstOrNull { it.name.equals("auth") }
         if (cookie != null &&
-            LocalDateTime.parse(cookie.value, DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))
+            LocalDateTime.parse(cookie.value, DateTimeFormatter.ofPattern("dd.MM.yyyy-HH:mm:ss"))
                 .isBefore(LocalDateTime.now())
         ) {
             chain!!.doFilter(request, response)
@@ -33,5 +31,4 @@ class AuthenticationFilter : Filter {
             res.sendRedirect(loginURI)
         }
     }
-
 }

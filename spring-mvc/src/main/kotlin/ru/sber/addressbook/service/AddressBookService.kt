@@ -1,9 +1,8 @@
-package ru.sber.mvc.service
+package ru.sber.addressbook.service
 
 import org.springframework.stereotype.Service
-import ru.sber.mvc.data.Contact
+import ru.sber.addressbook.data.Contact
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.ConcurrentHashMap
 
@@ -18,7 +17,7 @@ class AddressBookService {
             LocalDate.parse("01.01.1999", DateTimeFormatter.ofPattern("dd.MM.yyyy")), "+7 999 999-99-99", "popovi@mail.ru"
         )
         addressBook[2] = Contact(
-            "Попов", "Петр", "Фелорович",
+            "Попов", "Петр", "Федорович",
             LocalDate.parse("01.01.1999", DateTimeFormatter.ofPattern("dd.MM.yyyy")), "+7 123 456-78-99", "popovp@mail.ru"
         )
     }

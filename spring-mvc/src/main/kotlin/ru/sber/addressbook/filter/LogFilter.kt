@@ -1,19 +1,19 @@
-package ru.sber.mvc.filter
+package ru.sber.addressbook.filter
 
-import jakarta.servlet.Filter
-import jakarta.servlet.FilterChain
-import jakarta.servlet.ServletRequest
-import jakarta.servlet.ServletResponse
-import jakarta.servlet.annotation.WebFilter
-import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
-import ru.sber.mvc.service.LogService
+import ru.sber.addressbook.service.LogService
+import javax.servlet.Filter
+import javax.servlet.FilterChain
+import javax.servlet.ServletRequest
+import javax.servlet.ServletResponse
+import javax.servlet.annotation.WebFilter
+import javax.servlet.http.HttpServletRequest
 
 
 @Component
-@WebFilter(urlPatterns = ["/*"], filterName = "LogFilter")
+@WebFilter(urlPatterns = ["/*"])
 @Order(1)
 class LogFilter : Filter {
     @Autowired

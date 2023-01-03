@@ -1,6 +1,5 @@
-package ru.sber.mvc.controller
+package ru.sber.addressbook.controller
 
-import jakarta.servlet.http.Cookie
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -9,10 +8,11 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
-import ru.sber.mvc.data.Contact
+import ru.sber.addressbook.data.Contact
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import javax.servlet.http.Cookie
 
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -22,7 +22,7 @@ class AddressBookControllerTest {
     private lateinit var mockMvc: MockMvc
 
     private fun getAuthCookie(): Cookie = Cookie("auth",
-        "${LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))}")
+        "${LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy-HH:mm:ss"))}")
 
 
     @Test
@@ -72,11 +72,12 @@ class AddressBookControllerTest {
     @Test
     fun editPOSTTest() {
         mockMvc.perform(post("/app/1/edit").cookie(getAuthCookie())
-            .flashAttr("contact",Contact(
+            .flashAttr("contact", Contact(
                 "Попов", "Иван", "Сергеевич",
                 LocalDate.parse("01.01.1999", DateTimeFormatter.ofPattern("dd.MM.yyyy")),
                 "+7 333 333-33-33", "popovi@mail.ru"
-            )))
+            )
+            ))
             .andExpect {
                 status().is3xxRedirection
                 redirectedUrl("/app/list")

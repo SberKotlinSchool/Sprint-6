@@ -1,10 +1,10 @@
-package ru.sber.mvc
+package ru.sber.addressbook
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class SpringMvcApplicationTests {
+class AddressbookApplicationTests {
 
 	@Test
 	fun contextLoads() {

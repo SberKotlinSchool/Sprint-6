@@ -1,7 +1,6 @@
-package ru.sber.mvc.service
+package ru.sber.addressbook.service
 
 import org.springframework.stereotype.Service
-import ru.sber.mvc.data.Contact
 import java.time.LocalDateTime
 import java.util.concurrent.ConcurrentHashMap
 

@@ -1,12 +1,11 @@
-package ru.sber.mvc
+package ru.sber.addressbook
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
-
 @SpringBootApplication
-class SpringMvcApplication
+class AddressbookApplication
 
 fun main(args: Array<String>) {
-	runApplication<SpringMvcApplication>(*args)
+	runApplication<AddressbookApplication>(*args)
 }

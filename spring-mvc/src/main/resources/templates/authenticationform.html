@@ -8,15 +8,12 @@
     <div class="body">
         <h2>Вход</h2>
         <div class="form">
-            <form th:action="@{/login}" method="post">
+            <form th:action="@{/check}" method="post">
                 <div class="form-control">
                     <input type="text" placeholder="Ваш логин:" name="login">
                 </div>
                 <div class="form-control">
                     <input type="password" placeholder="Ваш пароль:" name="password">
-                </div>
-                <div class="form-control">
-                    <input type="checkbox" value="remember-me"> Запомнить меня
                 </div>
                 <div class="form-control">
                     <button class="button" type="submit">Войти</button>

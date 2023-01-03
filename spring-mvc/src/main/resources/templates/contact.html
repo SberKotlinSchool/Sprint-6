@@ -6,7 +6,7 @@
 </head>
 <body>
 <a th:href="@{/app/list}">back</a>
-<form method="post" th:action="@{command}" th:object="${contact}">
+<form method="post" th:action="${command}" th:object="${contact}" th:modelAttribute = "${contact}">
 <fieldset>
     <legend>Персональные данные</legend>
     <ul>

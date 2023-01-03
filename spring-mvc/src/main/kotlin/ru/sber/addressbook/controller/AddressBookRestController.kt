@@ -1,10 +1,10 @@
-package ru.sber.mvc.controller
+package ru.sber.addressbook.controller
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import ru.sber.mvc.data.Contact
-import ru.sber.mvc.service.AddressBookService
+import ru.sber.addressbook.data.Contact
+import ru.sber.addressbook.service.AddressBookService
 
 
 @RestController
