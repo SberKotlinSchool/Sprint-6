@@ -1,4 +1,4 @@
-package ru.sber.filter
+package ru.sber.mvc.filter
 
 import jakarta.servlet.Filter
 import jakarta.servlet.FilterChain
@@ -24,7 +24,7 @@ class AuthenticationFilter : Filter {
         val res = response as HttpServletResponse
         val cookie = req.cookies?.firstOrNull { it.name.equals("auth") }
         if (cookie != null &&
-            LocalDateTime.parse(cookie.value, DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm"))
+            LocalDateTime.parse(cookie.value, DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))
                 .isBefore(LocalDateTime.now())
         ) {
             chain!!.doFilter(request, response)

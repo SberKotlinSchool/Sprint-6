@@ -1,7 +1,7 @@
-package ru.sber.service
+package ru.sber.mvc.service
 
 import org.springframework.stereotype.Service
-import ru.sber.data.Contact
+import ru.sber.mvc.data.Contact
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

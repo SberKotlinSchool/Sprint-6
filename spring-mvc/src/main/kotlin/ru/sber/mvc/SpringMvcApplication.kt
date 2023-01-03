@@ -1,4 +1,4 @@
-package ru.sber.config
+package ru.sber.mvc
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

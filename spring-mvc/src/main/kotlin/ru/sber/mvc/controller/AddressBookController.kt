@@ -1,11 +1,11 @@
-package ru.sber.controller
+package ru.sber.mvc.controller
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
-import ru.sber.data.Contact
-import ru.sber.service.AddressBookService
+import ru.sber.mvc.data.Contact
+import ru.sber.mvc.service.AddressBookService
 
 @Controller
 @RequestMapping("/app")
@@ -20,7 +20,7 @@ class AddressBookController(@Autowired val service : AddressBookService) {
     @GetMapping("/add")
     fun create(model: Model): String {
         model.addAttribute("contact", Contact())
-        model.addAttribute("command", "/app/view")
+        model.addAttribute("command", "/app/add")
         return "contact"
     }
 
@@ -33,7 +33,7 @@ class AddressBookController(@Autowired val service : AddressBookService) {
     @GetMapping("/{id}/view")
     fun read(@PathVariable id: Long, model: Model): String {
         model.addAttribute("contact", service.getById(id))
-        model.addAttribute("command", "/app/add")
+        model.addAttribute("command", "/app/list")
         return "contact"
     }
 
@@ -44,7 +44,7 @@ class AddressBookController(@Autowired val service : AddressBookService) {
         return "contact"
     }
 
-    @PutMapping("/{id}/edit")
+    @PostMapping("/{id}/edit")
     fun update(@PathVariable id: Long, @ModelAttribute contact: Contact): String {
         service.update(id, contact)
         return "redirect:/app/list"

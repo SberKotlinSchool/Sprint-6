@@ -1,4 +1,4 @@
-package ru.sber.servlet
+package ru.sber.mvc.servlet
 
 import jakarta.servlet.annotation.WebServlet
 import jakarta.servlet.http.Cookie
@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-@WebServlet(urlPatterns = ["/login"])
+@WebServlet(urlPatterns = ["","/login"])
 class AuthenticationServlet : HttpServlet() {
 
     override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
@@ -21,7 +21,7 @@ class AuthenticationServlet : HttpServlet() {
         } else {
             val cookie = Cookie(
                 "auth",
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))
             )
             resp?.addCookie(cookie)
         }

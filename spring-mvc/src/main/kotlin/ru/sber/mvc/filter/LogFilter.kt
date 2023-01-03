@@ -1,4 +1,4 @@
-package ru.sber.filter
+package ru.sber.mvc.filter
 
 import jakarta.servlet.Filter
 import jakarta.servlet.FilterChain
@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
-import ru.sber.service.LogService
+import ru.sber.mvc.service.LogService
 
 
 @Component

@@ -1,4 +1,4 @@
-package ru.sber.data
+package ru.sber.mvc.data
 
 import java.time.LocalDate
 
