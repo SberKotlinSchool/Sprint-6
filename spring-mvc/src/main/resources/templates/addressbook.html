@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Адресная книга</title>
+</head>
+<body>
+<h2>Список контактов</h2>
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Фамилия</th>
+    <th>Имя</th>
+    <th>Отчество</th>
+    <th>Дата рождения</th>
+    <th>Телефон</th>
+    <th>email</th>
+  </tr>
+  <tr th:each="contact : ${contacts}">
+    <td th:text="${contact.key}"></td>
+    <td th:text="${contact.value.lastName}"></td>
+    <td th:text="${contact.value.firstName}"></td>
+    <td th:text="${contact.value.middleName}"></td>
+    <td th:text="${contact.value.birthDate}"></td>
+    <td th:text="${contact.value.phoneNumber}"></td>
+    <td th:text="${contact.value.email}"></td>
+    <td><a th:href="@{/app/{id}/view(id=${contact.key})}">view</a></td>
+    <td><a th:href="@{/app/{id}/edit(id=${contact.key})}">edit</a></td>
+    <td><a th:href="@{/app/{id}/delete(id=${contact.key})}">delete</a></td>
+  </tr>
+</table>
+<p><a th:href="@{/app/add}">add</a></p>
+</body>
+</html>

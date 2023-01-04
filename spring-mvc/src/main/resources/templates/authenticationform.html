@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+</head>
+<body>
+<div class="container">
+    <div class="body">
+        <h2>Вход</h2>
+        <div class="form">
+            <form th:action="@{/check}" method="post">
+                <div class="form-control">
+                    <input type="text" placeholder="Ваш логин:" name="login">
+                </div>
+                <div class="form-control">
+                    <input type="password" placeholder="Ваш пароль:" name="password">
+                </div>
+                <div class="form-control">
+                    <button class="button" type="submit">Войти</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
