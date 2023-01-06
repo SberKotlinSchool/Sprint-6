@@ -1,0 +1,9 @@
+server:
+  port: 0
+
+spring:
+  freemarker:
+    cache: false
+
+app:
+  baseUrl: http://localhost:0
