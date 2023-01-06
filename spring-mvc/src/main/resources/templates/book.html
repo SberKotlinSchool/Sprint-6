@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+<h1>Адресная книга</h1>
+<form method="post" action="field_setting">
+    <p>Поиск по уникальному ID</p>
+    <input name="id" placeholder="введите id"/>
+<p>
+    <button>Найти</button>
+</p>
+</form>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Город проживания</th>
+    </tr>
+    <tr th:each="obj : ${data}">
+        <td th:text="${obj.key}">
+        <td th:text="${obj.value.firstName}">
+        <td th:text="${obj.value.lastName}">
+        <td th:text="${obj.value.city}">
+    </tr>
+</table>
+<a href="/app">Назад</a>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<p th:text="'Уникальный ID: ' + ${id} + '.'" />
+<table>
+    <tr>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Город проживания</th>
+    </tr>
+    <tr th:each="obj : ${data}">
+        <td th:text="${obj.firstName}">
+        <td th:text="${obj.lastName}">
+        <td th:text="${obj.city}">
+    </tr>
+</table>
+<p>
+    <a href="/app/field_setting">Назад</a>
+</p>
+</body>
+</html>

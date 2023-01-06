@@ -1,0 +1,11 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<p th:text="'Запись с ID: ' + ${id} + ' удалена.'" />
+<form method="post" action="/app/list">
+    <p>
+        <button>К списку</button>
+    </p>
+</form>
+</body>
+</html>
