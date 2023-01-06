@@ -10,12 +10,6 @@ class AddressRepository {
     private val countId = AtomicInteger(0)
     private val addresses = ConcurrentHashMap<Int, Address>()
 
-    init {
-        addresses[countId.get()] = Address(countId.get(), "Eric", "South Park", "79119581251")
-        addresses[countId.incrementAndGet()] = Address(countId.get(), "Bender", "New York", "1110001111")
-        addresses[countId.incrementAndGet()] = Address(countId.get(), "Homer", "Springfield", "78912312359")
-    }
-
     fun getList() = addresses.values.toList()
 
     fun get(id: Int) = addresses[id]

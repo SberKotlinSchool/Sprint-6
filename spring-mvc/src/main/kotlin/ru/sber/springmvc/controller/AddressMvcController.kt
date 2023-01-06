@@ -8,7 +8,7 @@ import ru.sber.springmvc.service.AddressService
 
 @Controller
 @RequestMapping("/app")
-class AddressAppController(private val service: AddressService) {
+class AddressMvcController(private val service: AddressService) {
 
     @GetMapping("/list")
     fun getAddressList(@RequestParam(required = false) query: String?, model: Model): String {
