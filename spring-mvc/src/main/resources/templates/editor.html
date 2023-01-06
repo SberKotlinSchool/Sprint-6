@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<p th:text="'Запись с ID: ' + ${id} + '.'" />
+<p>Внесите изменения в соответствующие поля и подтвердите:</p>
+<form method="post" th:action="edit">
+  <input name="firstName" placeholder="имя"/>
+  <input name="lastName" placeholder="фамилия"/>
+  <input name="city" placeholder="город проживания"/>
+  <p>
+    <button>Подтверждаю изменения</button>
+  </p>
+</form>
+<form method="post" action="/app/list">
+  <p>
+    <button>К списку</button>
+  </p>
+</form>
+</body>
+</html>

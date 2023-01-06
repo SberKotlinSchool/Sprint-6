@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<body>
+<form method="post" th:action="${id}+'/view'">
+    <p>
+        <button>Просмотр записи</button>
+    </p>
+</form>
+<form method="post" th:action="${id} + '/edit'">
+    <p>
+        <button>Редактирование записи</button>
+    </p>
+</form>
+<form method="post" th:action="${id} + '/delete'">
+    <p>
+        <button>Удалить запись</button>
+    </p>
+</form>
+    <p>
+        <a href="/app/list">К Списку</a>
+    </p>
+</body>
+</html>
