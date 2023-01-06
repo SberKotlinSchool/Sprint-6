@@ -1,6 +1,6 @@
 package ru.sber.springmvc.controller
 
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.containsString
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -36,8 +36,9 @@ internal class AddressMvcControllerTest {
     fun `method get to _app_add should return page with form add new address`() {
         mockMvc.perform(get("/app/add"))
             .andExpect(status().isOk)
+            .andExpect(view().name("add"))
             .andExpect(content().contentType("text/html;charset=UTF-8"))
-            .andExpect(content().string(Matchers.containsString("Add")))
+            .andExpect(content().string(containsString("Add")))
     }
 
     @Test
@@ -52,18 +53,16 @@ internal class AddressMvcControllerTest {
             .andExpect(redirectedUrl("/app/list"))
 
         sendGetToAppList()
-            .andExpect(content().string(Matchers.containsString(testAddress.name)))
+            .andExpect(content().string(containsString(testAddress.name)))
     }
 
     @Test
     fun `method get to _app_id_view should return view page`() {
         val addressId = 1
         sendGetToAppIdView(addressId)
-            .andExpect(status().isOk)
-            .andExpect(content().contentType("text/html;charset=UTF-8"))
-            .andExpect(content().string(Matchers.containsString(testAddress.name)))
-            .andExpect(content().string(Matchers.containsString(testAddress.city)))
-            .andExpect(content().string(Matchers.containsString(testAddress.phone)))
+            .andExpect(content().string(containsString(testAddress.name)))
+            .andExpect(content().string(containsString(testAddress.city)))
+            .andExpect(content().string(containsString(testAddress.phone)))
     }
 
     @Test
@@ -71,10 +70,10 @@ internal class AddressMvcControllerTest {
         val addressId = 1
         mockMvc.perform(get("/app/${addressId}/edit"))
             .andExpect(status().isOk)
-            .andExpect(content().string(Matchers.containsString(testAddress.name)))
-            .andExpect(content().string(Matchers.containsString(testAddress.city)))
-            .andExpect(content().string(Matchers.containsString(testAddress.phone)))
-            .andExpect(content().string(Matchers.containsString("Edit")))
+            .andExpect(view().name("edit"))
+            .andExpect(content().string(containsString(testAddress.name)))
+            .andExpect(content().string(containsString(testAddress.city)))
+            .andExpect(content().string(containsString(testAddress.phone)))
     }
 
     @Test
@@ -91,7 +90,7 @@ internal class AddressMvcControllerTest {
             .andExpect(redirectedUrl("/app/list"))
 
         sendGetToAppIdView(addressId)
-            .andExpect(content().string(Matchers.containsString(newPhone)))
+            .andExpect(content().string(containsString(newPhone)))
     }
 
     @Test
@@ -111,10 +110,12 @@ internal class AddressMvcControllerTest {
     private fun sendGetToAppList(): ResultActions = mockMvc
         .perform(get("/app/list"))
         .andExpect(status().isOk)
+        .andExpect(view().name("list"))
         .andExpect(content().contentType("text/html;charset=UTF-8"))
 
     private fun sendGetToAppIdView(id: Int) = mockMvc
         .perform(get("/app/${id}/view"))
         .andExpect(status().isOk)
+        .andExpect(view().name("view"))
         .andExpect(content().contentType("text/html;charset=UTF-8"))
 }
