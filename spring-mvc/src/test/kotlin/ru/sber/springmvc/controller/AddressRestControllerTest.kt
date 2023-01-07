@@ -53,7 +53,7 @@ internal class AddressRestControllerTest {
     @Order(3)
     fun `method post to _rest_add with cookie authentication should add new address`() {
         val responsePost = restTemplate.exchange(
-            url("rest/add"),
+            url("rest"),
             HttpMethod.POST,
             HttpEntity(testAddress, authenticationHeader()),
             Unit::class.java
@@ -70,7 +70,7 @@ internal class AddressRestControllerTest {
     @Order(4)
     fun `method get to _rest_id_view with cookie authentication should return address json`() {
         val response = restTemplate.exchange(
-            url("rest/1/view"),
+            url("rest/1"),
             HttpMethod.GET,
             HttpEntity(null, authenticationHeader()),
             Address::class.java
@@ -85,8 +85,8 @@ internal class AddressRestControllerTest {
     fun `method post to _rest_id_edit with cookie authentication should change address`() {
         val editAddress = testAddress.copy(name = "Oscar")
         val responsePost = restTemplate.exchange(
-            url("rest/1/edit"),
-            HttpMethod.POST,
+            url("rest/1"),
+            HttpMethod.PUT,
             HttpEntity(editAddress, authenticationHeader()),
             Unit::class.java
         )
@@ -102,8 +102,8 @@ internal class AddressRestControllerTest {
     @Order(6)
     fun `method post to _rest_id_delete with cookie authentication should remove address`() {
         val responsePost = restTemplate.exchange(
-            url("rest/1/delete"),
-            HttpMethod.POST,
+            url("rest/1"),
+            HttpMethod.DELETE,
             HttpEntity(null, authenticationHeader()),
             Unit::class.java
         )

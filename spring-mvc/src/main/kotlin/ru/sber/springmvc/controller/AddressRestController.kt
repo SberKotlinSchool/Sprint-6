@@ -12,23 +12,23 @@ class AddressRestController(private val service: AddressService) {
         return service.getList(query)
     }
 
-    @GetMapping("/{id}/view")
+    @PostMapping
+    fun addNewAddress(@RequestBody address: Address) {
+        service.add(address)
+    }
+
+    @GetMapping("/{id}")
     fun viewAddress(@PathVariable id: Int): Address? {
         return service.get(id)
     }
 
-    @PostMapping("/{id}/edit")
+    @PutMapping("/{id}")
     fun editAddress(@PathVariable id: Int, @RequestBody address: Address) {
         service.edit(id, address)
     }
 
-    @PostMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     fun deleteAddress(@PathVariable id: Int) {
         service.delete(id)
-    }
-
-    @PostMapping("/add")
-    fun addNewAddress(@RequestBody address: Address) {
-        service.add(address)
     }
 }
