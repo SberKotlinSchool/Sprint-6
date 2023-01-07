@@ -1,15 +1,14 @@
 package ru.sber.springmvc.filter
 
-import jakarta.servlet.FilterChain
-import jakarta.servlet.annotation.WebFilter
-import jakarta.servlet.http.HttpFilter
-import jakarta.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse
+import javax.servlet.FilterChain
+import javax.servlet.annotation.WebFilter
+import javax.servlet.http.HttpFilter
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 import java.time.LocalDateTime
 
 @WebFilter(urlPatterns = ["/app/*", "/rest/*"])
-class AuthenticationFilter() :
-    HttpFilter() {
+class AuthenticationFilter() : HttpFilter() {
     override fun doFilter(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
         val allowed = !request.cookies.isNullOrEmpty() && (
                 request.cookies
