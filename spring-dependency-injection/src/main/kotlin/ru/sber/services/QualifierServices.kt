@@ -2,6 +2,7 @@ package ru.sber.services
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
 
 interface QualifierInterface
@@ -13,7 +14,7 @@ class FirstQualifierServiceImpl : QualifierInterface {
     }
 }
 
-@Component
+@Component("onlySecondService")
 class SecondQualifierServiceImpl : QualifierInterface {
     override fun toString(): String {
         return "SecondQualifierServiceImpl"
