@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="user-inputs">
+        <h2>
+            Дневник
+            <span></span>
+        </h2>
+    </div>
+    <div class="container">
+    <table>
+        <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Событие</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="record :${list}">
+            <td th:text="${record.date}"></td>
+            <td th:text="${record.message}"></td>
+            <td>
+                <div style="float: ;"></div><a th:href="@{'/app/' + ${record.date} + '/view' }"><button class="bn30">Подробнее</button></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+        <form action="/app/add">
+            <button type="submit">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Добавить
+            </button>
+        </form>
+    </div>
+</body>
+</html>

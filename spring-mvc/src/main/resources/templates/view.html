@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="user-inputs" th:object="${record}">
+    <h2>
+        Дата <div th:text="${record.date}"> </div>
+    </h2>
+</div>
+<div class="container">
+    <table>
+        <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Событие</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:object="${record}">
+            <td th:text="${record.date}"></td>
+            <td th:text="${record.message}"></td>
+            <td>
+                <a th:href="@{'/app/' + ${record.date} + '/delete' }" methods="get">
+                    <div style="float: left;">
+                        <button class="bn31">&nbsp;&nbsp;&nbsp;Удалить&nbsp;&nbsp;&nbsp;</button>
+                    </div>
+                </a>
+                <a th:href="@{'/app/' + ${record.date} + '/edit' }" methods="get">
+                    <div style="float: right;">
+                        <button class="bn30">Редактировать</button>
+                    </div>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
