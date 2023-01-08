@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ENG">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Edit entry in Address Book</title>
+</head>
+<body>
+<h2>Edit entry in address book</h2>
+<form action="#" th:object="${entry}" method="post">
+    <p>ID:
+        <input placeholder="Enter ID" required type="text" th:field="*{id}"/>
+    </p>
+    <p>First Name:
+        <input placeholder="Enter First Name" required type="text" th:field="*{firstName}"/>
+    </p>
+    <p>Last Name:
+        <input placeholder="Enter Last Name" required type="text" th:field="*{lastName}"/>
+    </p>
+    <p>Address:
+        <input placeholder="Enter Address" required type="text" th:field="*{address}"/>
+    </p>
+    <p>Phone:
+        <input placeholder="Enter Phone" required type="text" th:field="*{phone}"/>
+    </p>
+    <p>Email:
+        <input placeholder="Enter Email" required type="text" th:field="*{email}"/>
+    </p>
+    <p><input type="submit" value="Submit"/>
+</form>
+</body>
+</html>

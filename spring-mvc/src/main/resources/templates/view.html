@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ENG">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>View entry from Address Book by ID</title>
+</head>
+<body>
+<h2>View entry from Address Book by ID</h2>
+<table th:border="1" th:object="${entry}">
+    <tr>
+        <td>ID</td>
+        <td th:text="*{id}"></td>
+    </tr>
+    <tr>
+        <td>Firstname</td>
+        <td th:text="*{firstName}"></td>
+    </tr>
+    <tr>
+        <td>Lastname</td>
+        <td th:text="*{lastName}"></td>
+    </tr>
+    <tr>
+        <td>Address</td>
+        <td th:text="*{address}"></td>
+    </tr>
+    <tr>
+        <td>Phone</td>
+        <td th:text="*{phone}"></td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td th:text="*{email}"></td>
+    </tr>
+</table>
+</body>
+</html>

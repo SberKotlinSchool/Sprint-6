@@ -1,6 +1,6 @@
-package org.example.mvc.services
+package sber.mvc.application.service
 
-import org.example.mvc.dto.AddressBookEntry
+import sber.mvc.application.model.AddressBookEntry
 
 interface AddressBookService {
 
@@ -9,6 +9,7 @@ interface AddressBookService {
     fun getEntries(
         firstName: String?,
         lastName: String?,
+        address: String?,
         phone: String?,
         email: String?
     ): List<AddressBookEntry>

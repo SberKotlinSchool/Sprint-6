@@ -1,7 +1,7 @@
-package org.example.mvc.services
+package sber.mvc.application.service
 
-import org.example.mvc.dto.AddressBookEntry
-import org.example.mvc.repositoties.AddressBookRepository
+import sber.mvc.application.model.AddressBookEntry
+import sber.mvc.application.repository.AddressBookRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -16,14 +16,18 @@ class AddressBookServiceImpl(@Autowired val addressBookRepository: AddressBookRe
     override fun getEntries(
         firstName: String?,
         lastName: String?,
+        address: String?,
         phone: String?,
         email: String?
     ): List<AddressBookEntry> {
         return addressBookRepository.getAll()
-            .filter { firstName.isNullOrBlank() || it.name == firstName }
+            .asSequence()
+            .filter { firstName.isNullOrBlank() || it.firstName == firstName }
             .filter { lastName.isNullOrBlank() || it.lastName == lastName }
+            .filter { address.isNullOrBlank() || it.address == address }
             .filter { phone.isNullOrBlank() || it.phone == phone }
-            .filter { email.isNullOrBlank() || it.phone == email }
+            .filter { email.isNullOrBlank() || it.email == email }
+            .toList()
     }
 
     override fun getEntryById(id: Long): AddressBookEntry? {

@@ -1,6 +1,6 @@
-package org.example.mvc.repositoties
+package sber.mvc.application.repository
 
-import org.example.mvc.dto.AddressBookEntry
+import sber.mvc.application.model.AddressBookEntry
 import org.springframework.stereotype.Repository
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong

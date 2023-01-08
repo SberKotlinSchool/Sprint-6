@@ -9,8 +9,8 @@
         <relativePath/>
     </parent>
 
-    <groupId>org.example</groupId>
-    <artifactId>mvc</artifactId>
+    <groupId>sber.mvs</groupId>
+    <artifactId>application</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>mvc</name>
 

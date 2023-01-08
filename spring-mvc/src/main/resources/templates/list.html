@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ENG">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Get entries from Address Book</title>
+</head>
+<body>
+<h2>Get entries from Address Book</h2>
+<table th:border="1">
+<tr>
+    <th>ID</th>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Address</th>
+    <th>Phone</th>
+    <th>Email</th>
+</tr>
+<tr th:each="entry : ${entries}">
+    <td th:text="${entry.id}"></td>
+    <td th:text="${entry.firstName}"></td>
+    <td th:text="${entry.lastName}"></td>
+    <td th:text="${entry.address}"></td>
+    <td th:text="${entry.phone}"></td>
+    <td th:text="${entry.email}"></td>
+</tr>
+</table>
+</body>
+</html>
