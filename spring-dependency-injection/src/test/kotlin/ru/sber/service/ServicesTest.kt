@@ -100,7 +100,7 @@ class ServicesTest {
     fun `conditionalBeanInjectionService should return ConditionalService dependency`() {
         // given
         val context = AnnotationConfigApplicationContext().apply {
-            environment.setActiveProfiles("prod")
+            environment.setActiveProfiles("qa")
             register(ServicesConfig::class.java)
             refresh()
         }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Адрессная книга</title>
+</head>
+<body>
+
+<h1>Список адресов</h1>
+<div>
+    <table>
+        <tr>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Номер телефона</th>
+            <th>Адрес</th>
+            <th/>
+            <th/>
+        </tr>
+        <tr th:each="record: ${records}">
+            <td th:utext="${record.firstName}"></td>
+            <td th:utext="${record.lastName}"></td>
+            <td th:utext="${record.phoneNumber}"></td>
+            <td th:utext="${record.address}"></td>
+            <td>
+                <form th:method="get" th:action="@{/app/__${record.id}__/view}">
+                    <input type="submit" value="Детали">
+                </form>
+            </td>
+            <td>
+                <form th:method="get" th:action="@{/app/__${record.id}__/edit}">
+                    <input type="submit" value="Изменить">
+                </form>
+            </td>
+            <td>
+                <form th:method="delete" th:action="@{/app/__${record.id}__/delete}" onsubmit="return confirm('Вы уверены, что хотите удалить запись?');">
+                    <input type="submit" value="Удалить">
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<h1>Добавить новый адрес</h1>
+<form th:action="@{/app/add}"
+      th:object="${record}" method="POST">
+    Имя:
+    <input type="text" th:field="*{firstName}"/>
+    <br/>
+    Отчество:
+    <input type="text" th:field="*{lastName}"/>
+    Телефон:
+    <input type="text" th:field="*{phoneNumber}"/>
+    Адрес:
+    <input type="text" th:field="*{address}"/>
+    <br/>
+    <input type="submit" value="Добавить"/>
+</form>
+</body>
+</html>
