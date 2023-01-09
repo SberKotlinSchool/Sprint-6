@@ -3,6 +3,8 @@ package com.homework.addressbook.servlet
 import org.springframework.beans.factory.annotation.Value
 import java.io.PrintWriter
 import java.time.LocalDateTime
+import javax.servlet.RequestDispatcher
+import javax.servlet.ServletContext
 import javax.servlet.annotation.WebServlet
 import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServlet
@@ -18,7 +20,7 @@ class LoginServlet(@Value("\${auth.login}")
 
 
     override fun doGet(request: HttpServletRequest, response: HttpServletResponse) {
-        request.getRequestDispatcher("login.html").forward(request, response)
+        request.getRequestDispatcher("/login.html").forward(request, response)
     }
 
     override fun doPost(request: HttpServletRequest, response: HttpServletResponse) {

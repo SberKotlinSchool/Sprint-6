@@ -23,6 +23,11 @@
             <td th:utext="${record.phoneNumber}"></td>
             <td th:utext="${record.address}"></td>
             <td>
+                <form th:method="get" th:action="@{/app/__${record.id}__/view}">
+                    <input type="submit" value="Детали">
+                </form>
+            </td>
+            <td>
                 <form th:method="get" th:action="@{/app/__${record.id}__/edit}">
                     <input type="submit" value="Изменить">
                 </form>

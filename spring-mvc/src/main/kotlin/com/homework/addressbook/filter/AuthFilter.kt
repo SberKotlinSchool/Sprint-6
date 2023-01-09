@@ -13,19 +13,25 @@ import javax.servlet.http.HttpServletResponse
 
 @Component
 @Order(2)
-class AuthFilter : Filter {
+class AuthFilter: Filter {
 
     override fun doFilter(request: ServletRequest?, response: ServletResponse?, chain: FilterChain?) {
-
-        val authCookie = (request as HttpServletRequest).cookies?.firstOrNull { it.name.equals("auth") }
-        if (authCookie == null) {
-            (response as HttpServletResponse).sendRedirect("/login")
-        } else {
-            val cookieValue = LocalDateTime.parse(authCookie.value)
-            if (cookieValue > cookieValue.plus(10, ChronoUnit.MINUTES)) {
-                (response as HttpServletResponse).sendRedirect("/login")
-            } else chain?.doFilter(request, response)
+        val path = (request as HttpServletRequest).requestURI;
+        if (path.endsWith("/login")) {
+            chain?.doFilter(request, response)
         }
-
+        else
+            {
+                val authCookie = (request as HttpServletRequest).cookies?.firstOrNull { it.name.equals("auth") }
+                if (authCookie == null) {
+                    (response as HttpServletResponse).sendRedirect("/login")
+                    return
+                } else {
+                    val cookieValue = LocalDateTime.parse(authCookie.value)
+                    if (cookieValue > cookieValue.plus(10, ChronoUnit.MINUTES)) {
+                        (response as HttpServletResponse).sendRedirect("/login")
+                    } else chain?.doFilter(request, response)
+                }
+            }
     }
 }

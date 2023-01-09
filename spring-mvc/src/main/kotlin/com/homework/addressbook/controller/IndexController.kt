@@ -14,7 +14,7 @@ class IndexController {
         return "index";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/login.html")
     fun login(): String? {
         return "login"
     }
