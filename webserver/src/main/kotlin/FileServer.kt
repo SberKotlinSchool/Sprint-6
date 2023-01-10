@@ -1,4 +1,6 @@
+
 import ru.sber.filesystem.VFilesystem
+import ru.sber.filesystem.VPath
 import java.io.IOException
 import java.net.ServerSocket
 
@@ -28,43 +30,41 @@ class FileServer {
          */
         while (true) {
 
-            // TODO Delete this once you start working on your solution.
-            //throw new UnsupportedOperationException();
+            val sock = socket.accept()
 
-            // TODO 1) Use socket.accept to get a Socket object
+            sock.use {
+                val request = sock.getInputStream().bufferedReader().readLine().split(" ")
 
+                sock.getOutputStream().bufferedWriter().use { output ->
+                    if (request[0] == "GET") {
+                        val content = fs.readFile(VPath(request[1]))
 
-            /*
-            * TODO 2) Using Socket.getInputStream(), parse the received HTTP
-            * packet. In particular, we are interested in confirming this
-            * message is a GET and parsing out the path to the file we are
-            * GETing. Recall that for GET HTTP packets, the first line of the
-            * received packet will look something like:
-            *
-            *     GET /path/to/file HTTP/1.1
-            */
+                        if (content != null) {
+                            output.append("HTTP/1.1 200 OK")
+                                .appendLine("Server: FileServer")
+                                .appendLine("Content-Type: text/html; charset=utf-8")
+                                .appendLine("Content-Length: ${content.length}")
+                                .appendLine("Connection: close")
+                                .appendLine()
+                                .appendLine(content)
+                                .appendLine()
+                        } else {
+                            output.append("HTTP/1.1 404 Not Found")
+                                .appendLine("Server: FileServer")
+                                .appendLine()
+                        }
+                    } else {
+                        output.append("HTTP/1.1 405 Method Not Allowed")
+                            .appendLine("Server: FileServer")
+                            .appendLine()
+                    }
+                    output.flush()
+                }
+            }
 
-
-            /*
-             * TODO 3) Using the parsed path to the target file, construct an
-             * HTTP reply and write it to Socket.getOutputStream(). If the file
-             * exists, the HTTP reply should be formatted as follows:
-             *
-             *   HTTP/1.0 200 OK\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *   FILE CONTENTS HERE\r\n
-             *
-             * If the specified file does not exist, you should return a reply
-             * with an error code 404 Not Found. This reply should be formatted
-             * as:
-             *
-             *   HTTP/1.0 404 Not Found\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *
-             * Don't forget to close the output stream.
-             */
+            if (Thread.interrupted()) {
+                break;
+            }
         }
     }
 }

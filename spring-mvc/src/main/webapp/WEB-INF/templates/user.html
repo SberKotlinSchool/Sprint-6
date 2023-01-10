@@ -1,0 +1,54 @@
+﻿<html lang="en" xmlns:th="http://www.thymeleaf.org" content="text/html;">
+<head>
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <title>User</title>
+</head>
+<body>
+<div class="top">
+    <div th:switch="${user.state}">
+        <div th:case="'new'">
+            <img src="/static/img/add-user.png" style="width: 128px; height: 128px"/>
+            <h3>Создать пользователя</h3>
+        </div>
+        <div th:case="'old'">
+            <img src="/static/img/edit-user.png" style="width: 128px; height: 128px"/>
+            <h3>Изменить пользователя</h3>
+        </div>
+        <div th:case="'find'">
+            <img src="/static/img/search-user.png" style="width: 128px; height: 128px"/>
+            <h3>Найти пользователя</h3>
+        </div>
+    </div>
+    <form th:action="@{/user/save}" th:method="post" th:object="${user}" accept-charset="utf-8">
+        <label>
+            Id:<br/>
+            <input type="text" name="id" th:value="${user.id}" readonly >
+        </label>
+        <br/>
+        <label>
+            Name:<br/>
+            <input type="text" name="name" th:value="${user.name}" >
+        </label>
+        <br/>
+        <label>
+            Login:<br/>
+            <input type="text" name="login" th:value="${user.login}">
+        </label>
+        <br/>
+        <label>
+            Password:<br/>
+            <input type="password" name="password" th:value="${user.password}">
+        </label>
+        <br/>
+        <label>
+            Address:<br/>
+            <input type="text" name="address.addr" th:value="${user.address?.addr}">
+        </label>
+        <br/><br/>
+        <button type="submit"><i class="fa fa-check"></i> Сохранить</button>
+        <button type="button" onclick="window.location.href='/'"><i class="fa fa-times"></i> Отменить</button>
+    </form>
+</div>
+</body>
+</html>
