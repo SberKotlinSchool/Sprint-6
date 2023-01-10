@@ -1,0 +1,33 @@
+﻿<html lang="en" xmlns:th="http://www.thymeleaf.org" content="text/html;" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <title>User</title>
+</head>
+<body>
+<div class="top">
+    <img src="/static/img/find-user.png" style="width: 128px; height: 128px"/>
+    <h3>Найти пользователя</h3>
+
+    <form th:action="@{/user/find}" th:method="post" th:object="${findUser}" accept-charset="utf-8">
+        <label>
+            Name:<br/>
+            <input type="text" name="name" th:value="${findUser.name}" >
+        </label>
+        <br/>
+        <label>
+            Login:<br/>
+            <input type="text" name="login" th:value="${findUser.login}">
+        </label>
+        <br/>
+        <label>
+            Address:<br/>
+            <input type="text" name="address" th:value="${findUser.address}">
+        </label>
+        <br/><br/>
+        <button type="submit"><i class="fa fa-search"></i> Найти</button>
+        <button type="button" onclick="window.location.href='/'"><i class="fa fa-times"></i> Отменить</button>
+    </form>
+</div>
+</body>
+</html>

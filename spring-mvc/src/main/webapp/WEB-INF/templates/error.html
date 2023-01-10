@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Create user</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+    </style>
+</head>
+<body>
+<img src="/static/img/error.png" style="width: 128px; height: 128px"/>
+<h3>Упс! Не найдено...</h3>
+<pre th:text="${error}"></pre>
+<a th:href="@{/}">На главную</a>
+
+</body>
+</html>

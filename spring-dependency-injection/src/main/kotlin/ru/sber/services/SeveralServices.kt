@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Component
 
 interface ServiceInterface
@@ -37,6 +38,6 @@ class SeveralBeanInjectionService {
 class SeveralServicesConfig {
     @Bean
     fun services(): ArrayList<ServiceInterface> {
-        return arrayListOf(FirstServiceImpl())
+        return arrayListOf(FirstServiceImpl(), SecondServiceImpl())
     }
 }

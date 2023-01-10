@@ -1,0 +1,55 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<style>
+    table {
+        border: 1px black solid; /* стиль внешней рамки */
+    }
+    td {
+        border: 1px black solid; /* стиль рамки ячеек */
+    }
+    th {
+        border: 1px black solid; /* стиль рамки заголовков */
+    }
+</style>
+<head>
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <title>Пользователи</title>
+    <script>
+        function createUser() {
+            window.location.href = "/user/create"
+        }
+        function findUser() {
+            window.location.href = "/user/search"
+        }
+    </script>
+</head>
+
+<body>
+<img src="/static/img/users.png" style="width: 128px; height: 128px">
+<h3>Список пользователей</h3>
+<button onclick="createUser()"><i class="fa fa-plus"></i> Создать</button>
+<button onclick="findUser()"><i class="fa fa-search"></i> Найти</button>
+<div><br/></div>
+
+<table style="width: 80%">
+    <thead>
+        <tr>
+            <td style="width: 150px">Id</td>
+            <td style="width: 300px">Имя</td>
+            <td style="width: 100px">Логин</td>
+            <td style="width: 100px">Пароль</td>
+            <td style="width: 500px">Адрес</td>
+        </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td><a th:href="@{/user/edit/{id}(id=${user.id})}"><span th:text="${user.id}"/></a></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.login}"></td>
+        <td th:text="${user.password}"></td>
+        <td th:text="${user.address?.addr}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
