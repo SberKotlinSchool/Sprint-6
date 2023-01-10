@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="user-inputs">
+    <h2>
+        Редактировать событие
+        <span></span>
+    </h2>
+</div>
+<div class="login-box">
+    <form action="#" th:object="${record}" method="post">
+        <table>
+            <tr>
+                <div class="user-box">
+                    <td>Дата</td>
+                </div>
+                <div class="user-box">
+                    <td>Событие</td>
+                </div>
+            </tr>
+            <tr>
+                <td>
+                    <div class="user-box">
+                        <input type="date" name="date" required="" th:value="${record.date}">
+                        <label></label>
+                    </div>
+                </td>
+                <td>
+                    <div class="user-box">
+                        <input type="text" name="message" required="" placeholder="Введите событие" th:value="${record.message}">
+                        <label></label>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <button type="submit">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Изменить
+        </button>
+    </form>
+</div>
+</body>
+</html>
