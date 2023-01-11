@@ -45,7 +45,7 @@ abstract class BaseNotesTest : BaseMvcTest() {
     }
 
     protected fun getHtmlResponse(mvcResult : MvcResult) : String {
-        return mvcResult.response.contentAsString.replace("\r\n", "")
+        return mvcResult.response.contentAsString.replace(System.lineSeparator(), "")
     }
 
     protected fun getJsonResponse(mvcResult : MvcResult) : String {
