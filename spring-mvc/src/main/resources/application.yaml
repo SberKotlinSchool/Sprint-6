@@ -1,0 +1,9 @@
+server:
+  port: 8500
+
+spring:
+  freemarker:
+    cache: true
+
+app:
+  baseUrl: http://localhost:8500
