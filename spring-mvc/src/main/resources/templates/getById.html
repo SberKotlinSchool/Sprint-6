@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Record by id </title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .persons, .persons td {
+            border: 1px solid lightgray;
+            padding: 5px;
+        }
+
+    </style>
+</head>
+<body>
+<h1>Books:</h1>
+
+<table class="record">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Address</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${recordById.id}">ID</td>
+        <td th:text="${recordById.name}">Name</td>
+        <td th:text="${recordById.address}">Address</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
