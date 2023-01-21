@@ -8,13 +8,13 @@ import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
 @Service
-class AddressBookServiceImpl @Autowired constructor(val repository: AddressBookRepository): AddressBookService {
+class AddressBookServiceImpl @Autowired constructor(val repository: AddressBookRepository) : AddressBookService {
     override fun insert(record: Record): Record? {
-     return repository.addRecord(record)
+        return repository.addRecord(record)
     }
 
     override fun getAll(): List<Record> {
-       return repository.getAll()
+        return repository.getAll()
     }
 
 
@@ -23,7 +23,7 @@ class AddressBookServiceImpl @Autowired constructor(val repository: AddressBookR
     }
 
     override fun deleteById(id: Long) {
-        TODO("Not yet implemented")
+        repository.deleteById(id)
     }
 
 }
