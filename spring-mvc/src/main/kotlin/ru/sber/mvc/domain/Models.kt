@@ -1,20 +1,18 @@
 package ru.sber.mvc.domain
 
-import java.util.UUID
 
+data class DomainUser(val username: String, val password: String)
 
-data class User(val username: String, val password: String)
-
-data class Record(
+data class DomainRecord(
     val name: String,
     val phone: String,
     val address: String,
     val description: String = "",
-    val id: String = UUID.randomUUID().toString(),
+    val id: Long? = null,
 ) {
     companion object {
 
-        val EMPTY: Record
-            get() = Record("", "", "")
+        val EMPTY: DomainRecord
+            get() = DomainRecord("", "", "")
     }
 }

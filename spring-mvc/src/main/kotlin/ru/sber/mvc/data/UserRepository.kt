@@ -1,17 +1,8 @@
 package ru.sber.mvc.data
 
-import org.springframework.stereotype.Repository
-import ru.sber.mvc.domain.User
+import org.springframework.data.jpa.repository.JpaRepository
 
-interface UserRepository {
+interface UserRepository: JpaRepository<User, Long> {
 
-    val users: List<User>
-}
-
-@Repository
-class UserRepositoryImpl : UserRepository {
-
-    override val users = listOf(
-        User("admin", "admin")
-    )
+    fun findByUsername(username: String): User?
 }

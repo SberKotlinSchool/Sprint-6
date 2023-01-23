@@ -1,7 +1,5 @@
 package ru.sber.mvc
 
-import io.mockk.every
-import io.mockk.mockkStatic
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -14,17 +12,18 @@ import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
-import ru.sber.mvc.domain.Record
+import org.springframework.test.annotation.DirtiesContext
+import org.springframework.util.LinkedMultiValueMap
+import ru.sber.mvc.domain.DomainRecord
 import java.net.URL
-import java.time.LocalDateTime
-import java.util.UUID
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class RestAddressBookControllerTests {
 
     private companion object {
-        const val DEFAULT_RECORD_ID = "0"
-        val DEFAULT_RECORD_VALUE = Record(
+        const val DEFAULT_RECORD_ID = 1L
+        val DEFAULT_RECORD_VALUE = DomainRecord(
             "Dima",
             "+79876543211",
             "Saint-Petersburg",
@@ -42,18 +41,9 @@ class RestAddressBookControllerTests {
     @Autowired
     private lateinit var restTemplate: TestRestTemplate
 
-    private val headers: HttpHeaders
-        get() = HttpHeaders().apply { add("cookie", "auth=${LocalDateTime.now()}") }
-
-
-    init {
-        mockkStatic(UUID::class.java.name)
-        every { UUID.randomUUID().toString() } returns DEFAULT_RECORD_ID
-    }
-
     @Test
     fun `check valid get list request`() {
-        val request = HttpEntity(null, headers)
+        val request = HttpEntity(null, getAuthHeaders("user2", "user2", "/login"))
 
         val response = restTemplate.exchange(url("/api/list"), HttpMethod.GET, request, Map::class.java)
 
@@ -65,7 +55,7 @@ class RestAddressBookControllerTests {
 
     @Test
     fun `check valid post add request`() {
-        val request = HttpEntity(DEFAULT_RECORD_VALUE, headers)
+        val request = HttpEntity(DEFAULT_RECORD_VALUE, getAuthHeaders("user2", "user2", "/login"))
 
         val response = restTemplate.exchange(url("/api/add"), HttpMethod.POST, request, Map::class.java)
 
@@ -77,7 +67,7 @@ class RestAddressBookControllerTests {
 
     @Test
     fun `check valid get view request`() {
-        val request = HttpEntity(DEFAULT_RECORD_VALUE, headers)
+        val request = HttpEntity(DEFAULT_RECORD_VALUE, getAuthHeaders("user2", "user2", "/login"))
 
         val response = restTemplate.exchange(
             url("/api/${DEFAULT_RECORD_ID}/view"),
@@ -92,25 +82,22 @@ class RestAddressBookControllerTests {
     }
 
     @Test
-    fun `check valid post edit request`() {
-        val request = HttpEntity(DEFAULT_RECORD_VALUE, headers)
+    fun `check invalid post delete request`() {
+        val request = HttpEntity(DEFAULT_RECORD_VALUE, getAuthHeaders("user2", "user2", "/login"))
 
         val response = restTemplate.exchange(
-            url("/api/${DEFAULT_RECORD_ID}/edit"),
+            url("/api/${DEFAULT_RECORD_ID}/delete"),
             HttpMethod.POST,
             request,
-            Map::class.java
+            Unit::class.java
         )
 
-        response.run {
-            assertEquals(HttpStatus.OK, statusCode)
-            assertTrue(body!!.contains("newRecord"))
-        }
+        assertEquals(HttpStatus.FORBIDDEN, response.statusCode)
     }
 
     @Test
     fun `check valid post delete request`() {
-        val request = HttpEntity(DEFAULT_RECORD_VALUE, headers)
+        val request = HttpEntity(DEFAULT_RECORD_VALUE, getAuthHeaders("admin", "admin", "/login"))
 
         val response = restTemplate.exchange(
             url("/api/${DEFAULT_RECORD_ID}/delete"),
@@ -123,5 +110,18 @@ class RestAddressBookControllerTests {
             assertEquals(HttpStatus.OK, statusCode)
             assertNull(body)
         }
+    }
+
+    private fun getAuthHeaders(username: String, password: String, url: String): HttpHeaders {
+        // credentials for api user
+        val credentials = LinkedMultiValueMap<String, String>()
+            .apply {
+                set("username", username)
+                set("password", password)
+            }
+        val request = HttpEntity(credentials, HttpHeaders())
+
+        val response = restTemplate.postForEntity(url, request, String::class.java)
+        return HttpHeaders().apply { set("Cookie", response.headers["Set-Cookie"].orEmpty().first()) }
     }
 }

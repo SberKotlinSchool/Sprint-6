@@ -1,0 +1,6 @@
+INSERT INTO address_book_user (`username`, `password`, `groups`) VALUES ('admin', '{bcrypt}$2a$10$VwaQShR/jvjdzfLFAzosl.Ld0zH6VXMhDegCIcZt714LgXGy/BYKa', 'ROLE_ADMIN'), ('user1', '{bcrypt}$2a$10$1zzanLtjMRYgq7ztMrArfeXUknxG5cOudbeTYFGdIMn9SMvroPDje', 'ROLE_USER'), ('user2', '{bcrypt}$2a$10$6uahsGU53J5o4DAYYlY8we7ddH.ag73/FDm9Z4fLF7pyIEwEphlda', 'ROLE_API');
+INSERT INTO address_book_record(`name`, `phone`, `address`, `description`) VALUES ('Vasya', '+79998765432', 'Moscow', ''), ('Dima', '+79876543211', 'Saint-Petersburg', 'Gym buddy');
+INSERT INTO ACL_CLASS (`id`, `class`) VALUES (1, 'ru.sber.mvc.data.Record');
+INSERT INTO ACL_SID(`id`, `sid`, `principal`) VALUES (1, 'ROLE_API', 0), (2, 'ROLE_USER', 0), (3, 'admin', 1), (4, 'user1', 1), (5, 'user2', 1), (6, 'ROLE_ADMIN', 0);
+INSERT INTO ACL_OBJECT_IDENTITY(`id`, `object_id_class`, `object_id_identity`, `owner_sid`, `entries_inheriting`) VALUES (1, 1, 1, 2, 0), (2, 1, 2, 2, 0);
+INSERT INTO ACL_ENTRY(`acl_object_identity`, `ace_order`, `sid`, `mask`, `granting`, `audit_success`, `audit_failure`) VALUES (1, 1, 1, 1, 1, 1, 1), (1, 2, 2, 1, 1, 1, 1), (1, 3, 3, 1, 1, 1, 1), (1, 4, 3, 8, 1, 1, 1), (1, 5, 3, 8, 1, 1, 1), (2, 6, 1, 1, 1, 1, 1), (2, 7, 2, 1, 1, 1, 1), (2, 8, 3, 1, 1, 1, 1), (2, 9, 3, 8, 1, 1, 1);
