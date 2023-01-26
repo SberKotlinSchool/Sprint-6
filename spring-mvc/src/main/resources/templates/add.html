@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new record</title>
+</head>
+<body>
+
+<form th:action="@{/app/add}" th:object="${newRecord}" th:method="post">
+    <p><input th:type="text" th:field="${newRecord.name}" th:placeholder="Name"/></p>
+    <p><input th:type="text" th:field="${newRecord.phone}" th:placeholder="Phone"/></p>
+    <p><input th:type="text" th:field="${newRecord.address}" th:placeholder="Address"/></p>
+    <p><input th:type="text" th:field="${newRecord.description}" th:placeholder="Description"/></p>
+    <p>
+        <button type="submit">Add</button>
+        <button type="reset">Clear</button>
+    </p>
+</form>
+<a th:href="@{/app/list}">Go to list</a>
+</body>
+</html>

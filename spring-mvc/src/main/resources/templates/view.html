@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View record</title>
+</head>
+<body>
+<form th:action="@{/app/{id}/edit(id=${record.id})}" method="get">
+    <button th:type="submit">Edit</button>
+</form>
+<table>
+    <tbody>
+    <tr>
+        <td class="html-editor-align-center"><span th:text="Name"></span></td>
+        <td class="html-editor-align-center"><span th:text="${record.name}"></span></td>
+    </tr>
+    <tr>
+        <td class="html-editor-align-center"><span th:text="Address"></span></td>
+        <td class="html-editor-align-center"><span th:text="${record.address}"></span></td>
+    </tr>
+    <tr>
+        <td class="html-editor-align-center"><span th:text="Phone"></span></td>
+        <td class="html-editor-align-center"><span th:text="${record.phone}"></span></td>
+    </tr>
+    <tr>
+        <td class="html-editor-align-center"><span th:text="Description"></span></td>
+        <td class="html-editor-align-center"><span th:text="${record.description}"></span></td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/app/list}">Go to list</a>
+</body>
+</html>

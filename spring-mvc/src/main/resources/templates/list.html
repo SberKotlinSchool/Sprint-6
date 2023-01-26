@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr th:if="${!records.isEmpty()}">
+        <th>Name</th>
+        <th>Address</th>
+        <th>Phone</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${records.isEmpty()}">
+        <td colspan="4">No records</td>
+    </tr>
+    <tr th:each="record : ${records}">
+        <td class="html-editor-align-center"><span th:text="${record.name}"></span></td>
+        <td class="html-editor-align-center"><span th:text="${record.address}"></span></td>
+        <td class="html-editor-align-center"><span th:text="${record.phone}"></span></td>
+        <td class="html-editor-align-center"><span th:text="${record.description}"></span></td>
+        <td class="html-editor-align-center">
+            <form th:action="@{/app/{id}/edit(id=${record.id})}" method="get">
+                <button th:type="submit">Edit</button>
+            </form>
+        </td>
+        <td class="html-editor-align-center">
+            <form th:action="@{/app/{id}/delete(id=${record.id})}" method="post">
+                <button th:type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<form th:action="@{/app/add}" method="get">
+    <button th:type="submit">Add new record</button>
+</form>
+</body>
+</html>

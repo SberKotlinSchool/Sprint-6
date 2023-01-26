@@ -14,7 +14,7 @@ class ServicesTest {
         val context = AnnotationConfigApplicationContext(ServicesConfig::class.java)
 
         // when
-        val firstService = context.getBean("firstService")
+        val firstService = context.getBean("service")
 
         // then
         assertEquals("I am firstService", firstService.toString())
