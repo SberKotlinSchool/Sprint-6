@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>Детали</h1>
+<div>
+    <table>
+        <tr>
+            <td>Имя</td>
+            <td th:utext="${address.name}"></td>
+        </tr>
+        <tr>
+            <td>Номер телефона</td>
+            <td th:utext="${address.phoneNumber}"></td>
+        </tr>
+        <tr>
+            <td>Адрес</td>
+            <td th:utext="${address.address}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
