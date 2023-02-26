@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список</title>
+</head>
+<body>
+<div>
+    <table>
+        <tr>
+            <th>Адреса</th>
+        </tr>
+        <tr th:each="id: ${addresses.keySet()}">
+            <td th:utext="${addresses.get(id)}"></td>
+            <td>
+                <form th:method="get" th:action="@{/app/__${id}__/view}">
+                    <input type="submit" value="Детали">
+                </form>
+            </td>
+            <td>
+                <form th:method="delete" th:action="@{/app/__${id}__/delete}">
+                    <input type="submit" value="Удалить">
+                </form>
+            </td>
+            <td>
+                <form th:method="post" th:action="@{/app/__${id}__/edit}">
+                    <input type="submit" value="Изменить">
+                    <input name="address"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<form action="/app/add" method="post">
+    <p>
+        <button>Добавить новый</button>
+    </p>
+    <input name="address"/>
+</form>
+</body>
+</html>
