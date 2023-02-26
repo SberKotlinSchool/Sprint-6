@@ -1,12 +1,12 @@
 package ru.sber.filter
 
-import jakarta.servlet.FilterChain
-import jakarta.servlet.annotation.WebFilter
-import jakarta.servlet.http.HttpFilter
-import jakarta.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse
+import javax.servlet.FilterChain
+import javax.servlet.http.HttpFilter
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 import org.springframework.core.annotation.Order
 import java.time.LocalDateTime
+import javax.servlet.annotation.WebFilter
 
 @WebFilter(urlPatterns = ["/app/*", "/api/*"])
 @Order(2)
