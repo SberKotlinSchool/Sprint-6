@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EDIT CONTACT</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+<form th:method="POST" th:action="@{/app/add}" th:object="${contact}">
+    <label for="name">Name:</label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <div style="color: darkred" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+
+    <label for="phone">Phone:</label>
+    <input type="text" th:field="*{phone}" id="phone"/>
+    <div style="color: darkred" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">phone Error</div>
+
+    <br>
+    <input type="submit" class="button" value="Add"/>
+</form>
+</body>
+</html>

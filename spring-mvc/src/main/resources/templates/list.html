@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>ADDRESS BOOK</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
+</head>
+<body>
+<h1>Contacts:</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="contact : ${contacts}">
+        <td th:text="${contact.name}">-</td>
+        <td th:text="${contact.phone}">-</td>
+        <td>
+            <a th:href="@{/app/{id}/view(id=${contact.id})}"
+               class="button">View</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="add-new" style="margin-top: 20px;">
+    <a href="/app/add" class="button">Add New</a>
+</div>
+</body>
+</html>

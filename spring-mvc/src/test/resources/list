@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" >
+    <title>ADDRESS BOOK</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
+</head>
+<body>
+<h1>Contacts:</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Tom</td>
+        <td>111-11-11</td>
+        <td>
+            <a href="/app/1/view"
+               class="button">View</a>
+        </td>
+    </tr>
+    <tr>
+        <td>Kate</td>
+        <td>222-22-22</td>
+        <td>
+            <a href="/app/2/view"
+               class="button">View</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="add-new" style="margin-top: 20px;">
+    <a href="/app/add" class="button">Add New</a>
+</div>
+</body>
+</html>
