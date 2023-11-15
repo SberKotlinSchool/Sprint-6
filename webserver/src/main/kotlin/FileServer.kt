@@ -2,7 +2,6 @@ import ru.sber.filesystem.VFilesystem
 import ru.sber.filesystem.VPath
 import java.io.IOException
 import java.net.ServerSocket
-import java.nio.charset.StandardCharsets
 
 /**
  * A basic and very limited implementation of a file server that responds to GET
@@ -14,6 +13,8 @@ class FileServer {
     private val HTTP_1_1: String = "HTTP/1.1"
     private val METHOD_GET: String = "GET"
     private val NEW_LINE_SYMBOLS: String = "\r\n"
+    private val CODE_200: String = "200 OK"
+    private val CODE_404: String = "404 Not Found"
 
     /**
      * Main entrypoint for the basic file server.
@@ -54,34 +55,14 @@ class FileServer {
         val content = fileSystem.readFile(VPath(path))
 
         if (content != null) {
-            return "HTTP/1.0 200 OK" + NEW_LINE_SYMBOLS +
+            return HTTP_1_1 + " " + CODE_200 + NEW_LINE_SYMBOLS +
                     SERVER_NAME + NEW_LINE_SYMBOLS +
                     NEW_LINE_SYMBOLS +
                     content + NEW_LINE_SYMBOLS
         }
 
-        /*
-             *   HTTP/1.0 200 OK\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *   FILE CONTENTS HERE\r\n
-             *
-             * If the specified file does not exist, you should return a reply
-             * with an error code 404 Not Found. This reply should be formatted
-             * as:
-             *
-             *   HTTP/1.0 404 Not Found\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *
-             * Don't forget to close the output stream.
-             */
-        return "HTTP/1.0 404 Not Found" + NEW_LINE_SYMBOLS +
+        return HTTP_1_1 + " " + CODE_404 + NEW_LINE_SYMBOLS +
                 SERVER_NAME + NEW_LINE_SYMBOLS +
                 NEW_LINE_SYMBOLS
     }
-}
-
-fun main() {
-
 }
