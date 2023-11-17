@@ -1,11 +1,26 @@
+import domain.Request
+import domain.Response
+import exception.RequestParseException
 import ru.sber.filesystem.VFilesystem
+import ru.sber.filesystem.VPath
+import util.HttpStatus
 import java.io.IOException
+import java.io.PrintWriter
 import java.net.ServerSocket
 
 /**
  * A basic and very limited implementation of a file server that responds to GET
  * requests from HTTP clients.
  */
+
+fun main() {
+    val socket = ServerSocket(9999)
+    socket.setReuseAddress(true)
+    val fs = VFilesystem()
+    fs.addFile(VPath("/static/A.txt"), "sdfghj")
+    FileServer().run(socket, fs)
+}
+
 class FileServer {
 
     /**
@@ -19,52 +34,54 @@ class FileServer {
      *                     implementation is not expected to ever throw
      *                     IOExceptions during normal operation.
      */
+    private val serverName = this.javaClass.name
+
     @Throws(IOException::class)
-    fun run(socket: ServerSocket, fs: VFilesystem) {
+    fun run(server: ServerSocket, fs: VFilesystem) {
+        server.use {
+            while (true) {
+                println("Server started at port ${it.localPort}. Listening for client connections...")
+                handle(it, fs)
+            }
+        }
+    }
 
-        /**
-         * Enter a spin loop for handling client requests to the provided
-         * ServerSocket object.
-         */
-        while (true) {
+    private fun handle(server: ServerSocket, fs: VFilesystem) {
+        server.accept().use { socket ->
+            val reader = socket.getInputStream().bufferedReader()
+            val rawRequest = reader.readLine()
 
-            // TODO Delete this once you start working on your solution.
-            //throw new UnsupportedOperationException();
+            println("Receive from ${socket.remoteSocketAddress}  > clientRequest $rawRequest")
 
-            // TODO 1) Use socket.accept to get a Socket object
+            val writer = PrintWriter(socket.getOutputStream())
 
+            rawRequest.runCatching {
+                val request = Request.fromRaw(rawRequest)
+                val response = (fs.readFile(VPath(request.path))?.let { content ->
+                    Response(status = HttpStatus.OK, server = serverName, content = content)
+                } ?: Response(status = HttpStatus.NOT_FOUND, server = serverName)).toRaw()
+                writer.println(response)
+                writer.flush()
+                println("Send to ${socket.remoteSocketAddress} > $response")
+            }.onFailure { ex ->
+                when (ex) {
+                    is RequestParseException -> {
+                        val response = Response(
+                                status = HttpStatus.INTERNAL_SERVER_ERROR,
+                                server = serverName,
+                                content = ex.localizedMessage).toRaw()
+                        writer.println(Response)
+                        writer.flush()
+                        println("Send to ${socket.remoteSocketAddress} > $response")
+                    }
 
-            /*
-            * TODO 2) Using Socket.getInputStream(), parse the received HTTP
-            * packet. In particular, we are interested in confirming this
-            * message is a GET and parsing out the path to the file we are
-            * GETing. Recall that for GET HTTP packets, the first line of the
-            * received packet will look something like:
-            *
-            *     GET /path/to/file HTTP/1.1
-            */
-
-
-            /*
-             * TODO 3) Using the parsed path to the target file, construct an
-             * HTTP reply and write it to Socket.getOutputStream(). If the file
-             * exists, the HTTP reply should be formatted as follows:
-             *
-             *   HTTP/1.0 200 OK\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *   FILE CONTENTS HERE\r\n
-             *
-             * If the specified file does not exist, you should return a reply
-             * with an error code 404 Not Found. This reply should be formatted
-             * as:
-             *
-             *   HTTP/1.0 404 Not Found\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *
-             * Don't forget to close the output stream.
-             */
+                    else -> throw ex
+                }
+            }
         }
     }
 }
+
+
+
+
