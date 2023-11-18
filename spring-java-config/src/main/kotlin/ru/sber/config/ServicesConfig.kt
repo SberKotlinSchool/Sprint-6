@@ -4,16 +4,18 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import ru.sber.services.FirstService
+import ru.sber.services.SecondService
 
 @Configuration
-@ComponentScan
+@ComponentScan("ru.sber.services")
 class ServicesConfig {
-    @Bean
+    @Bean("firstService")
     fun service(): FirstService {
         return FirstService()
     }
 
-    @Bean
-    fun secondService() {
+    @Bean("secondService")
+    fun secondService(): SecondService {
+        return SecondService()
     }
 }
