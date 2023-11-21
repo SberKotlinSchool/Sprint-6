@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${row.name}"></title>
+</head>
+<body>
+<div><a href="/app/list">Back</a> </div>
+<div>
+  <span th:text="${row.name}"/>: <span th:text="${row.address}"/>
+</div>
+<form method="post" th:action="'/app/'+${row.name}+'/edit'">
+  <input name="address" type="text" th:value="${row.address}">
+  <input name="name" type="hidden" th:value="${row.name}">
+  <button>Update</button>
+</form>
+</body>
+</html>
