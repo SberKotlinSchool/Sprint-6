@@ -23,12 +23,13 @@ class SecondServiceImpl : ServiceInterface {
 }
 
 @Component
-class SeveralBeanInjectionService {
+class SeveralBeanInjectionService @Autowired constructor(val firstService: FirstServiceImpl, val secondService: SecondServiceImpl) {
+
     @Autowired
     lateinit var services: ArrayList<ServiceInterface>
 
     override fun toString(): String {
-        return "SeveralBeanInjectionService(services=$services)"
+        return "SeveralBeanInjectionService(services=${listOf(firstService, secondService)})"
     }
 }
 
