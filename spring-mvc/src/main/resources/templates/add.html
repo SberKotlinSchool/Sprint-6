@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Adding entry</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>Add entry</h2>
+<form method="post" th:action="@{/app/add}" th:object="${entry}">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><label>
+                <input type="text" th:field="${entry.name}" placeholder="Name"/>
+            </label></td>
+        </tr>
+        <tr>
+            <td>Address:</td>
+            <td><label>
+                <input type="text" th:field="${entry.address}" placeholder="Address"/>
+            </label></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
