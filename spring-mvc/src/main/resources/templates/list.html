@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Entries</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>Entries</h2>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Address</th>
+    </tr>
+    <tr th:each="mapEntry : ${entries}">
+        <td th:text="${mapEntry.key}"></td>
+        <td th:text="${mapEntry.value.name}"></td>
+        <td th:text="${mapEntry.value.address}"></td>
+    </tr>
+</table>
+</body>
+</html>

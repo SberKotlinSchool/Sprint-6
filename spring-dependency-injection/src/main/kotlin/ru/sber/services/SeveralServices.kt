@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
+import java.util.*
+import kotlin.collections.ArrayList
 
 interface ServiceInterface
 
@@ -25,7 +27,7 @@ class SecondServiceImpl : ServiceInterface {
 @Component
 class SeveralBeanInjectionService {
     @Autowired
-    lateinit var services: ArrayList<ServiceInterface>
+    lateinit var services: List<ServiceInterface> // почему не работает с ArrayList?
 
     override fun toString(): String {
         return "SeveralBeanInjectionService(services=$services)"
