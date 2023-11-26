@@ -1,6 +1,10 @@
 import ru.sber.filesystem.VFilesystem
+import ru.sber.filesystem.VPath
 import java.io.IOException
+import java.io.PrintWriter
 import java.net.ServerSocket
+import java.net.Socket
+import java.util.regex.Pattern
 
 /**
  * A basic and very limited implementation of a file server that responds to GET
@@ -27,44 +31,44 @@ class FileServer {
          * ServerSocket object.
          */
         while (true) {
-
-            // TODO Delete this once you start working on your solution.
-            //throw new UnsupportedOperationException();
-
-            // TODO 1) Use socket.accept to get a Socket object
-
-
-            /*
-            * TODO 2) Using Socket.getInputStream(), parse the received HTTP
-            * packet. In particular, we are interested in confirming this
-            * message is a GET and parsing out the path to the file we are
-            * GETing. Recall that for GET HTTP packets, the first line of the
-            * received packet will look something like:
-            *
-            *     GET /path/to/file HTTP/1.1
-            */
-
-
-            /*
-             * TODO 3) Using the parsed path to the target file, construct an
-             * HTTP reply and write it to Socket.getOutputStream(). If the file
-             * exists, the HTTP reply should be formatted as follows:
-             *
-             *   HTTP/1.0 200 OK\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *   FILE CONTENTS HERE\r\n
-             *
-             * If the specified file does not exist, you should return a reply
-             * with an error code 404 Not Found. This reply should be formatted
-             * as:
-             *
-             *   HTTP/1.0 404 Not Found\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *
-             * Don't forget to close the output stream.
-             */
+            socket.use {
+                while (true) {
+                    println("Server started at port: ${socket.localPort}")
+                    val socket = it.accept()
+                    handle(socket, fs)
+                }
+            }
         }
     }
+
+    private fun handle(socket: Socket, fs: VFilesystem) {
+        println("Client connected:${socket.remoteSocketAddress}")
+        socket.use { s ->
+            val reader = s.getInputStream().bufferedReader()
+            val clientRequest = reader.readLine()
+            val path: String
+            var serverResponse: String
+            try {
+                path = clientRequest.split(Pattern.compile(" "), 3)[1]
+
+                serverResponse = if (path.isBlank()) {
+                    responseBadRequest
+                } else {
+                    val file = fs.readFile(VPath(path))
+                    if (file == null) responseNotFound else responseSuccess.plus(file)
+                }
+            } catch (e: Exception) {
+                serverResponse = responseBadRequest
+            }
+            val writer = PrintWriter(s.getOutputStream())
+            writer.println(serverResponse)
+            writer.flush()
+        }
+    }
+
+
+    private val responseSuccess = "HTTP/1.0 200 OK\r\nServer: FileServer\r\n\r\n"
+    private val responseNotFound = "HTTP/1.0 404 Not Found\r\nServer: FileServer\r\n\r\n"
+    private val responseBadRequest = "HTTP/1.0 400 Bad Request\r\nServer: FileServer\r\n\r\n"
+
 }
