@@ -9,8 +9,7 @@ class ServicesTest {
     @Test
     fun `should create context and get bean successfully`() {
         // given
-        val context = ClassPathXmlApplicationContext("applicationContext")
-
+        val context = ClassPathXmlApplicationContext("applicationContext.xml")
         // when
         val firstService = context.getBean("firstService")
 

@@ -9,11 +9,17 @@ import ru.sber.services.FirstService
 @ComponentScan
 class ServicesConfig {
     @Bean
-    fun service(): FirstService {
+    fun firstService(): FirstService {
         return FirstService()
     }
 
     @Bean
-    fun secondService() {
+    fun secondService(): SecondService {
+        return SecondService()
+    }
+
+    @Bean
+    fun thirdService(): ThirdService {
+        return ThirdService()
     }
 }

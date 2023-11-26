@@ -1,41 +1,29 @@
 package ru.sber.services
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Condition
-import org.springframework.context.annotation.ConditionContext
-import org.springframework.context.annotation.Conditional
-import org.springframework.core.type.AnnotatedTypeMetadata
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 
-class ProdProfileCondition : Condition {
-    override fun matches(context: ConditionContext, metadata: AnnotatedTypeMetadata): Boolean {
-        return context.environment.activeProfiles.contains("qa")
-    }
-}
-
-interface ConditionalInterface
+interface PrimaryServiceInterface
 
 @Component
-@Conditional(ProdProfileCondition::class)
-class ConditionalService : ConditionalInterface {
+class FirstPrimaryServiceImpl : PrimaryServiceInterface {
     override fun toString(): String {
-        return "ConditionalService"
+        return "FirstPrimaryServiceImpl"
     }
 }
 
 @Component
-class AnotherConditionalService : ConditionalInterface {
+class SecondPrimaryServiceImpl : PrimaryServiceInterface {
     override fun toString(): String {
-        return "AnotherConditionalService"
+        return "SecondPrimaryServiceImpl"
     }
 }
 
 @Component
-class ConditionalBeanInjectionService {
-    @Autowired
-    private lateinit var conditionalService: ConditionalInterface
+class PrimaryBeanInjectionService @Autowired constructor(@Qualifier("secondPrimaryServiceImpl") private val primaryService: PrimaryServiceInterface){
 
     override fun toString(): String {
-        return "ConditionalBeanInjectionService(conditionalService=$conditionalService)"
+        return "PrimaryBeanInjectionService(primaryService=$primaryService)"
     }
 }
