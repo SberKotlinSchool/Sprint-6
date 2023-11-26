@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Address Book</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>E-mail</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${addressList.empty}">
+        <td colspan="5"> No Addresses Available</td>
+    </tr>
+    <tr th:each="address : ${addressList}">
+        <td th:text="${address.name}">Name</td>
+        <td th:text="${address.phone}">Phone</td>
+        <td th:text="${address.email}">Email</td>
+        <td><a th:href="@{/app/{id}/view(id=${address.id})}" th:text="View"></a></td>
+        <td><a th:href="@{/app/{id}/edit(id=${address.id})}" th:text="Edit"></a></td>
+        <td><a th:href="@{/app/{id}/delete(id=${address.id})}" th:text="Delete"></a></td>
+    </tr>
+    </tbody>
+</table>
+<form method="post" action="/app/add">
+    <input type="text" name="name" placeholder="Name">
+    <input type="text" name="phone" placeholder="Phone">
+    <input type="text" name="email" placeholder="Email">
+    <button>Add</button>
+</form>
+</body>
+</html>
