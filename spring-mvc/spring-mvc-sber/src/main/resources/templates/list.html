@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Address list</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+<div>Address List</div>
+<br>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Address name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="address : ${addressList}">
+        <td th:text="${address.id}">ID</td>
+        <td>
+            <a th:href="@{/app/{id}/view(id=${address.id})}" th:text="${address.name}"></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<form th:action="@{/app/add}">
+    <button>New</button>
+</form>
+
+</body>
+</html>
