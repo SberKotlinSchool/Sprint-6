@@ -1,6 +1,7 @@
 package ru.sber.services
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 
 interface PrimaryServiceInterface
@@ -20,9 +21,7 @@ class SecondPrimaryServiceImpl : PrimaryServiceInterface {
 }
 
 @Component
-class PrimaryBeanInjectionService {
-    @Autowired
-    private lateinit var primaryService: PrimaryServiceInterface
+class PrimaryBeanInjectionService @Autowired constructor(@Qualifier("secondPrimaryServiceImpl") private val primaryService: PrimaryServiceInterface){
 
     override fun toString(): String {
         return "PrimaryBeanInjectionService(primaryService=$primaryService)"
