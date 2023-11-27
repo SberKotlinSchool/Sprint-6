@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>spring-mvc-sber</artifactId>
+	<artifactId>spring-mvc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-mvc-sber</name>
+	<name>spring-mvc</name>
 	<description>Homework for Kotlin</description>
 	<properties>
 		<java.version>1.8</java.version>
