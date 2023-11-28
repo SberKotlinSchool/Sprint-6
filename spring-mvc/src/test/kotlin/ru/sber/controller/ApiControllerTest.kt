@@ -134,9 +134,23 @@ internal class ApiControllerTest {
             url(url),
             HttpMethod.GET,
             HttpEntity(null, null),
-            Unit::class.java
+            String::class.java
         )
         //then
-        assertEquals(resp.statusCode, HttpStatus.INTERNAL_SERVER_ERROR)
+        assertEquals(resp.statusCode, HttpStatus.OK)
+        assertEquals(
+            resp.body.toString().trimIndent(), """
+                <!DOCTYPE html>
+                <html lang="en">
+                <body>
+                <form action="/login" method="POST">
+                    <p>login:<label><input name="login" type="text"></label></p>
+                    <p>password:<label><input name="password" type="text"></label></p>
+                    <input type="submit" value="login"/>
+                </form>
+                </body>
+                </html>
+            """.trimIndent()
+        )
     }
 }

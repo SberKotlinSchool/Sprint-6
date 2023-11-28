@@ -19,7 +19,7 @@ class LoginFilter : Filter {
         val request = servletRequest as HttpServletRequest
         log.warn { "request: ${request.method} ${request.requestURI}" }
 
-        val auth = request.cookies.find { it.name == "auth" }
+        val auth = request.cookies?.find { it.name == "auth" }
         val isCookiesAuthAndNotOverdue =
             auth != null && LocalDateTime.parse(auth.value) > LocalDateTime.now()
                 .minusMinutes(COOKIE_AUTH_OVERDUE_MINUTES)
