@@ -10,6 +10,7 @@
 
     <properties>
         <kotlin.version>1.5.31</kotlin.version>
+        <kotlin-logging-jvm.version>2.0.10</kotlin-logging-jvm.version>
     </properties>
 
     <dependencies>
@@ -30,6 +31,27 @@
             <artifactId>junit</artifactId>
             <version>3.8.2</version>
             <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+        <dependency>
+            <groupId>io.github.microutils</groupId>
+            <artifactId>kotlin-logging-jvm</artifactId>
+            <version>${kotlin-logging-jvm.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.2.3</version>
         </dependency>
     </dependencies>
 
@@ -95,6 +117,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>

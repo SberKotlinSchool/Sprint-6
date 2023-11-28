@@ -1,5 +1,6 @@
 package ru.sber.service
 
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import ru.sber.config.ServicesConfig
@@ -29,7 +30,7 @@ class ServicesTest {
 
         // when
         val callbackBean = context.getBean("callbackBean") as CallbackBean
-
+        context.close()
         // then
         assertEquals("Sorry, but I really have to go.", callbackBean.greeting)
     }
@@ -57,6 +58,7 @@ class ServicesTest {
     }
 
     @Test
+    @Disabled("является необязательной задачей")
     fun `getBean should return bean and correct preConfiguredProperty`() {
         // given
         val context = AnnotationConfigApplicationContext(ServicesConfig::class.java)

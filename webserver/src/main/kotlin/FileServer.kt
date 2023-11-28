@@ -1,6 +1,15 @@
+import mu.KotlinLogging
 import ru.sber.filesystem.VFilesystem
+import ru.sber.filesystem.VPath
 import java.io.IOException
+import java.io.PrintWriter
 import java.net.ServerSocket
+import java.net.Socket
+
+private const val INPUT_PARAM_SIZE = 3
+private const val INPUT_PARAM_GET = "GET"
+private const val RESPONSE_200 = "HTTP/1.0 200 OK\r\nServer: FileServer\r\n\r\n"
+private const val RESPONSE_404 = "HTTP/1.0 404 Not Found\r\nServer: FileServer\r\n\r\n"
 
 /**
  * A basic and very limited implementation of a file server that responds to GET
@@ -21,50 +30,46 @@ class FileServer {
      */
     @Throws(IOException::class)
     fun run(socket: ServerSocket, fs: VFilesystem) {
-
-        /**
-         * Enter a spin loop for handling client requests to the provided
-         * ServerSocket object.
-         */
+        LOG.info { "Server started at port $socket. Waiting for connections..." }
         while (true) {
-
-            // TODO Delete this once you start working on your solution.
-            //throw new UnsupportedOperationException();
-
-            // TODO 1) Use socket.accept to get a Socket object
-
-
-            /*
-            * TODO 2) Using Socket.getInputStream(), parse the received HTTP
-            * packet. In particular, we are interested in confirming this
-            * message is a GET and parsing out the path to the file we are
-            * GETing. Recall that for GET HTTP packets, the first line of the
-            * received packet will look something like:
-            *
-            *     GET /path/to/file HTTP/1.1
-            */
-
-
-            /*
-             * TODO 3) Using the parsed path to the target file, construct an
-             * HTTP reply and write it to Socket.getOutputStream(). If the file
-             * exists, the HTTP reply should be formatted as follows:
-             *
-             *   HTTP/1.0 200 OK\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *   FILE CONTENTS HERE\r\n
-             *
-             * If the specified file does not exist, you should return a reply
-             * with an error code 404 Not Found. This reply should be formatted
-             * as:
-             *
-             *   HTTP/1.0 404 Not Found\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *
-             * Don't forget to close the output stream.
-             */
+            socket.accept().use { handleRequest(it, fs) }
         }
+    }
+
+    private fun handleRequest(clientSocket: Socket, fs: VFilesystem) {
+        LOG.info { "Client connected: $clientSocket" }
+
+        clientSocket.getInputStream().bufferedReader().use { bufferedReader ->
+            val inputRequest = bufferedReader.readLine()
+            LOG.info { "Client receive:\n$inputRequest" }
+
+            val inputParam = inputRequest.split(" ")
+            validateRequest(inputParam)
+            sendResponse(clientSocket, getResponseMessage(fs, inputParam[1]))
+        }
+    }
+
+    private fun validateRequest(inputParam: List<String>) {
+        if (!(inputParam.size == INPUT_PARAM_SIZE && inputParam[0] == INPUT_PARAM_GET)) {
+            throw UnsupportedOperationException()
+        }
+    }
+
+    private fun sendResponse(clientSocket: Socket, result: String) {
+        LOG.info { "Server receive to $clientSocket : $result" }
+        PrintWriter(clientSocket.getOutputStream()).use { writer ->
+            writer.println(result)
+            writer.flush()
+        }
+    }
+
+    private fun getResponseMessage(fs: VFilesystem, path: String): String {
+        LOG.info { "Client search file: $path" }
+        val file = fs.readFile(VPath(path))
+        return if (file == null) RESPONSE_404 else RESPONSE_200 + file
+    }
+
+    companion object {
+        val LOG = KotlinLogging.logger {}
     }
 }
