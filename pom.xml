@@ -15,7 +15,7 @@
         <module>spring-bean-scope</module>
         <module>spring-dependency-injection</module>
         <module>spring-java-config</module>
-<!--        <module>spring-mvc</module>-->
+        <module>spring-mvc</module>
     </modules>
 
 </project>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Address book</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1> Add Record </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <form action="#"
+            th:action="@{/app/add}"
+            th:object="${record}"
+            method="post"
+            class="col card p-3 mb-5">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" placeholder="Enter Name" required type="text" th:field="*{name}"
+                 class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input id="lastName" placeholder="Enter Last Name" type="text" th:field="*{lastName}"
+                 class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="secondName">Second Name</label>
+          <input id="secondName" placeholder="Enter Second Name" type="text" th:field="*{secondName}"
+                 class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="phoneNumber">Phone number</label>
+          <input id="phoneNumber" placeholder="Enter Phone number" type="text" th:field="*{phoneNumber}"
+                 class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input id="city" placeholder="Enter City" type="text" th:field="*{address.city}"
+                 class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="street">Street</label>
+          <input id="street" placeholder="Enter Street" type="text" th:field="*{address.street}"
+                 class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="houseNumber">House number</label>
+          <input id="houseNumber" placeholder="Enter House number" type="text"
+                 th:field="*{address.houseNumber}"
+                 class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="postcode">Postcode</label>
+          <input id="postcode" placeholder="Enter Postcode" type="text" th:field="*{address.postcode}"
+                 class="form-control"/>
+        </div>
+        <a class="btn btn-info" href="#" th:href="@{/app/list}"> Back to All Records </a>
+        <span class="pull-right">
+						    <input type="submit" id="submitButton" class="btn btn-primary" th:value="Save">
+						    <input type="reset" id="resetButton" class="btn btn-danger" th:value="Reset"/>
+					</span>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

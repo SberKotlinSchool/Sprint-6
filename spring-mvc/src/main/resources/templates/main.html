@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <meta charset="UTF-8">
+  <title>Address book</title>
+</head>
+<body>
+<div class="container">
+  <h3>Records from address book</h3><br/>
+  <form class="form-inline pull-right" th:action="@{/app/search}" method="get">
+    <input type="search"
+           id="mySearch"
+           placeholder="Input search query..."
+           name="query" th:value="*{query}"/>
+    <input type="submit" class="btn btn-primary" value="Search"/>
+    <a class="btn btn-default" href="#" th:href="@{/app/list}">Clear</a>
+    <a class="btn btn-info" href="#" th:href="@{/app/add}">Add</a>
+  </form>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Last name</th>
+      <th>Second name</th>
+      <th>Phone number</th>
+      <th>City</th>
+      <th>Street</th>
+      <th>House number</th>
+      <th>Postcode</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="record : ${records}">
+      <td><a th:href="@{|/app/${record.id}/view|}" th:text="${record.name}"/></td>
+      <td th:text="${record.lastName}"/>
+      <td th:text="${record.secondName}"/>
+      <td th:text="${record.phoneNumber}"/>
+      <td th:text="${record.address.city}"/>
+      <td th:text="${record.address.street}"/>
+      <td th:text="${record.address.houseNumber}"/>
+      <td th:text="${record.address.postcode}"/>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
