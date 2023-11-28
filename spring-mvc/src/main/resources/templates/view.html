@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Address book</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1> View record </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <form action="#"
+            th:object="${record}"
+            method="get"
+            th:action="@{|/app/${record.id}/edit|}"
+            class="col card p-3 mb-5">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" readonly th:value="*{name}"
+                 class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input id="lastName" readonly th:value="*{lastName}"
+                 class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="secondName">Second Name</label>
+          <input id="secondName" readonly th:value="*{secondName}"
+                 class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="phoneNumber">Phone number</label>
+          <input id="phoneNumber" readonly th:value="*{phoneNumber}"
+                 class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input id="city" readonly th:value="*{address.city}"
+                 class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="street">Street</label>
+          <input id="street" readonly th:value="*{address.street}"
+                 class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="houseNumber">House number</label>
+          <input id="houseNumber" readonly th:value="*{address.houseNumber}"
+                 class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="postcode">Postcode</label>
+          <input id="postcode" readonly th:value="*{address.postcode}"
+                 class="form-control"/>
+        </div>
+        <a class="btn btn-info" href="#" th:href="@{/app/list}"> Back to All Records </a>
+        <span class="pull-right">
+						    <input type="submit" id="submitButton" class="btn btn-primary" th:value="Edit"/>
+						    <input type="submit" th:formaction="@{|/app/${record.id}/delete|}" id="deleteButton"
+                       class="btn btn-danger" th:value="Delete"/>
+					</span>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
