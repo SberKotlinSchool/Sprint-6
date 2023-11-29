@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить адрес</title>
+</head>
+<body>
+
+<h1>Добавить новый адрес</h1>
+<form th:action="@{/app/add}"
+      th:object="${address}" method="POST">
+    Имя:
+    <input type="text" th:field="*{name}"/>
+    <br/>
+    email:
+    <input type="text" th:field="*{email}"/>
+    <br/>
+    <input type="submit" value="Добавить"/>
+</form>
+</body>
+</html>
