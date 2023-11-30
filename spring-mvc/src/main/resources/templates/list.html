@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список</title>
+</head>
+<body>
+<div>
+    <table>
+
+        <tr>
+            <th>
+                <form action="/app/list" method="post">
+                    <input name="byName"/>
+                    <input type="submit" value="Фильтр по названию"/>
+                </form>
+            </th>
+        </tr>
+    </table>
+    <br>
+    <br>
+
+
+    <table>
+        <tr>
+            <th>Адреса</th>
+        </tr>
+
+
+        <tr th:each="address: ${addresses}">
+            <td th:text="${address.id}">ID</td>
+            <td th:text="${address.name}">name</td>
+            <td>
+                <form th:method="get" th:action="@{/app/__${address.id}__/view}">
+                    <input type="submit" value="Детали">
+                </form>
+            </td>
+            <td>
+                <form th:method="post" th:action="@{/app/__${address.id}__/delete}">
+                    <input type="submit" value="Удалить">
+                </form>
+            </td>
+            <td>
+                <form th:method="post" th:action="@{/app/__${address.id}__/edit}">
+                    <input type="submit" value="Изменить">
+                    <input name="name"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<br>
+<br>
+<form action="/app/add" method="post">
+    <input type="submit" value="Добавить новый:"/>
+    <input name="name"/>
+
+</form>
+</body>
+</html>

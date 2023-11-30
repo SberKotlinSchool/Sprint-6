@@ -13,6 +13,7 @@ class FirstQualifierServiceImpl : QualifierInterface {
     }
 }
 
+@Qualifier("onlySecondService")
 @Component
 class SecondQualifierServiceImpl : QualifierInterface {
     override fun toString(): String {

@@ -30,6 +30,8 @@ class ServicesTest {
         // when
         val callbackBean = context.getBean("callbackBean") as CallbackBean
 
+        context.close() // Требуется для неявного вызова destroy() у бина
+
         // then
         assertEquals("Sorry, but I really have to go.", callbackBean.greeting)
     }

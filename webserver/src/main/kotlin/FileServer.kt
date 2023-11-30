@@ -1,12 +1,37 @@
 import ru.sber.filesystem.VFilesystem
+import ru.sber.filesystem.VPath
 import java.io.IOException
+import java.io.PrintWriter
 import java.net.ServerSocket
 
 /**
+ *
+ * Cервер по поиску файла в виртуальной файловой системе.
+ *
  * A basic and very limited implementation of a file server that responds to GET
  * requests from HTTP clients.
  */
 class FileServer {
+
+    private val OK_RESPONSE = { it: String ->
+        """
+         HTTP/1.0 200 OK
+         Server: FileServer
+         
+         $it
+    """.trimIndent()
+    }
+
+    private val FILE_NOT_FOUND_RESPONSE = """
+        HTTP/1.0 404 Not Found
+        Server: FileServer
+    """.trimIndent()
+
+    private val BAD_REQUEST_RESPONSE = """
+        HTTP/1.0 400 Bad Request
+        Server: FileServer
+    """.trimIndent()
+
 
     /**
      * Main entrypoint for the basic file server.
@@ -20,7 +45,8 @@ class FileServer {
      *                     IOExceptions during normal operation.
      */
     @Throws(IOException::class)
-    fun run(socket: ServerSocket, fs: VFilesystem) {
+    fun run(serverSocket: ServerSocket, fs: VFilesystem) {
+        println("Сервер запущен на порту: ${serverSocket.localPort}")
 
         /**
          * Enter a spin loop for handling client requests to the provided
@@ -28,43 +54,39 @@ class FileServer {
          */
         while (true) {
 
-            // TODO Delete this once you start working on your solution.
-            //throw new UnsupportedOperationException();
+            val socket = serverSocket.accept()
+            println("Открыто соединение с клиентом: ${socket.remoteSocketAddress}")
 
-            // TODO 1) Use socket.accept to get a Socket object
+            socket.use { s ->
+                val responseStr = getResponse(s.getInputStream().bufferedReader().readLine(), fs)
 
+                s.getOutputStream().use {
+                    val writer = PrintWriter(it)
+                    writer.println(responseStr)
+                    writer.flush()
+                }
+                println("Закрыто соединение с клиентом  ${socket.remoteSocketAddress}")
+            }//Соединение будет закрыто с клиентом
+        }
+    }
 
-            /*
-            * TODO 2) Using Socket.getInputStream(), parse the received HTTP
-            * packet. In particular, we are interested in confirming this
-            * message is a GET and parsing out the path to the file we are
-            * GETing. Recall that for GET HTTP packets, the first line of the
-            * received packet will look something like:
-            *
-            *     GET /path/to/file HTTP/1.1
-            */
-
-
-            /*
-             * TODO 3) Using the parsed path to the target file, construct an
-             * HTTP reply and write it to Socket.getOutputStream(). If the file
-             * exists, the HTTP reply should be formatted as follows:
-             *
-             *   HTTP/1.0 200 OK\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *   FILE CONTENTS HERE\r\n
-             *
-             * If the specified file does not exist, you should return a reply
-             * with an error code 404 Not Found. This reply should be formatted
-             * as:
-             *
-             *   HTTP/1.0 404 Not Found\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *
-             * Don't forget to close the output stream.
-             */
+    /**
+     * Получение файла из виртуальной ФС
+     *
+     * @param request Строка, которую присылает клиент. Ожидается формат "GET данные HTTP/1.1"
+     * @param fs Виртуальная файловая система для операции с файлами
+     */
+    private fun getResponse(request: String, fs: VFilesystem): String {
+        val regex = """^GET .* HTTP/1.1$""".toRegex()
+        if (!regex.containsMatchIn(request)) {
+            return BAD_REQUEST_RESPONSE
+        }
+        val path = request.substring(4, request.length - 9)
+        val file = fs.readFile(VPath(path))
+        return if (file == null) {
+            FILE_NOT_FOUND_RESPONSE
+        } else {
+            OK_RESPONSE.invoke(file)
         }
     }
 }
