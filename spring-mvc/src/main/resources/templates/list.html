@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список</title>
+</head>
+<body>
+<h2>Адресная книга</h2>
+<a href="add">Добавить запись</a>
+
+<table border="1" cellpadding="2">
+    <tr>
+        <th>id</th>
+        <th>Имя</th>
+        <th>Телефон</th>
+        <th>Адрес</th>
+        <th>Время создания</th>
+    </tr>
+    <tr th:each="record : ${records}">
+        <td><a th:href="@{{guid}/view(guid=${record.guid})}"><span th:text="${record.guid}">id</span></a></td>
+        <td th:text="${record.name}">Имя</td>
+        <td th:text="${record.phone}">Телефон</td>
+        <td th:text="${record.address}">Адрес</td>
+        <td th:text="${record.createDataTime}">Время создания</td>
+        <td><a th:href="@{{guid}/delete(guid=${record.guid})}">Удалить</a></td>
+    </tr>
+</table>
+</body>
+</html>

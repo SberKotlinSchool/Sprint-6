@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить</title>
+</head>
+<body>
+<h2>Адресная книга</h2>
+<form th:action="@{/app/add}" th:object="${record}" method="post">
+    <p>Имя:
+        <input placeholder="Имя" required type="text" th:field="*{name}"/>
+    </p>
+    <p>Телефон:
+        <input placeholder="Телефон" required type="text" th:field="*{phone}"/>
+    </p>
+    <p>Адрес:
+        <input placeholder="Адрес" required type="text" th:field="*{address}"/>
+    </p>
+    <p><input type="submit" value="Добавить"/>
+</form>
+</body>
+</html>
