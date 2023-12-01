@@ -1,5 +1,7 @@
 import ru.sber.filesystem.VFilesystem
+import ru.sber.filesystem.VPath
 import java.io.IOException
+import java.io.PrintWriter
 import java.net.ServerSocket
 
 /**
@@ -65,6 +67,28 @@ class FileServer {
              *
              * Don't forget to close the output stream.
              */
+
+            socket.accept().use{
+                it.getInputStream().bufferedReader().use{ reader ->
+                    val path = reader.readLine().split(" ")[1]
+                    val file = fs.readFile(VPath(path))
+                    var serverResponse: String = ""
+                    if ( file != null ){
+                        serverResponse = "HTTP/1.0 200 OK" + System.lineSeparator() +
+                                         "Server: FileServer" + System.lineSeparator() +
+                                          System.lineSeparator() + file }
+                    else {
+                        serverResponse =
+                            """HTTP/1.0 404 Not Found
+                               Server: FileServer
+                               """
+                                 }
+                    val writer = PrintWriter(it.getOutputStream())
+                    writer.println(serverResponse)
+                    writer.flush()
+            }
+
+            }
         }
     }
 }

@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Адрес подробно</title>
+</head>
+<body>
+<h2>Адрес подробно</h2>
+<table>
+    <tr th:object="${address}">
+        <th>Имя</th>
+        <th>Email</th>
+    </tr>
+    <tr>
+        <td th:text="${address.name}"></td>
+        <td th:text="${address.email}"></td>
+    </tr>
+</table>
