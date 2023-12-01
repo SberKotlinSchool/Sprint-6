@@ -29,7 +29,8 @@ class ServicesTest {
 
         // when
         val callbackBean = context.getBean("callbackBean") as CallbackBean
-        callbackBean.destroy()
+        context.close()
+//        callbackBean.destroy()
         // then
         assertEquals("Sorry, but I really have to go.", callbackBean.greeting)
     }

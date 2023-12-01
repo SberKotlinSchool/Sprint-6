@@ -5,7 +5,7 @@ import org.springframework.beans.factory.InitializingBean
 import org.springframework.stereotype.Component
 import javax.annotation.PostConstruct
 
-@Component("callbackBean")
+@Component
 class CallbackBean : InitializingBean, DisposableBean {
     var greeting: String? = "What's happening?"
 
