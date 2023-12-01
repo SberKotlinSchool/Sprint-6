@@ -1,5 +1,6 @@
 import ru.sber.filesystem.VFilesystem
-import java.io.IOException
+import ru.sber.filesystem.VPath
+import java.io.*
 import java.net.ServerSocket
 
 /**
@@ -21,50 +22,39 @@ class FileServer {
      */
     @Throws(IOException::class)
     fun run(socket: ServerSocket, fs: VFilesystem) {
-
-        /**
-         * Enter a spin loop for handling client requests to the provided
-         * ServerSocket object.
-         */
         while (true) {
+            val clientSocket = socket.accept()
+            clientSocket.use {
+                val reader = BufferedReader(InputStreamReader(it.getInputStream()))
+                val writer = BufferedWriter(OutputStreamWriter(it.getOutputStream()))
 
-            // TODO Delete this once you start working on your solution.
-            //throw new UnsupportedOperationException();
+                val requestLine = reader.readLine()
+                if (requestLine != null) {
+                    val requestParts = requestLine.split(" ")
+                    if (requestParts.size >= 3) {
+                        val httpMethod = requestParts[0]
+                        val path = requestParts[1]
+                        val httpVersion = requestParts[2]
 
-            // TODO 1) Use socket.accept to get a Socket object
+                        if (httpMethod == "GET" && httpVersion == "HTTP/1.1") {
+                            handleRequest(path, fs, writer)
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-
-            /*
-            * TODO 2) Using Socket.getInputStream(), parse the received HTTP
-            * packet. In particular, we are interested in confirming this
-            * message is a GET and parsing out the path to the file we are
-            * GETing. Recall that for GET HTTP packets, the first line of the
-            * received packet will look something like:
-            *
-            *     GET /path/to/file HTTP/1.1
-            */
-
-
-            /*
-             * TODO 3) Using the parsed path to the target file, construct an
-             * HTTP reply and write it to Socket.getOutputStream(). If the file
-             * exists, the HTTP reply should be formatted as follows:
-             *
-             *   HTTP/1.0 200 OK\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *   FILE CONTENTS HERE\r\n
-             *
-             * If the specified file does not exist, you should return a reply
-             * with an error code 404 Not Found. This reply should be formatted
-             * as:
-             *
-             *   HTTP/1.0 404 Not Found\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *
-             * Don't forget to close the output stream.
-             */
+    private fun handleRequest(path: String, fs: VFilesystem, writer: BufferedWriter) {
+        if (path.isNotEmpty()) {
+            val content = fs.readFile(VPath(path))
+            val httpResponse = if (content != null) {
+                "HTTP/1.1 200 OK\r\nServer: FileServer\r\n\r\n$content\r\n"
+            } else {
+                "HTTP/1.1 404 Not Found\r\nServer: FileServer\r\n\r\n"
+            }
+            writer.write(httpResponse)
+            writer.flush()
         }
     }
 }
