@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import ru.shadowsith.addressbook.dto.Record
+import ru.shadowsith.addressbook.repositories.AddressBookRepository
 import java.util.*
 
 
@@ -22,6 +23,9 @@ class AddressBookControllerTest {
 
     @Autowired
     private lateinit var mockMvc: MockMvc
+
+    @Autowired
+    private lateinit var addressBookRepository: AddressBookRepository
 
     @Test
     fun addRecord() {
@@ -64,28 +68,37 @@ class AddressBookControllerTest {
     }
 
     @Test
-    @Disabled("Не ясная ошибка, нужна помощь")
     fun getRecord() {
-        val record = Record(guid = UUID.randomUUID().toString(), name = "qwe", address = "address", phone = "123")
-        mockMvc.perform(get("/app/dd375830-95b7-4c94-92ec-c9cd50f75d46/view")
-            .flashAttr("record", record)
+        val expectedRecord = addressBookRepository.create(Record(guid = UUID.randomUUID().toString(), name = "asd", address = "zxcxzcz", phone = "32423"))
+
+        mockMvc.perform(get("/app/${expectedRecord.guid}/view")
             .content("guid"))
             .andDo(print())
             .andExpect(status().isOk())
             .andExpect(view().name("view"))
             .andExpect(content().string(containsString("Запись из адресной книги")))
+            .andExpect(content().string(containsString(expectedRecord.guid)))
+            .andExpect(content().string(containsString(expectedRecord.address)))
+            .andExpect(content().string(containsString(expectedRecord.name)))
+            .andExpect(content().string(containsString(expectedRecord.phone)))
     }
 
     @Test
-    @Disabled("Не ясная ошибка, нужна помощь")
     fun changeRecord() {
-        val record = Record(guid = UUID.randomUUID().toString(), name = "qwe", address = "address", phone = "123")
-
-        mockMvc.perform(post("/app/dd375830-95b7-4c94-92ec-c9cd50f75d46/edit")
-            .flashAttr("record", record))
+        val record = addressBookRepository.create(Record(guid = UUID.randomUUID().toString(), name = "qwe", address = "address", phone = "123"))
+        val changeRecord = record.copy(
+            name = "ewq",
+            address = "sserdda",
+            phone = "321"
+        )
+        mockMvc.perform(post("/app/${record.guid}/edit")
+            .flashAttr("record", changeRecord))
             .andDo(print())
             .andExpect(status().isOk())
             .andExpect(view().name("view"))
             .andExpect(content().string(containsString("Запись из адресной книги")))
+
+        val expectedRecord = addressBookRepository.read(record.guid!!)
+        assertEquals(expectedRecord, changeRecord)
     }
 }
