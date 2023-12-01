@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Адресная книга</title>
+</head>
+<body>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Имя</th>
+    <th>Адрес</th>
+    <th>Телефон</th>
+  </tr>
+  <tr th:each="person : ${persons}">
+    <td th:text="${person.id}"></td>
+    <td th:text="${person.name}"></td>
+    <td th:text="${person.address}"></td>
+    <td th:text="${person.phone}"></td>
+  </tr>
+</table>
+</body>
+</html>
