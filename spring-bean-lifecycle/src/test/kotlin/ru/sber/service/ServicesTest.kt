@@ -26,9 +26,11 @@ class ServicesTest {
     fun `getBean should return bean and call destroy`() {
         // given
         val context = AnnotationConfigApplicationContext(ServicesConfig::class.java)
+        val beanName = "callbackBean"
 
         // when
-        val callbackBean = context.getBean("callbackBean") as CallbackBean
+        val callbackBean = context.getBean(beanName) as CallbackBean
+        context.removeBeanDefinition(beanName)
 
         // then
         assertEquals("Sorry, but I really have to go.", callbackBean.greeting)
