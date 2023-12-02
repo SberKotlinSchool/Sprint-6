@@ -1,4 +1,5 @@
 import ru.sber.filesystem.VFilesystem
+import ru.sber.filesystem.VPath
 import java.io.IOException
 import java.net.ServerSocket
 
@@ -27,44 +28,38 @@ class FileServer {
          * ServerSocket object.
          */
         while (true) {
-
-            // TODO Delete this once you start working on your solution.
-            //throw new UnsupportedOperationException();
-
-            // TODO 1) Use socket.accept to get a Socket object
-
-
-            /*
-            * TODO 2) Using Socket.getInputStream(), parse the received HTTP
-            * packet. In particular, we are interested in confirming this
-            * message is a GET and parsing out the path to the file we are
-            * GETing. Recall that for GET HTTP packets, the first line of the
-            * received packet will look something like:
-            *
-            *     GET /path/to/file HTTP/1.1
-            */
-
-
-            /*
-             * TODO 3) Using the parsed path to the target file, construct an
-             * HTTP reply and write it to Socket.getOutputStream(). If the file
-             * exists, the HTTP reply should be formatted as follows:
-             *
-             *   HTTP/1.0 200 OK\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *   FILE CONTENTS HERE\r\n
-             *
-             * If the specified file does not exist, you should return a reply
-             * with an error code 404 Not Found. This reply should be formatted
-             * as:
-             *
-             *   HTTP/1.0 404 Not Found\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *
-             * Don't forget to close the output stream.
-             */
+            socket.accept().use { clientSocket ->
+                clientSocket.getInputStream().bufferedReader().use {
+                    runCatching {
+                        val requestParts = it.readLine().split(" ").also { validateRequest(it) }
+                        clientSocket.getOutputStream().writer().use { writer ->
+                            fs.readFile(VPath(requestParts[1])).let {
+                                writer.write(it.toHttpResponse())
+                            }
+                        }
+                    }.getOrElse { println("Ошибка: ${it.localizedMessage}") }
+                }
+            }
         }
+    }
+
+    private fun validateRequest(requestParts: List<String>) {
+        if (requestParts.size != 3) {
+            throw IllegalArgumentException("Некорректно составлен запрос")
+        } else if (requestParts[0] != "GET") {
+            throw UnsupportedOperationException("Некорректный метод http")
+        } else if (requestParts[2] != "HTTP/1.1") {
+            throw IllegalArgumentException("Некорректно составлен запрос")
+        }
+    }
+
+    private fun String?.toHttpResponse() = if (this == null) {
+        "HTTP/1.0 404 Not Found\r\n" +
+                "Server: FileServer\r\n" +
+                "\r\n"
+    } else {
+        "HTTP/1.0 200 OK\r\n" +
+                "Server: FileServer\r\n" +
+                "\r\n$this\r\n"
     }
 }
