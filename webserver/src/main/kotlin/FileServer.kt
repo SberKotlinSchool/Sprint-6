@@ -1,4 +1,5 @@
 import ru.sber.filesystem.VFilesystem
+import ru.sber.filesystem.VPath
 import java.io.IOException
 import java.net.ServerSocket
 
@@ -28,43 +29,28 @@ class FileServer {
          */
         while (true) {
 
-            // TODO Delete this once you start working on your solution.
-            //throw new UnsupportedOperationException();
-
-            // TODO 1) Use socket.accept to get a Socket object
-
-
-            /*
-            * TODO 2) Using Socket.getInputStream(), parse the received HTTP
-            * packet. In particular, we are interested in confirming this
-            * message is a GET and parsing out the path to the file we are
-            * GETing. Recall that for GET HTTP packets, the first line of the
-            * received packet will look something like:
-            *
-            *     GET /path/to/file HTTP/1.1
-            */
-
-
-            /*
-             * TODO 3) Using the parsed path to the target file, construct an
-             * HTTP reply and write it to Socket.getOutputStream(). If the file
-             * exists, the HTTP reply should be formatted as follows:
-             *
-             *   HTTP/1.0 200 OK\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *   FILE CONTENTS HERE\r\n
-             *
-             * If the specified file does not exist, you should return a reply
-             * with an error code 404 Not Found. This reply should be formatted
-             * as:
-             *
-             *   HTTP/1.0 404 Not Found\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *
-             * Don't forget to close the output stream.
-             */
+            socket.accept().use { clientSocket ->
+                val reader = clientSocket.getInputStream().bufferedReader()
+                val (method, path, _) = reader.readLine().split(" ")
+                if (method == "GET") {
+                    val file = fs.readFile(VPath(path))
+                    clientSocket.getOutputStream().bufferedWriter().use { result ->
+                        if (file != null) {
+                            result.append("HTTP/1.0 200 OK")
+                                .appendLine("Server: FileServer")
+                                .appendLine()
+                                .appendLine(file)
+                        } else {
+                            result.append("HTTP/1.0 404 Not Found")
+                                .appendLine("Server: FileServer")
+                                .appendLine()
+                        }
+                        result.flush()
+                    }
+                } else {
+                    throw UnsupportedOperationException()
+                }
+            }
         }
     }
 }

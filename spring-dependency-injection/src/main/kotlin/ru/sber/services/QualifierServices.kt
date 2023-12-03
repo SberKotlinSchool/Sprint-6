@@ -14,6 +14,7 @@ class FirstQualifierServiceImpl : QualifierInterface {
 }
 
 @Component
+@Qualifier("secondService")
 class SecondQualifierServiceImpl : QualifierInterface {
     override fun toString(): String {
         return "SecondQualifierServiceImpl"
@@ -23,7 +24,7 @@ class SecondQualifierServiceImpl : QualifierInterface {
 @Component
 class QualifierBeanInjectionService {
     @Autowired
-    @Qualifier("onlySecondService")
+    @Qualifier("secondService")
     private lateinit var qualifierServices: Set<QualifierInterface>
 
     override fun toString(): String {
