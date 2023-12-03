@@ -47,7 +47,7 @@ class ServicesTest {
     @Test
     fun `getBean should return fourthService successfully`() {
         // given
-        val context = AnnotationConfigApplicationContext(AnotherServicesConfig::class.java)
+        val context = AnnotationConfigApplicationContext(ServicesConfig::class.java)
 
         // when
         val fourthService = context.getBean("fourthService")
