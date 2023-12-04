@@ -1,6 +1,12 @@
 import ru.sber.filesystem.VFilesystem
+import ru.sber.filesystem.VPath
+import java.io.BufferedReader
+import java.io.DataOutputStream
 import java.io.IOException
+import java.io.InputStreamReader
 import java.net.ServerSocket
+import java.net.Socket
+import java.nio.charset.StandardCharsets
 
 /**
  * A basic and very limited implementation of a file server that responds to GET
@@ -33,7 +39,6 @@ class FileServer {
 
             // TODO 1) Use socket.accept to get a Socket object
 
-
             /*
             * TODO 2) Using Socket.getInputStream(), parse the received HTTP
             * packet. In particular, we are interested in confirming this
@@ -65,6 +70,48 @@ class FileServer {
              *
              * Don't forget to close the output stream.
              */
+            // TODO 1) Use socket.accept to get a Socket object
+            val clientSocket: Socket = socket.accept()
+
+            try {
+                // TODO 2) Using Socket.getInputStream(), parse the received HTTP packet.
+                val inputStream = BufferedReader(InputStreamReader(clientSocket.getInputStream()))
+                val requestLine = inputStream.readLine()
+
+                // Parse the request line
+                val requestComponents = requestLine.split(" ")
+                if (requestComponents.size != 3 || requestComponents[0] != "GET") {
+                    // Invalid request, respond with 400 Bad Request
+                    val outputStream = DataOutputStream(clientSocket.getOutputStream())
+                    val response = "HTTP/1.0 400 Bad Request\r\nServer: FileServer\r\n\r\n"
+                    outputStream.write(response.toByteArray(StandardCharsets.UTF_8))
+                    outputStream.close()
+                    continue
+                }
+
+                // Extract the path from the request
+                val filePath = requestComponents[1]
+
+                // TODO 3) Using the parsed path to the target file, construct an HTTP reply
+                val fileContents = fs.readFile(VPath(filePath))
+                val outputStream = DataOutputStream(clientSocket.getOutputStream())
+
+                if (fileContents != null) {
+                    // File found, respond with 200 OK and file contents
+                    val response = "HTTP/1.0 200 OK\r\nServer: FileServer\r\n\r\n$fileContents\r\n"
+                    outputStream.write(response.toByteArray(StandardCharsets.UTF_8))
+                } else {
+                    // File not found, respond with 404 Not Found
+                    val response = "HTTP/1.0 404 Not Found\r\nServer: FileServer\r\n\r\n"
+                    outputStream.write(response.toByteArray(StandardCharsets.UTF_8))
+                }
+
+                outputStream.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            } finally {
+                clientSocket.close()
+            }
         }
     }
 }
