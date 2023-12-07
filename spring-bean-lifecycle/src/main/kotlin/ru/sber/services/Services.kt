@@ -37,17 +37,6 @@ class CombinedBean : InitializingBean {
     fun postConstruct() {
         postConstructOrderMessage = "postConstruct() is called"
     }
-
-    fun initPostProcessBeforeInitializationOrderMessage() {
-        postProcessBeforeInitializationOrderMessage = "postProcessBeforeInitialization() is called"
-    }
-
-    fun initPostProcessAfterInitializationOrderMessage() {
-        postProcessAfterInitializationOrderMessage = "postProcessAfterInitialization() is called"
-    }
-
-
-
 }
 
 

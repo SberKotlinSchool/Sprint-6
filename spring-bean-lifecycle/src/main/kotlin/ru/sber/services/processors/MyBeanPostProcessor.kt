@@ -7,19 +7,17 @@ import ru.sber.services.CombinedBean
 @Component
 class MyBeanPostProcessor : BeanPostProcessor {
     override fun postProcessBeforeInitialization(bean: Any, beanName: String): Any? {
-
         if (bean is CombinedBean) {
             val myBean: CombinedBean = bean
-            myBean.initPostProcessBeforeInitializationOrderMessage()
+            myBean.postProcessBeforeInitializationOrderMessage = "postProcessBeforeInitialization() is called"
         }
-
         return bean
     }
 
     override fun postProcessAfterInitialization(bean: Any, beanName: String): Any? {
         if (bean is CombinedBean) {
             val myBean: CombinedBean = bean
-            myBean.initPostProcessAfterInitializationOrderMessage()
+            myBean.postProcessAfterInitializationOrderMessage = "postProcessAfterInitialization() is called"
         }
         return bean
     }

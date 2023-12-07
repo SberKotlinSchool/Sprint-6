@@ -8,20 +8,7 @@ import ru.sber.services.SecondService
 import ru.sber.services.ThirdService
 
 @Configuration
-@ComponentScan
+@ComponentScan("ru.sber.services")
 class ServicesConfig {
-    @Bean
-    fun firstService(): FirstService {
-        return FirstService()
-    }
 
-    @Bean
-    fun secondService(): SecondService {
-        return SecondService()
-    }
-
-    @Bean
-    fun thirdService(): ThirdService {
-        return ThirdService()
-    }
 }
