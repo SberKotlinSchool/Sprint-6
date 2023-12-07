@@ -6,10 +6,5 @@ import org.springframework.context.annotation.Configuration
 import ru.sber.services.FourthService
 
 @Configuration
-@ComponentScan("ru.sber.anotherservices")
-class AnotherServicesConfig {
-    @Bean
-    fun fourthService(): FourthService {
-        return FourthService()
-    }
-}
+@ComponentScan("ru.sber.services")
+class AnotherServicesConfig
