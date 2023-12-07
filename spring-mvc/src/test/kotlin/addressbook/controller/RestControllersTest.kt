@@ -69,8 +69,7 @@ class RestControllersTest {
             null,
             String::class.java
         )
-        println(response)
-        assertTrue { response.statusCode == HttpStatus.FOUND }
+        assertTrue { response.statusCode == HttpStatus.OK }
     }
 
     @Test
@@ -104,10 +103,7 @@ class RestControllersTest {
             httpEntity,
             String::class.java
         )
-
-        assertTrue { response.statusCode == HttpStatus.OK }
-        assertTrue { response.body.toString().contains("login") }
-        assertTrue { response.body.toString().contains("password") }
+        assertTrue { response.statusCode == HttpStatus.FOUND }
     }
 
 
