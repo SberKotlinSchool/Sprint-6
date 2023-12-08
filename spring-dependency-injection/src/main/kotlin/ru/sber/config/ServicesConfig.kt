@@ -5,4 +5,9 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ComponentScan("ru.sber.services")
-class ServicesConfig
+class ServicesConfig {
+
+
+
+
+}
