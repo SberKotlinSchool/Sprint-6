@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Добавить запись</title>
+</head>
+<body>
+<form method="post" th:action="@{/app/v1/add}" th:object="${record}">
+    <p>Name:<input type="text" th:field="${record.address}" placeholder="Введите адрес"/></p>
+    <p>Phone:<input type="text" th:field="${record.phone}" placeholder="Введите телефон"/></p>
+    <p><input type="submit" value="Submit"/>
+</form>
+<p><a th:href="@{/app/v1/list}">back</a></p>
+</body>
+</html>
