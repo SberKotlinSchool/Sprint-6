@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Record</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>Record</h2>
+<table>
+    <tr>
+        <td>Name</td>
+        <td th:text="${baseEntity.name}"></td>
+    </tr>
+    <tr>
+        <td>Address</td>
+        <td th:text="${baseEntity.address}"></td>
+    </tr>
+</table>
+</body>
+</html>
