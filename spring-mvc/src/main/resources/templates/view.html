@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>View contact</title>
+</head>
+<body>
+
+<p th:text="'ID: ' + ${contact.id}">id</p>
+<p th:text="'Name: ' + ${contact.name}">name</p>
+<p th:text="'City: ' + ${contact.city}">city</p>
+<p th:text="'Phone: ' + ${contact.phone}">phone</p>
+<form th:action="@{/app/{id}/edit(id=${contact.id})}">
+  <button>Edit</button>
+</form>
+<form th:action="@{/app/{id}/delete(id=${contact.id})}" method="post">
+  <button>Delete</button>
+</form>
+<br>
+<form th:action="@{/app/list}">
+  <button>Back</button>
+</form>
+
+</body>
+</html>
