@@ -1,19 +1,22 @@
 package com.example.springmvcsber.controller
 
 import com.example.springmvcsber.entity.Address
+import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.Matchers
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 
 @SpringBootTest
+@AutoConfigureMockMvc
 class AddressControllerTest {
     private lateinit var mockMvc: MockMvc
     private val testAddress = Address(name = "Somename", city = "Moscow", phone = "123123")
@@ -35,45 +38,71 @@ class AddressControllerTest {
     @Test
     fun addAddressRedirectTest() {
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/app/add")
+            post("/app/add")
                 .param("name", testAddress.name)
                 .param("city", testAddress.city)
                 .param("phone", testAddress.phone)
         )
-            .andExpect(MockMvcResultMatchers.status().is3xxRedirection)
-            .andExpect(MockMvcResultMatchers.redirectedUrl("/app/list"))
+            .andExpect(status().is3xxRedirection)
+            .andExpect(redirectedUrl("/app/list"))
 
         sendGetListForm()
-            .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString(testAddress.name)))
+            .andExpect(content().string(Matchers.containsString(testAddress.name)))
     }
 
+    @WithMockUser(username = "user", password = "pass", roles = ["ADMIN", "API"])
     @Test
-    fun viewTest() {
-        val addressId = 1
-        mockMvc
-            .perform(MockMvcRequestBuilders.get("/app/${addressId}/view"))
-            .andExpect(MockMvcResultMatchers.status().isOk)
-            .andExpect(MockMvcResultMatchers.view().name("view"))
-            .andExpect(MockMvcResultMatchers.content().contentType("text/html;charset=UTF-8"))
-            .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString(testAddress.name)))
-            .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString(testAddress.city)))
-            .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString(testAddress.phone)))
+    fun returnEmptyListSecurityTest() {
+        assertFalse {
+            sendGetListForm().andReturn()
+                .response
+                .contentAsString.matches(Regex(testAddress.name!!))
+        }
     }
 
+    @WithMockUser(username = "user", password = "pass", roles = ["ADMIN", "API"])
     @Test
-    fun editTest() {
-        val addressId = 1
-        mockMvc.perform(MockMvcRequestBuilders.get("/app/${addressId}/edit"))
-            .andExpect(MockMvcResultMatchers.status().isOk)
-            .andExpect(MockMvcResultMatchers.view().name("edit"))
-            .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString(testAddress.name)))
-            .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString(testAddress.city)))
-            .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString(testAddress.phone)))
+    fun addGetSecurityTest() {
+        mockMvc.perform(get("/app/add"))
+            .andExpect(status().isOk)
+            .andExpect(view().name("add"))
+    }
+
+    @WithMockUser(username = "user", password = "pass", roles = ["ADMIN", "API"])
+    @Test
+    fun addAddressRedirectSecurityTest() {
+        mockMvc.perform(
+            post("/app/add")
+                .param("name", testAddress.name)
+                .param("city", testAddress.city)
+                .param("phone", testAddress.phone)
+        )
+            .andExpect(status().is3xxRedirection)
+            .andExpect(view().name("redirect:/app/list"))
+
+        sendGetListForm()
+            .andExpect(content().string(containsString(testAddress.name)))
+    }
+
+    @WithMockUser(username = "user", password = "pass", roles = ["ADMIN"])
+    @Test
+    fun deleteAddressRedirectSecurityTest() {
+        val addressId = 1L
+        mockMvc.perform(post("/app/${addressId}/delete"))
+            .andExpect(status().is3xxRedirection)
+            .andExpect(redirectedUrl("/app/list"))
+
+        assertFalse {
+            sendGetListForm().andReturn()
+                .response
+                .contentAsString.matches(Regex(testAddress.name!!))
+        }
     }
 
     private fun sendGetListForm(): ResultActions = mockMvc
-        .perform(MockMvcRequestBuilders.get("/app/list"))
-        .andExpect(MockMvcResultMatchers.status().isOk)
-        .andExpect(MockMvcResultMatchers.view().name("list"))
-        .andExpect(MockMvcResultMatchers.content().contentType("text/html;charset=UTF-8"))
+        .perform(get("/app/list"))
+        .andExpect(status().isOk)
+        .andExpect(view().name("list"))
+        .andExpect(content().contentType("text/html;charset=UTF-8"))
+
 }

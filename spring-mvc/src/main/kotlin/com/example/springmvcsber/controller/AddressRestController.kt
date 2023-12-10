@@ -2,6 +2,7 @@ package com.example.springmvcsber.controller
 
 import com.example.springmvcsber.entity.Address
 import com.example.springmvcsber.service.AddressService
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -19,17 +20,17 @@ class AddressRestController(private val service: AddressService)  {
     }
 
     @GetMapping("/{id}")
-    fun viewAddress(@PathVariable id: Int): Address? {
+    fun viewAddress(@PathVariable id: Long): Address? {
         return service.get(id)
     }
 
     @PutMapping("/{id}")
-    fun editAddress(@PathVariable id: Int, @RequestBody address: Address) {
+    fun editAddress(@PathVariable id: Long, @RequestBody address: Address) {
         service.edit(id, address)
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    fun deleteAddress(@PathVariable id: Int) {
+    fun deleteAddress(@PathVariable id: Long) {
         service.delete(id)
     }
 }

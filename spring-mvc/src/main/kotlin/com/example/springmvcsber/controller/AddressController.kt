@@ -2,6 +2,7 @@ package com.example.springmvcsber.controller
 
 import com.example.springmvcsber.entity.Address
 import com.example.springmvcsber.service.AddressService
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
@@ -17,25 +18,25 @@ class AddressController(private val service: AddressService) {
     }
 
     @GetMapping("/{id}/view")
-    fun viewAddress(@PathVariable id: Int, model: Model): String {
+    fun viewAddress(@PathVariable id: Long, model: Model): String {
         model.addAttribute("address", service.get(id))
         return "view"
     }
 
     @GetMapping("/{id}/edit")
-    fun getFormEditAddress(@PathVariable id: Int, model: Model): String {
+    fun getFormEditAddress(@PathVariable id: Long, model: Model): String {
         model.addAttribute("address", service.get(id))
         return "edit"
     }
 
     @PostMapping("/{id}/edit")
-    fun editAddress(@PathVariable id: Int, @ModelAttribute address: Address, model: Model): String {
+    fun editAddress(@PathVariable id: Long, @ModelAttribute address: Address, model: Model): String {
         service.edit(id, address)
         return "redirect:/app/list"
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{id}/delete")
-    fun deleteAddress(@PathVariable id: Int): String {
+    fun deleteAddress(@PathVariable id: Long): String {
         service.delete(id)
         return "redirect:/app/list"
     }

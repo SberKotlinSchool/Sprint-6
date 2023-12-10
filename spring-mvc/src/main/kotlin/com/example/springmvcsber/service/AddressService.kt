@@ -7,14 +7,21 @@ import org.springframework.stereotype.Service
 @Service
 class AddressService(private val repository: AddressRepository) {
 
-    fun findAddressesByCity(city: String?) = repository.getAllAddresses()
+    fun findAddressesByCity(city: String?) = repository.findAll()
         .apply { if (city != null) filter { address -> address.city == city } }
 
-    fun get(id: Int) = repository.get(id)
+    fun get(id: Long) = repository.findById(id).orElse(null)
 
-    fun add(address: Address) = repository.add(address)
+    fun add(address: Address) = repository.save(address)
 
-    fun edit(id: Int, address: Address) = repository.edit(id, address)
+    fun edit(id: Long, address: Address) = get(id)
+        ?.apply {
+            name = address.name
+            city = address.city
+            phone = address.phone
+        }
+        ?.let { repository.save(it) }
 
-    fun delete(id: Int) = repository.delete(id)
+    fun delete(id: Long) = get(id)
+        ?.let { repository.delete(it) }
 }
