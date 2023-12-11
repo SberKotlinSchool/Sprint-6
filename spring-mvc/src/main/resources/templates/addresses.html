@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Адреса</title>
+</head>
+<body>
+<table border="1" cellpadding="5%" cellspacing="0" th:if="${not #maps.isEmpty(addresses)}">
+    <tr>
+        <th>Имя</th>
+        <th colspan="3">Операции</th>
+    </tr>
+    <tr th:each="address : ${addresses}">
+        <td th:text="${address.value.name}"/>
+        <td><a th:href="@{/app/{id}(id=${address.key})}">просмотр</a></td>
+        <td><a th:href="@{/app/{id}/edit(id=${address.key})}">изменение</a></td>
+        <td>
+            <form th:action="@{/app/{id}/delete(id=${address.key})}" th:method="DELETE">
+                <input type="submit" value="Удалить">
+            </form>
+        </td>
+    </tr>
+</table>
+<a th:href="@{/app/add}">Создать новую запись</a>
+</body>
+</html>

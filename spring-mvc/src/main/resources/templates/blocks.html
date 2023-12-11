@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="form">
+    <label>
+        <p>
+            Имя: <input th:type="text" placeholder="Введите имя" th:field="*{name}">
+        </p>
+    </label>
+    <label>
+        <p>
+            Адрес: <input th:type="text" placeholder="Введите адрес" th:field="*{address}">
+        </p>
+    </label>
+    <input type="submit" value="Отправить изменения">
+</div>
+<div th:fragment="back">
+    <a th:href="@{/app/list}">Обратно к адресной книжке</a>
+</div>
+</body>
+</html>
