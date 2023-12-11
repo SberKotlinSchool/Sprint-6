@@ -1,15 +1,16 @@
 package ru.sber.services
 
+import javax.annotation.PostConstruct
 import org.springframework.beans.factory.DisposableBean
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.stereotype.Component
-import javax.annotation.PostConstruct
 
 @Component
 class CallbackBean : InitializingBean, DisposableBean {
     var greeting: String? = "What's happening?"
 
     override fun afterPropertiesSet() {
+        this.greeting = "Hello! My name is callbackBean!"
     }
 
     override fun destroy() {
@@ -17,14 +18,14 @@ class CallbackBean : InitializingBean, DisposableBean {
     }
 }
 
-class CombinedBean {
+class CombinedBean : InitializingBean {
     var postProcessBeforeInitializationOrderMessage: String? = null
     var postConstructOrderMessage: String? = null
     var customInitOrderMessage: String? = null
     var afterPropertiesSetOrderMessage: String? = null
     var postProcessAfterInitializationOrderMessage: String? = null
 
-    fun afterPropertiesSet() {
+    override fun afterPropertiesSet() {
         afterPropertiesSetOrderMessage = "afterPropertiesSet() is called"
     }
 
@@ -32,6 +33,7 @@ class CombinedBean {
         customInitOrderMessage = "customInit() is called"
     }
 
+    @PostConstruct
     fun postConstruct() {
         postConstructOrderMessage = "postConstruct() is called"
     }

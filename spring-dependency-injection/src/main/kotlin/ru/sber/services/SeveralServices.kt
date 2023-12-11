@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 
 interface ServiceInterface
 
 @Component
+@Order(1)
 class FirstServiceImpl : ServiceInterface {
     override fun toString(): String {
         return "FirstServiceImpl"
@@ -25,7 +27,7 @@ class SecondServiceImpl : ServiceInterface {
 @Component
 class SeveralBeanInjectionService {
     @Autowired
-    lateinit var services: ArrayList<ServiceInterface>
+    lateinit var services: List<ServiceInterface>
 
     override fun toString(): String {
         return "SeveralBeanInjectionService(services=$services)"
