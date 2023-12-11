@@ -1,13 +1,22 @@
-import ru.sber.filesystem.VFilesystem
 import java.io.IOException
 import java.net.ServerSocket
+import java.net.Socket
+import ru.sber.filesystem.VFilesystem
+import ru.sber.filesystem.VPath
 
 /**
  * A basic and very limited implementation of a file server that responds to GET
  * requests from HTTP clients.
  */
-class FileServer {
+private const val NOT_FOUND_RESPONSE = "HTTP/1.0 404 Not Found"
+private const val OK_RESPONSE = "HTTP/1.0 200 OK"
+private const val SERVER_CONTENT_PREFIX = "Server: FileServer"
+private const val GET_METHOD = "GET"
+private const val PROTOCOL = "HTTP/1.1"
+private const val FILE_PATH_DATA_INDEX = 1
 
+
+class FileServer {
     /**
      * Main entrypoint for the basic file server.
      *
@@ -27,44 +36,35 @@ class FileServer {
          * ServerSocket object.
          */
         while (true) {
-
-            // TODO Delete this once you start working on your solution.
-            //throw new UnsupportedOperationException();
-
-            // TODO 1) Use socket.accept to get a Socket object
-
-
-            /*
-            * TODO 2) Using Socket.getInputStream(), parse the received HTTP
-            * packet. In particular, we are interested in confirming this
-            * message is a GET and parsing out the path to the file we are
-            * GETing. Recall that for GET HTTP packets, the first line of the
-            * received packet will look something like:
-            *
-            *     GET /path/to/file HTTP/1.1
-            */
-
-
-            /*
-             * TODO 3) Using the parsed path to the target file, construct an
-             * HTTP reply and write it to Socket.getOutputStream(). If the file
-             * exists, the HTTP reply should be formatted as follows:
-             *
-             *   HTTP/1.0 200 OK\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *   FILE CONTENTS HERE\r\n
-             *
-             * If the specified file does not exist, you should return a reply
-             * with an error code 404 Not Found. This reply should be formatted
-             * as:
-             *
-             *   HTTP/1.0 404 Not Found\r\n
-             *   Server: FileServer\r\n
-             *   \r\n
-             *
-             * Don't forget to close the output stream.
-             */
+            socket.accept().use {
+                val request = it.getInputStream().bufferedReader().readLine()
+                val splitData = request.split(" ")
+                if (splitData.size == 3 && splitData.first() == GET_METHOD && splitData.last() == PROTOCOL) {
+                    val content = fs.readFile(VPath(splitData[FILE_PATH_DATA_INDEX]))
+                    if (content == null) {
+                        it.sendNotFoundResponse()
+                    } else {
+                        it.sendSuccessResponse(content)
+                    }
+                }
+            }
         }
+    }
+}
+
+private fun Socket.sendNotFoundResponse() {
+    this.getOutputStream().bufferedWriter().use {
+        it.appendLine(NOT_FOUND_RESPONSE)
+            .appendLine(SERVER_CONTENT_PREFIX)
+    }
+}
+
+private fun Socket.sendSuccessResponse(content: CharSequence) {
+    this.getOutputStream().bufferedWriter().use {
+        it.appendLine(OK_RESPONSE)
+            .appendLine(SERVER_CONTENT_PREFIX)
+            .appendLine()
+            .appendLine(content)
+            .appendLine()
     }
 }
