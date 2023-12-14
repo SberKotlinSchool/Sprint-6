@@ -14,20 +14,18 @@ import java.time.format.DateTimeFormatter
 
 @WebServlet(urlPatterns = ["/login"])
 class AuthServlet(private val authService: AuthService) : HttpServlet() {
-    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+    override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
         println("AuthServlet")
         servletContext.getRequestDispatcher("/login.html").forward(req, resp)
     }
 
-    override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
-        if (req != null) {
-            val user = User(req.getParameter("login"), req.getParameter("password"))
-            if (authService.authenticate(user)) {
-                resp?.addCookie(Cookie("auth", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)))
-                resp?.sendRedirect("/app/list")
-            } else {
-                resp?.sendRedirect("/login")
-            }
+    override fun doPost(req: HttpServletRequest, resp: HttpServletResponse) {
+        val user = User(req.getParameter("login"), req.getParameter("password"))
+        if (authService.authenticate(user)) {
+            resp.addCookie(Cookie("auth", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)))
+            resp.sendRedirect("/app/list")
+        } else {
+            resp.sendRedirect("/login")
         }
     }
 

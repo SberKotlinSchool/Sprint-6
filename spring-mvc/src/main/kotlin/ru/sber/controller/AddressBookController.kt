@@ -19,7 +19,7 @@ class AddressBookController(private val addressBookService: AddressBookService) 
     @GetMapping("/list")
     fun showAllPersons(model: Model): String {
         model.addAttribute("addressBook", addressBookService.getAllPersons())
-        return "list"
+        return "allPersons"
     }
 
     @GetMapping("{id}/view")
@@ -32,12 +32,12 @@ class AddressBookController(private val addressBookService: AddressBookService) 
     @PostMapping("{id}/edit")
     fun updatePersonById(@PathVariable id: Long, @ModelAttribute("person") person: Person): String {
         addressBookService.updatePersonInfo(id, person)
-        return "edit"
+        return "update_person"
     }
 
     @GetMapping("{id}/delete")
     fun deletePersonById(@PathVariable id: Long): String {
         addressBookService.deletePerson(id)
-        return "delete_person"
+        return "redirect:/app/list"
     }
 }
