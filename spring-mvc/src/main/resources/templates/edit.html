@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Изменить</title>
+</head>
+<body>
+<form method="post" th:action="@{/app/v1/{id}/edit(id=${record.id})}">
+    <p>Адрес:<input name="address" th:value="${record.address}"/></p>
+    <p>Телефон:<input name="phone" th:value="${record.phone}"/></p>
+    <input type="submit" value="Изменить"/>
+</form>
+<p><a th:href="@{/app/v1/list}">назад</a></p>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Запись</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>Адрес:</td>
+        <td th:text="${record.address}"></td>
+    </tr>
+    <tr>
+        <td>Телефон:</td>
+        <td th:text="${record.phone}"></td>
+    </tr>
+</table>
+<p><a th:href="@{/app/v1/list}">назад</a></p>
+</body>
+</html>
