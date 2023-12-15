@@ -34,32 +34,29 @@ class FileServer {
          */
         while (true) {
 
-            val serverSocker: Socket = socket.accept()
+            socket.accept().use {
+                val inputStream = BufferedReader(InputStreamReader(it.getInputStream()))
+                val outStream = BufferedWriter(OutputStreamWriter(it.getOutputStream()))
 
-            val inputStream = BufferedReader(InputStreamReader(serverSocker.getInputStream()))
-            val outStream = BufferedWriter(OutputStreamWriter(serverSocker.getOutputStream()))
+                val clientRequest = inputStream.readLine()
+                val (request, path) = clientRequest.split(" ")
 
-            val clientRequest = inputStream.readLine()
-            val (request, path) = clientRequest.split(" ")
-
-            if (request.trim() == "GET") {
-                val readFile = fs.readFile(VPath(path.trim()))
-                if (readFile != null) {
-                    outStream.write("HTTP/1.0 200 OK\r\n");
-                    outStream.write("Server:  FileServer\r\n");
-                    outStream.write("\r\n");
-                    outStream.write(readFile);
-                    outStream.write("\r\n");
-                    outStream.flush();
-                } else {
-                    outStream.write("HTTP/1.0 404 Not Found");
-                    outStream.write("Server:  FileServer\r\n");
-                    outStream.write("\r\n");
-                    outStream.flush();
+                if (request.trim() == "GET") {
+                    val readFile = fs.readFile(VPath(path.trim()))
+                    if (readFile != null) {
+                        outStream.write("HTTP/1.0 200 OK\r\n");
+                        outStream.write("Server:  FileServer\r\n");
+                        outStream.write("\r\n");
+                        outStream.write(readFile);
+                        outStream.write("\r\n");
+                        outStream.flush();
+                    } else {
+                        outStream.write("HTTP/1.0 404 Not Found");
+                        outStream.write("Server:  FileServer\r\n");
+                        outStream.write("\r\n");
+                        outStream.flush();
+                    }
                 }
-                outStream.close()
-                inputStream.close()
-                socket.close()
             }
         }
     }
