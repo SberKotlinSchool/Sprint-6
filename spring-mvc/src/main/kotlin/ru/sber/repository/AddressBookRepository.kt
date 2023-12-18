@@ -3,7 +3,6 @@ package ru.sber.repository
 import org.springframework.stereotype.Repository
 import ru.sber.model.Person
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.atomic.AtomicLong
 
 @Repository
 class AddressBookRepository {

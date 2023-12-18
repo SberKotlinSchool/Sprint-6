@@ -5,10 +5,8 @@ import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServlet
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-import ru.sber.service.AuthService
 import ru.sber.model.User
+import ru.sber.service.AuthService
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

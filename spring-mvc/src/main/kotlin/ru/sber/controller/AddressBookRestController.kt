@@ -4,7 +4,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ru.sber.model.Person
 import ru.sber.service.AddressBookService
-import java.util.concurrent.atomic.AtomicLong
 
 @RestController
 @RequestMapping("/api")
