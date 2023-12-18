@@ -1,13 +1,11 @@
-package ru.sber.adressBook
+package ru.sber
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class PersonBookApplicationTests {
-
-	@Test
-	fun contextLoads() {
-	}
-
+class AppTest {
+    @Test
+    fun contextLoads() {
+    }
 }

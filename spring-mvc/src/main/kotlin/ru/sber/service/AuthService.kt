@@ -8,7 +8,7 @@ import ru.sber.repository.UserRepository
 class AuthService(private val repository: UserRepository) {
     fun authenticate(user: User): Boolean {
         val userInDb = getUser(user)
-        return (userInDb == null || userInDb.password != user.password)
+        return (userInDb == null || userInDb.password == user.password)
     }
 
     private fun getUser(user: User) =

@@ -3,15 +3,23 @@ package ru.sber.controller
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
-import ru.sber.model.Person
 import ru.sber.service.AddressBookService
+import ru.sber.model.Person
+import java.util.concurrent.atomic.AtomicLong
 
 @Controller
 @RequestMapping("/app")
 class AddressBookController(private val addressBookService: AddressBookService) {
+    private val atomicId = AtomicLong(1)
+
+    @GetMapping("/add")
+    fun getFormForAdd(model: Model): String {
+        model.addAttribute("entity", Person(atomicId.incrementAndGet(), "", "", ""))
+        return "updatePerson"
+    }
 
     @PostMapping("/add")
-    fun addNewPerson(person: Person): String {
+    fun addNewPerson(@ModelAttribute person: Person): String {
         addressBookService.addNewPerson(person)
         return "redirect:/app/list"
     }
@@ -22,20 +30,27 @@ class AddressBookController(private val addressBookService: AddressBookService) 
         return "allPersons"
     }
 
-    @GetMapping("{id}/view")
+    @GetMapping("/{id}/view")
     fun showPersonById(@PathVariable id: Long, model: Model): String {
         model.addAttribute("id", id)
-        model.addAttribute("person", addressBookService.getPersonById(id))
-        return "show_person"
+        model.addAttribute("entity", addressBookService.getPersonById(id))
+        return "showPerson"
     }
 
-    @PostMapping("{id}/edit")
-    fun updatePersonById(@PathVariable id: Long, @ModelAttribute("person") person: Person): String {
+    @GetMapping("/{id}/edit")
+    fun getFormForEdit(@PathVariable id: Long, model: Model): String {
+        model.addAttribute("id", id)
+        model.addAttribute("entity", addressBookService.getPersonById(id))
+        return "updatePerson"
+    }
+
+    @PostMapping("/{id}/edit")
+    fun updatePersonById(@PathVariable id: Long, @ModelAttribute("entity") person: Person): String {
         addressBookService.updatePersonInfo(id, person)
-        return "update_person"
+        return "redirect:/app/list"
     }
 
-    @GetMapping("{id}/delete")
+    @GetMapping("/{id}/delete")
     fun deletePersonById(@PathVariable id: Long): String {
         addressBookService.deletePerson(id)
         return "redirect:/app/list"

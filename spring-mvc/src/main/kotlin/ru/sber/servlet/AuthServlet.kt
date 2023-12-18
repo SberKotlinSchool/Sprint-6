@@ -7,8 +7,8 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import ru.sber.model.User
 import ru.sber.service.AuthService
+import ru.sber.model.User
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -20,10 +20,10 @@ class AuthServlet(private val authService: AuthService) : HttpServlet() {
     }
 
     override fun doPost(req: HttpServletRequest, resp: HttpServletResponse) {
-        val user = User(req.getParameter("login"), req.getParameter("password"))
+        val user = User(req.getParameter("username"), req.getParameter("password"))
         if (authService.authenticate(user)) {
             resp.addCookie(Cookie("auth", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)))
-            resp.sendRedirect("/app/list")
+            resp.sendRedirect("/api/list")
         } else {
             resp.sendRedirect("/login")
         }

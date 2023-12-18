@@ -1,4 +1,4 @@
-package ru.sber.adressBook
+package ru.sber
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

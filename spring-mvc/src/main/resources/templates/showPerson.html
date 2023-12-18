@@ -21,13 +21,13 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:object="${person}">
-        <td th:text="${entry.name}"></td>
-        <td th:text="${entry.address}"></td>
-        <td th:text="${entry.email}"></td>
+    <tr th:object="${entity}">
+        <td th:text="${entity.name}"></td>
+        <td th:text="${entity.address}"></td>
+        <td th:text="${entity.email}"></td>
         <td>
-            <a th:href="@{/app/showFormForUpdate/{id}(id=${id})}" class="btn btn-primary">Update</a>
-            <a th:href="@{/app/delete/{id}(id=${id})}" class="btn btn-primary">Delete</a>
+            <a th:href="@{/app/{id}/edit(id=${id})}" class="btn btn-primary">Update</a>
+            <a th:href="@{/app/{id}/delete(id=${id})}" class="btn btn-primary">Delete</a>
         </td>
     </tr>
     </tbody>

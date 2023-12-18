@@ -12,16 +12,17 @@ class AddressBookRepository {
 
     init {
         insert(
-            Person(
-                "Anton",
-                "Moscow",
-                "qwe@sbrfff.ru"
-            )
+                Person(
+                        0,
+                        "Anton",
+                        "Moscow",
+                        "qwe@sbrfff.ru"
+                )
         )
     }
 
     fun insert(person: Person) {
-        addressBook[atomicId.getAndIncrement()] = person
+        addressBook[person.id] = person
     }
 
     fun updateById(id: Long, person: Person) {
