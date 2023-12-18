@@ -7,7 +7,6 @@ import java.util.concurrent.atomic.AtomicLong
 
 @Repository
 class AddressBookRepository {
-    private val atomicId = AtomicLong(0)
     private val addressBook = ConcurrentHashMap<Long, Person>()
 
     init {
@@ -21,7 +20,7 @@ class AddressBookRepository {
         )
     }
 
-    fun insert(person: Person) {
+    final fun insert(person: Person) {
         addressBook[person.id] = person
     }
 

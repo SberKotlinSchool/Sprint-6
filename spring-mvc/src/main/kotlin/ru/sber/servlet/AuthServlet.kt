@@ -28,8 +28,4 @@ class AuthServlet(private val authService: AuthService) : HttpServlet() {
             resp.sendRedirect("/login")
         }
     }
-
-    companion object {
-        private val logger: Logger = LoggerFactory.getLogger(AuthServlet::class.java)
-    }
 }

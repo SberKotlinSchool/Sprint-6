@@ -1,7 +1,6 @@
 package ru.sber.controller
 
 import org.springframework.http.ResponseEntity
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import ru.sber.model.Person
 import ru.sber.service.AddressBookService
@@ -10,8 +9,6 @@ import java.util.concurrent.atomic.AtomicLong
 @RestController
 @RequestMapping("/api")
 class AddressBookRestController(private val addressBookService: AddressBookService) {
-    private val atomicId = AtomicLong(1)
-
     @PostMapping("/add")
     fun addNewPerson(@RequestBody person: Person): ResponseEntity<Any> {
         return ResponseEntity.ok(addressBookService.addNewPerson(person))
