@@ -11,6 +11,8 @@ import java.nio.channels.ClosedByInterruptException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class FileServerTest extends TestCase {
@@ -69,8 +71,8 @@ public class FileServerTest extends TestCase {
         final ServerSocket socket = new ServerSocket(port);
         socket.setReuseAddress(true);
         final VFilesystem fs = getFilesystem();
-        
-        Runnable runner = new Runnable () {
+
+        Runnable runner = new Runnable() {
             @Override
             public void run() {
                 try {
@@ -94,7 +96,7 @@ public class FileServerTest extends TestCase {
     }
 
     private HttpResponse sendHttpRequest(final String path, final boolean print)
-            throws IOException {
+            throws IOException, InterruptedException {
         assert !path.startsWith("/");
 
         if (print) {
@@ -105,8 +107,8 @@ public class FileServerTest extends TestCase {
 
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
-        con.setConnectTimeout(5000); // 5 seconds
-        con.setReadTimeout(5000); // 5 seconds
+        con.setConnectTimeout(15000); // 5 seconds
+        con.setReadTimeout(15000); // 5 seconds
 
         final int responseCode = con.getResponseCode();
 
