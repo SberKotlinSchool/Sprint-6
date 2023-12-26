@@ -3,15 +3,15 @@ package addressbook.controller
 import addressbook.model.Person
 import addressbook.service.AddressBookService
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/rest-controller/app")
+@RequestMapping("/api/app")
 class RestControllers(private val addressBookService: AddressBookService) {
 
     @GetMapping("/list")
     fun getPersons(@RequestParam(required = false) firstName: String?): ResponseEntity<List<Person>> {
-        println("rest controller list")
         return firstName?.let {
             ResponseEntity.ok(addressBookService.getPersonByFirstName(it))
         } ?: run {
@@ -36,7 +36,7 @@ class RestControllers(private val addressBookService: AddressBookService) {
     fun editPerson(@PathVariable id: Int, @RequestBody entry: Person) {
         return addressBookService.editPerson(id, entry)
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}/delete")
     fun deletePerson(@PathVariable id: Int) {
         return addressBookService.deletePersonById(id)

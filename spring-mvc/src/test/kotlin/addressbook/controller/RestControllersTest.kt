@@ -10,8 +10,6 @@ import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.*
 import org.springframework.test.annotation.DirtiesContext
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -24,12 +22,12 @@ class RestControllersTest {
 
     @Test
     fun `test testGetPersons`() {
-        val baseUrl = "http://localhost:$port/rest-controller/app"
+        val baseUrl = "http://localhost:$port/api/app"
 
         val responseWithoutParam = restTemplate.exchange(
             "$baseUrl/list",
             HttpMethod.GET,
-            HttpEntity<String>(createHttpHeaders()),
+            HttpEntity<Nothing>(apiUser()),
             object : ParameterizedTypeReference<List<Person>>() {}
         )
         assertEquals(HttpStatus.OK, responseWithoutParam.statusCode)
@@ -46,7 +44,7 @@ class RestControllersTest {
         val responseWithParam = restTemplate.exchange(
             "$baseUrl/list?firstName=$firstName",
             HttpMethod.GET,
-            HttpEntity<String>(createHttpHeaders()),
+            HttpEntity<Nothing>(apiUser()),
             object : ParameterizedTypeReference<List<Person>>() {}
         )
         assertEquals(HttpStatus.OK, responseWithParam.statusCode)
@@ -60,29 +58,43 @@ class RestControllersTest {
     }
 
     @Test
-    fun `test testGetPersonsWithOutCookie`() {
-        val baseUrl = "http://localhost:$port/rest-controller/app"
+    fun `test testGetPersonsWithOutAuth`() {
+        val baseUrl = "http://localhost:$port/api/app"
 
         val response = restTemplate.exchange(
             "$baseUrl/list",
             HttpMethod.GET,
-            null,
+            HttpEntity<Nothing>(HttpHeaders()),
             String::class.java
         )
-        assertTrue { response.statusCode == HttpStatus.OK }
+        println(response)
+        assertTrue { response.statusCode == HttpStatus.FORBIDDEN }
+    }
+    @Test
+    fun `test testGetPersonsNotAuthWithUser`() {
+        val baseUrl = "http://localhost:$port/api/app"
+
+        val response = restTemplate.exchange(
+            "$baseUrl/list",
+            HttpMethod.GET,
+            HttpEntity<Nothing>(user()),
+            String::class.java
+        )
+
+        assertTrue { response.statusCode == HttpStatus.FORBIDDEN }
     }
 
     @Test
     fun `test testAddPerson`() {
-        val baseUrl = "http://localhost:$port/rest-controller/app"
+        val baseUrl = "http://localhost:$port/api/app"
         val newPerson = Person(id = null, "Elena", "Rotova")
 
-        val httpEntity = HttpEntity(newPerson, createHttpHeaders())
+        val httpEntity = HttpEntity(newPerson, apiUser())
 
         val response: ResponseEntity<Int> = restTemplate.exchange(
             "$baseUrl/add",
             HttpMethod.POST,
-            httpEntity,
+            HttpEntity<Nothing>(apiUser()),
             Int::class.java
         )
 
@@ -92,33 +104,28 @@ class RestControllersTest {
 
     @Test
     fun `test AddPersonWithOutCookie`() {
-        val baseUrl = "http://localhost:$port/rest-controller/app"
+        val baseUrl = "http://localhost:$port/api/app"
         val newPerson = Person(id = null, "Elena", "Rotova")
-
-        val httpEntity = HttpEntity(newPerson)
 
         val response = restTemplate.exchange(
             "$baseUrl/add",
             HttpMethod.POST,
-            httpEntity,
+            null,
             String::class.java
         )
-        assertTrue { response.statusCode == HttpStatus.FOUND }
+        assertTrue { response.statusCode == HttpStatus.FORBIDDEN }
     }
 
 
     @Test
     fun `test viewEntry`() {
-        val baseUrl = "http://localhost:$port/rest-controller/app"
+        val baseUrl = "http://localhost:$port/api/app"
         val existingPersonId = 1
-
-        val httpEntity = HttpEntity(null, createHttpHeaders())
-
 
         val responseEntity: ResponseEntity<Person> = restTemplate.exchange(
             "$baseUrl/$existingPersonId/view",
             HttpMethod.GET,
-            httpEntity,
+            HttpEntity<Nothing>(apiUser()),
             object : ParameterizedTypeReference<Person>() {}
         )
 
@@ -132,7 +139,7 @@ class RestControllersTest {
 
     @Test
     fun `test viewEntryWithOutCookie`() {
-        val baseUrl = "http://localhost:$port/rest-controller/app"
+        val baseUrl = "http://localhost:$port/api/app"
         val existingPersonId = 1
 
         val response = restTemplate.exchange(
@@ -141,22 +148,20 @@ class RestControllersTest {
             null,
             String::class.java
         )
-        println(response)
-        assertEquals(HttpStatus.FOUND, response.statusCode)
+        assertEquals(HttpStatus.FORBIDDEN, response.statusCode)
 
     }
 
     @Test
     fun `test editEntry`() {
-        val baseUrl = "http://localhost:$port/rest-controller/app"
+        val baseUrl = "http://localhost:$port/api/app"
         val existingPersonId = 0
         val updatedPerson = Person(null, "Test", "Test")
 
-        val requestEntity: HttpEntity<Person> = HttpEntity(updatedPerson, createHttpHeaders())
         val response = restTemplate.exchange(
             "$baseUrl/$existingPersonId/edit",
             HttpMethod.PUT,
-            requestEntity,
+            HttpEntity<Nothing>(apiUser()),
             String::class.java
         )
         assertEquals(HttpStatus.OK, response.statusCode)
@@ -164,31 +169,29 @@ class RestControllersTest {
 
     @Test
     fun `test editEntryWithOutCookie`() {
-        val baseUrl = "http://localhost:$port/rest-controller/app"
+        val baseUrl = "http://localhost:$port/api/app"
         val existingPersonId = 0
         val updatedPerson = Person(null, "Test", "Test")
 
-        val requestEntity: HttpEntity<Person> = HttpEntity(updatedPerson)
         val response = restTemplate.exchange(
             "$baseUrl/$existingPersonId/edit",
             HttpMethod.PUT,
-            requestEntity,
+            null,
             String::class.java
         )
 
-        assertEquals(HttpStatus.FOUND ,response.statusCode)
+        assertEquals(HttpStatus.FORBIDDEN, response.statusCode)
     }
 
     @Test
     fun `test deleteEntry`() {
-        val baseUrl = "http://localhost:$port/rest-controller/app"
+        val baseUrl = "http://localhost:$port/api/app"
         val existingPersonId = 0
-
 
         val response = restTemplate.exchange(
             "$baseUrl/$existingPersonId/delete",
             HttpMethod.DELETE,
-            HttpEntity(null, createHttpHeaders()),
+            HttpEntity<Nothing>(adminUser()),
             String::class.java
         )
         assertEquals(HttpStatus.OK, response.statusCode)
@@ -196,27 +199,27 @@ class RestControllersTest {
 
     @Test
     fun `test deleteEntryWithOutCookie`() {
-        val baseUrl = "http://localhost:$port/rest-controller/app"
+        val baseUrl = "http://localhost:$port/api/app"
         val existingPersonId = 0
 
         val response = restTemplate.exchange(
             "$baseUrl/$existingPersonId/delete",
             HttpMethod.DELETE,
-            HttpEntity(null, null),
+            null,
             String::class.java
         )
-        // почему здесь FOUND и нет текста формы логина, непонятно
-        assertTrue { response.statusCode == HttpStatus.FOUND }
+        assertTrue { response.statusCode == HttpStatus.FORBIDDEN }
 
     }
 
-    private fun createHttpHeaders(): HttpHeaders {
-        val headers = HttpHeaders()
-        headers.add(
-            HttpHeaders.COOKIE,
-            "auth=".plus(LocalDateTime.now().plusMinutes(10).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
-        )
+    private fun adminUser(): HttpHeaders = authHeader("admin", "admin")
+    private fun apiUser(): HttpHeaders = authHeader("api", "api")
+    private fun user(): HttpHeaders = authHeader("user", "user")
 
+
+    private fun authHeader(username: String, password: String): HttpHeaders {
+        val headers = HttpHeaders()
+        headers.setBasicAuth(username, password)
         return headers
     }
 }

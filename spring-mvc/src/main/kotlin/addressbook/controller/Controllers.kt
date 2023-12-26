@@ -2,6 +2,7 @@ package addressbook.controller
 
 import addressbook.model.Person
 import addressbook.service.AddressBookService
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
@@ -60,6 +61,7 @@ class Controllers(private val addressBookService: AddressBookService) {
         return "view_person"
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/delete/{id}")
     fun deletePerson(@PathVariable(value = "id") id: Int, model: Model): String {
         addressBookService.deletePersonById(id)
