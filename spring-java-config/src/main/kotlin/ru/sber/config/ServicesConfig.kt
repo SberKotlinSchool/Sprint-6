@@ -15,12 +15,10 @@ class ServicesConfig {
         return FirstService()
     }
 
-    @Bean
     fun secondService(): SecondService {
         return SecondService()
     }
 
-    @Bean
     fun fourthService(): FourthService {
         return FourthService()
     }

@@ -25,7 +25,7 @@ class SecondServiceImpl : ServiceInterface {
 @Component
 class SeveralBeanInjectionService {
     @Autowired
-    lateinit var services: ArrayList<ServiceInterface>
+    lateinit var services: List<ServiceInterface>
 
     override fun toString(): String {
         return "SeveralBeanInjectionService(services=$services)"
@@ -37,6 +37,6 @@ class SeveralBeanInjectionService {
 class SeveralServicesConfig {
     @Bean
     fun services(): ArrayList<ServiceInterface> {
-        return arrayListOf(FirstServiceImpl(), SecondServiceImpl())
+        return arrayListOf(FirstServiceImpl())
     }
 }

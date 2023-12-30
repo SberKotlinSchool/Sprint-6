@@ -30,7 +30,7 @@ class CombinedBean : InitializingBean {
     }
 
     @PostConstruct
-    fun customInit() {
+    fun init() {
         customInitOrderMessage = "customInit() is called"
     }
 
