@@ -9,6 +9,7 @@ class FirstService {
     }
 }
 
+@Component
 class SecondService {
     override fun toString(): String {
         return "I am secondService"
