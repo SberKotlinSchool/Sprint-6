@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание новой записи</title>
+</head>
+<body>
+<h1>Добавить адрес</h1>
+<form th:object="${address}" th:method="POST" th:action="@{/app/add}">
+    <div th:include="blocks :: form"></div>
+</form>
+<div th:include="blocks :: back"></div>
+</body>
+</html>
