@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Просмотр адреса</title>
+</head>
+<body>
+<h1>Просмотр адреса</h1>
+<ul th:object="${address}">
+    <li><b>Имя</b> - <span th:text="*{name}"/> </li>
+    <li><b>Адрес</b>b> - <span th:text="*{address}"/> </li>
+</ul>
+<div th:include="blocks :: back"></div>
+</body>
+</html>
